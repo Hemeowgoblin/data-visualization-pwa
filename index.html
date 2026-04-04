@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Premium data visualization for economic metrics." />
+  <title>Economic Data Explorer</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@400;600;800&display=swap" rel="stylesheet">
+</head>
+<body>
+  <header class="glass-header">
+    <div class="header-content">
+      <h1 class="logo">Econ<span>Visuals</span></h1>
+      <button id="snapBtn" class="btn primary" style="display: none;">Snap Report</button>
+    </div>
+  </header>
+
+  <!-- Flow Container maps Flex Box Order dynamically -->
+  <div id="flowContainer" class="flow-container state-setup">
+    
+    <!-- BLOCK A: CHOICES -->
+    <div id="blockChoices" class="glass-panel flow-block">
+      <h2>Data Configuration</h2>
+      <div class="wizard-section">
+        <label>Subject</label>
+        <select id="subjectSelect">
+          <option value="" disabled selected>Select subject...</option>
+          <option value="Unemployment">Unemployment Rate</option>
+        </select>
+      </div>
+
+      <div class="wizard-section">
+        <label>Comparison Parameter</label>
+        <select id="parameterSelect" disabled>
+          <option value="" disabled selected>Select parameter...</option>
+          <option value="Age">Age</option>
+          <option value="Race">Race</option>
+          <option value="Disability">Disability status</option>
+          <option value="Education">Education level</option>
+        </select>
+      </div>
+
+      <div id="filtersArea" class="wizard-section hidden">
+        <label>Filters</label>
+        <div id="dynamicFiltersContainer" class="filters-container">
+          <!-- Populates dynamically -->
+        </div>
+        <div class="filter-actions hidden" id="filterActionBtns">
+          <button id="checkAllFiltersBtn" class="btn small outlined">Check All Filters</button>
+          <button id="uncheckAllFiltersBtn" class="btn small outlined">Uncheck All Filters</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- BLOCK B: DATES & EXECUTION -->
+    <div id="blockExecution" class="glass-panel flow-block">
+      <div class="wizard-actions centered">
+        <button id="confirmChoicesBtn" class="btn primary disabled" disabled>Confirm Choices</button>
+      </div>
+      
+      <div id="dateSelectionArea" class="wizard-section hidden">
+        <hr class="spacer-line" />
+        <div class="date-row">
+          <div class="date-field">
+            <label>Start Year</label>
+            <select id="startYearSelect"></select>
+          </div>
+          <div class="date-field">
+            <label>End Year</label>
+            <select id="endYearSelect"></select>
+          </div>
+        </div>
+        <div class="wizard-actions generate-action">
+          <button id="generateVizBtn" class="btn execute">Generate Visualization</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- BLOCK C: VISUALIZATIONS -->
+    <div id="blockVisuals" class="flow-block hidden">
+      <main id="dashboardWrapper" class="dashboard-container">
+        
+        <!-- Top Left: Trend Analysis -->
+        <div class="chart-panel secondary-charts">
+          <div class="chart-header-row">
+            <h2>Trend Analysis</h2>
+            <label class="toggle-switch">
+              <input type="checkbox" id="generalTrendToggle">
+              <span class="slider round"></span>
+              <span class="toggle-label">Show General Trend</span>
+            </label>
+          </div>
+          <div id="lineChartContainer" class="canvas-wrapper placeholder line-canvas-wrapper">
+            <canvas id="lineChartCanvas"></canvas>
+            <div class="chart-empty-state">Line Plot Render Area</div>
+          </div>
+        </div>
+        
+        <!-- Top Right: Time Snapshot -->
+        <div class="chart-panel main-chart">
+          <h2>Time Snapshot</h2>
+          <div id="mainChartContainer" class="canvas-wrapper placeholder">
+            <canvas id="mainChartCanvas"></canvas>
+            <div class="chart-empty-state">Main Chart Render Area</div>
+          </div>
+        </div>
+
+        <!-- Bottom Left: Slider -->
+        <div class="slider-panel glass-panel">
+          <div class="slider-header centered">
+            <h3>Timeline: <span id="currentYearDisplay">Loading...</span></h3>
+          </div>
+          <div class="slider-wrapper">
+            <button class="arrow-btn" id="prevYear" aria-label="Previous Year">◀</button>
+            <input type="range" id="yearSlider" min="1948" max="2026" value="2020" />
+            <button class="arrow-btn" id="nextYear" aria-label="Next Year">▶</button>
+          </div>
+        </div>
+
+        <!-- Bottom Right: Reset -->
+        <div id="resetArea" class="reset-wrapper">
+          <button id="resetSelectionsBtn" class="btn danger">Reset Selections</button>
+        </div>
+
+      </main>
+    </div>
+
+  </div>
+
+  <div id="hiddenSvgContainer" style="display: none;"></div>
+  <script type="module" src="/index.js"></script>
+</body>
+</html>
