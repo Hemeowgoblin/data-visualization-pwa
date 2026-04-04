@@ -162,6 +162,14 @@ input:checked + .slider:before { transform: translateX(20px); background-color: 
 .toggle-label { font-size: 0.85rem; font-weight: 600; color: var(--text-secondary); }
 input:checked ~ .toggle-label { color: var(--text-primary); }
 
+/* Chart Type Selector */
+.chart-type-selector { display: flex; background: rgba(0,0,0,0.3); border-radius: 8px; padding: 0.25rem; gap: 0.25rem; }
+.chart-type-btn { cursor: pointer; position: relative; }
+.chart-type-btn input { display: none; }
+.chart-type-btn span { display: inline-block; padding: 0.3rem 0.8rem; font-size: 0.85rem; font-weight: 600; color: var(--text-secondary); border-radius: 6px; transition: all 0.2s; }
+.chart-type-btn:hover span { color: var(--text-primary); background: rgba(255,255,255,0.05); }
+.chart-type-btn input:checked + span { background: var(--accent-color); color: white; }
+
 .canvas-wrapper { 
   flex: 1 1 0; /* Grow, shrink, start from 0 height */
   background: rgba(0,0,0,0.2); 

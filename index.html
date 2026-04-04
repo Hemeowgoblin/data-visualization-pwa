@@ -101,7 +101,23 @@
         
         <!-- Top Right: Time Snapshot -->
         <div class="chart-panel main-chart">
-          <h2>Time Snapshot</h2>
+          <div class="chart-header-row">
+            <h2>Time Snapshot</h2>
+            <div class="chart-type-selector">
+              <label class="chart-type-btn">
+                <input type="radio" name="chartType" value="pie" checked>
+                <span>Pie</span>
+              </label>
+              <label class="chart-type-btn">
+                <input type="radio" name="chartType" value="bubble">
+                <span>Bubble</span>
+              </label>
+              <label class="chart-type-btn">
+                <input type="radio" name="chartType" value="bar">
+                <span>Bar</span>
+              </label>
+            </div>
+          </div>
           <div id="mainChartContainer" class="canvas-wrapper placeholder">
             <canvas id="mainChartCanvas"></canvas>
             <div class="chart-empty-state">Main Chart Render Area</div>

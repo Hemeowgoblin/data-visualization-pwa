@@ -74,7 +74,7 @@ onmessage = function(e) {
     // Valid years are those where the Set size === targetCombinations
     let validYears = [];
     for (let year in yearComboCounts) {
-      if (yearComboCounts[year].size === targetCombinations) {
+      if (yearComboCounts[year].size > 0) { // Tolerate missing/untracked demographics for specific years
         validYears.push(parseInt(year));
       }
     }
@@ -82,16 +82,47 @@ onmessage = function(e) {
     postMessage({ type: 'YEAR_INTERSECTION', years: validYears });
   }
   
+  else if (msg.type === 'GET_TREND_DATA') {
+    const { startYear, endYear, category, genders } = msg;
+
+    // Filter relevant dataset lines
+    const lineData = globalData.filter(d => 
+      d.Year >= startYear && d.Year <= endYear &&
+      d.Category === category && 
+      genders.includes(d.Gender)
+    );
+
+    // Always fetch general data for the toggle
+    const generalData = globalData.filter(d => 
+      d.Year >= startYear && d.Year <= endYear &&
+      d.Category === 'General' &&
+      d.Subset === 'Total 16+' &&
+      d.Gender === 'Combined'
+    );
+
+    postMessage({ type: 'TREND_DATA', payload: { lineData, generalData }});
+  }
+
   else if (msg.type === 'FILTER_BY_YEAR') {
     const { year, category, genders } = msg;
 
-    // Filter by exact year, category, and active genders
-    const payload = globalData.filter(d => 
+    const snapshotData = globalData.filter(d => 
       d.Year === year && 
       d.Category === category && 
       genders.includes(d.Gender)
     );
+
+    const rateKey = 'Rate_%' in globalData[0] ? 'Rate_%' : 'Rate_Pct';
+    const processedSnapshot = snapshotData.map(point => {
+      const rawRate = point[rateKey];
+      return {
+        ...point,
+        Rate: (rawRate !== null && rawRate !== undefined) ? Number(rawRate) : null,
+        UnemployedLevel: point['Unemployed_Level'] !== null ? Number(point['Unemployed_Level']) : null,
+        PercentOfCategory: point['Unemployed_Percent_Of_Category'] !== null ? Number(point['Unemployed_Percent_Of_Category']) : null
+      };
+    });
     
-    postMessage({ type: 'FILTERED_DATA', year: year, payload });
+    postMessage({ type: 'FILTERED_DATA', year: year, payload: processedSnapshot });
   }
 };
