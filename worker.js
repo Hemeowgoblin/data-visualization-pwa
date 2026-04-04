@@ -59,7 +59,7 @@ onmessage = function(e) {
 
     // Build a map of Year -> Set of "Subset_Gender" combinations it has valid data for
     let yearComboCounts = {};
-    const rateKey = 'Rate_%' in globalData[0] ? 'Rate_%' : 'Rate_Pct';
+    const rateKey = (globalData && globalData.length > 0 && 'Rate_%' in globalData[0]) ? 'Rate_%' : 'Rate_Pct';
 
     // How many distinct combinations do we expect per year?
     const targetCombinations = subsets.length * genders.length;
@@ -112,7 +112,7 @@ onmessage = function(e) {
       genders.includes(d.Gender)
     );
 
-    const rateKey = 'Rate_%' in globalData[0] ? 'Rate_%' : 'Rate_Pct';
+    const rateKey = (globalData && globalData.length > 0 && 'Rate_%' in globalData[0]) ? 'Rate_%' : 'Rate_Pct';
     const processedSnapshot = snapshotData.map(point => {
       const rawRate = point[rateKey];
       return {

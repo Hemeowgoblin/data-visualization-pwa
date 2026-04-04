@@ -86,7 +86,7 @@
         <!-- Top Left: Trend Analysis -->
         <div class="chart-panel secondary-charts">
           <div class="chart-header-row">
-            <h2>Trend Analysis</h2>
+            <h2 id="trendHeader">Trend Analysis</h2>
             <label class="toggle-switch">
               <input type="checkbox" id="generalTrendToggle">
               <span class="slider round"></span>
@@ -94,6 +94,7 @@
             </label>
           </div>
           <div id="lineChartContainer" class="canvas-wrapper placeholder line-canvas-wrapper">
+            <div class="panel-subtitle-box" id="trendSubtitle">Unemployment Rate Within the Category</div>
             <canvas id="lineChartCanvas"></canvas>
             <div class="chart-empty-state">Line Plot Render Area</div>
           </div>
@@ -102,10 +103,10 @@
         <!-- Top Right: Time Snapshot -->
         <div class="chart-panel main-chart">
           <div class="chart-header-row">
-            <h2>Time Snapshot</h2>
+            <h2 id="snapshotHeader">Time Snapshot</h2>
             <div class="chart-type-selector">
               <label class="chart-type-btn">
-                <input type="radio" name="chartType" value="pie" checked>
+                <input type="radio" name="chartType" value="pie">
                 <span>Pie</span>
               </label>
               <label class="chart-type-btn">
@@ -113,12 +114,13 @@
                 <span>Bubble</span>
               </label>
               <label class="chart-type-btn">
-                <input type="radio" name="chartType" value="bar">
+                <input type="radio" name="chartType" value="bar" checked>
                 <span>Bar</span>
               </label>
             </div>
           </div>
           <div id="mainChartContainer" class="canvas-wrapper placeholder">
+            <div class="panel-subtitle-box" id="snapshotSubtitle"></div>
             <canvas id="mainChartCanvas"></canvas>
             <div class="chart-empty-state">Main Chart Render Area</div>
           </div>

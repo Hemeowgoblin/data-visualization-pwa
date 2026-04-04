@@ -53,6 +53,9 @@ function getActiveGenderString() {
 const verticalLinePlugin = {
   id: 'verticalLine',
   afterDraw: (chart) => {
+    // Only draw for charts that have a linear x/y scale (line/bar/bubble)
+    if (!chart.scales || !chart.scales.x || !chart.scales.y) return;
+    
     const activeYearStr = currentYearDisplay.textContent;
     if (!activeYearStr || isNaN(parseInt(activeYearStr))) return;
     
@@ -314,7 +317,8 @@ generalTrendToggle.addEventListener('change', () => {
 });
 
 chartTypeRadios.forEach(radio => {
-  radio.addEventListener('change', () => {
+  radio.addEventListener('change', (e) => {
+    userPreferredChartType = e.target.value;
     renderSnapshotChart();
   });
 });
@@ -403,6 +407,7 @@ function renderTrendChart() {
     options: {
       responsive: true,
       maintainAspectRatio: false,
+      layout: { padding: { top: 70 } },
       plugins: {
         legend: { labels: { color: '#a0a6b1' } },
         tooltip: { mode: 'index', intersect: false }
@@ -425,12 +430,22 @@ function renderTrendChart() {
   });
 }
 
+let userPreferredChartType = 'bar'; // Default to Bar as per latest request
+
+function getGlobalMaxRate() {
+  const allRates = [
+    ...currentTrendData.map(d => getRate(d)),
+    ...currentGeneralData.map(d => getRate(d))
+  ].filter(v => v !== null && !isNaN(v));
+  
+  return allRates.length > 0 ? Math.max(...allRates) : 10; // Fallback to 10%
+}
+
 function renderSnapshotChart() {
   const ctx = document.getElementById('mainChartCanvas').getContext('2d');
   if (snapshotChart) snapshotChart.destroy();
 
   // Detect if ANY subset is missing data for the current selection
-  // Only null/undefined are considered missing; 0 is a valid rate.
   const hasMissingData = currentSnapshotData.some(d => {
     const r = getRate(d);
     return r === null || d.UnemployedLevel === null;
@@ -452,13 +467,27 @@ function renderSnapshotChart() {
       r.disabled = false;
       r.parentElement.style.opacity = '1';
       r.parentElement.style.cursor = 'pointer';
+      // Restore user's preferred type if we are no longer in "missing data" mode
+      if (r.value === userPreferredChartType) {
+        r.checked = true;
+      }
     });
   }
 
-  const activeType = document.querySelector('input[name="chartType"]:checked').value;
+  const activeRadio = document.querySelector('input[name="chartType"]:checked');
+  if (!activeRadio) return; // Fail safe
+  
+  const activeType = activeRadio.value;
 
-  // For Bar Chart, we keep ALL subsets to show "No available data"
-  // For Pie/Bubble, we filter for values > 0
+  // Update HTML subtitle box
+  const subtitleEl = document.getElementById('snapshotSubtitle');
+  if (subtitleEl) {
+    if (activeType === 'pie') subtitleEl.textContent = 'Unemployed People per Category to the Sum in All Categories';
+    else if (activeType === 'bubble') subtitleEl.textContent = 'Number of Unemployed People per Category';
+    else if (activeType === 'bar') subtitleEl.textContent = 'Unemployment Rate Within the Category';
+  }
+
+  // Handle data filtering based on type
   let data = [];
   if (activeType === 'bar') {
     data = [...currentSnapshotData].sort((a,b) => a.Subset.localeCompare(b.Subset));
@@ -479,11 +508,10 @@ function renderSnapshotChart() {
   }
 
   let labels = data.map(d => d.Subset);
-  
-  // Synchronous Color Mapping
   const bgColors = data.map(d => activeColorMap[d.Subset] || '#64748b');
 
   if (activeType === 'bar') {
+    const globalMax = getGlobalMaxRate();
     snapshotChart = new Chart(ctx, {
       type: 'bar',
       data: {
@@ -496,23 +524,21 @@ function renderSnapshotChart() {
         }]
       },
       options: {
-        indexAxis: 'y', // Horizontal
+        indexAxis: 'y',
         responsive: true,
         maintainAspectRatio: false,
+        layout: { padding: { top: 70, right: 30 } },
         plugins: { 
           legend: { display: false },
           tooltip: { enabled: true }
         },
         scales: {
           x: { 
-            display: false, // No X Axis as per request
-            grid: { display: false },
-            ticks: { display: false }
+            display: false, 
+            min: 0,
+            max: globalMax * 1.2 // 20% breathing room for labels
           },
-          y: { 
-            grid: { display: false }, 
-            ticks: { color: '#f2f4f7', font: { size: 12, weight: 'bold' } } 
-          }
+          y: { grid: { display: false }, ticks: { color: '#f2f4f7', font: { size: 12, weight: 'bold' } } }
         }
       },
       plugins: [{
@@ -523,15 +549,11 @@ function renderSnapshotChart() {
             const rawVal = data.datasets[0].data[index];
             const label = (rawVal !== null && rawVal > 0) ? `${rawVal}%` : "No available data";
             const color = data.datasets[0].backgroundColor[index];
-            
             ctx.save();
             ctx.fillStyle = color;
             ctx.font = 'bold 12px Inter';
             ctx.textBaseline = 'middle';
             ctx.textAlign = 'left';
-            
-            // Draw text to the right of the bar
-            // If rawVal is null, x will be at the scale origin
             const xPos = Math.max(bar.x, bar.base) + 12;
             const yPos = bar.y;
             ctx.fillText(label, xPos, yPos);
@@ -541,7 +563,6 @@ function renderSnapshotChart() {
       }]
     });
   } 
-  
   else if (activeType === 'pie') {
     snapshotChart = new Chart(ctx, {
       type: 'pie',
@@ -557,47 +578,65 @@ function renderSnapshotChart() {
       },
       options: {
         responsive: true,
-        maintainAspectRatio: true, // Maintain circular shape
-        aspectRatio: 1, // Full panel height
+        maintainAspectRatio: true,
+        aspectRatio: 1,
+        layout: { padding: { top: 80 } },
         plugins: {
           legend: { 
-            position: 'bottom', 
-            labels: { color: '#f2f4f7', padding: 25, font: { size: 11 } } 
+            position: 'right', 
+            labels: { 
+              padding: 15, 
+              font: { size: 11 },
+              generateLabels: (chart) => {
+                const data = chart.data;
+                if (data.labels.length && data.datasets.length) {
+                  return data.labels.map((label, i) => {
+                    const value = data.datasets[0].data[i];
+                    const color = data.datasets[0].backgroundColor[i];
+                    return {
+                      text: `${label}: ${value}%`,
+                      fillStyle: color,
+                      strokeStyle: data.datasets[0].borderColor,
+                      lineWidth: data.datasets[0].borderWidth,
+                      fontColor: color, // Legend text matches piece color
+                      hidden: isNaN(data.datasets[0].data[i]) || chart.getDatasetMeta(0).data[i].hidden,
+                      index: i
+                    };
+                  });
+                }
+                return [];
+              }
+            } 
           },
-          tooltip: {
-            callbacks: {
-              label: (ctx) => ` ${ctx.label}: ${ctx.raw}%`
-            }
-          }
+          tooltip: { callbacks: { label: (ctx) => ` ${ctx.label}: ${ctx.raw}%` } }
         }
       }
     });
   }
-  
   else if (activeType === 'bubble') {
-    // Circle Packing using D3 Hierarchy
-    // We treat the dataset as leaves of a root tree node
     const rootData = { name: "root", children: data };
-    const packLayout = pack()
-        .size([600, 600]) 
-        .padding(10);     
-        
-    const rootNode = hierarchy(rootData)
-        .sum(d => d.UnemployedLevel); // Math based strictly on raw volumes
-        
+    const packLayout = pack().size([600, 600]).padding(2); // Tighter padding
+    const rootNode = hierarchy(rootData).sum(d => d.UnemployedLevel);
     const packedNodes = packLayout(rootNode).leaves();
     
-    // Map the packed coordinates into Chart.js bubble points
+    // Bounds tracking for area-filling fit
+    let minX = Infinity, maxX = -Infinity, minY = Infinity, maxY = -Infinity;
     const mappedData = packedNodes.map((node, i) => {
+      const r = node.r;
+      minX = Math.min(minX, node.x - r);
+      maxX = Math.max(maxX, node.x + r);
+      minY = Math.min(minY, node.y - r);
+      maxY = Math.max(maxY, node.y + r);
       return {
-        x: node.x,
-        y: node.y,
-        r: node.r * 0.8, 
-        subset: node.data.Subset,
-        value: node.data.UnemployedLevel, // Storing for tooltip
+        x: node.x, y: node.y, r: r, 
+        subset: node.data.Subset, value: node.data.UnemployedLevel,
         backgroundColor: activeColorMap[node.data.Subset] || '#cbd5e1'
       };
     });
+
+    // Add padding to specific bounds
+    const pad = 20;
+    minX -= pad; maxX += pad; minY -= pad; maxY += pad;
 
     snapshotChart = new Chart(ctx, {
       type: 'bubble',
@@ -607,17 +646,31 @@ function renderSnapshotChart() {
           data: [{ x: node.x, y: node.y, r: node.r }],
           backgroundColor: node.backgroundColor,
           borderWidth: 1,
-          borderColor: '#0f1115'
+          borderColor: '#0f1115',
+          volume: node.value,
+          fontColor: node.backgroundColor
         }))
       },
       options: {
         responsive: true,
         maintainAspectRatio: false,
-        layout: {
-          padding: 10
-        },
+        layout: { padding: { top: 80 } },
         plugins: {
-          legend: { position: 'bottom', labels: { color: '#f2f4f7', padding: 10 } },
+          legend: { 
+            position: 'right', 
+            labels: { 
+              padding: 10,
+              generateLabels: (chart) => {
+                return chart.data.datasets.map((ds, i) => ({
+                  text: `${ds.label}: ${ds.volume} K`,
+                  fillStyle: ds.backgroundColor,
+                  strokeStyle: ds.borderColor,
+                  fontColor: ds.backgroundColor, // Colored legend text
+                  datasetIndex: i
+                }));
+              }
+            } 
+          },
           tooltip: {
             callbacks: {
                label: (context) => {
@@ -628,8 +681,8 @@ function renderSnapshotChart() {
           }
         },
         scales: {
-          x: { display: false, min: -50, max: 650 }, // Padding for circles
-          y: { display: false, min: -50, max: 650 }
+          x: { display: false, min: minX, max: maxX },
+          y: { display: false, min: minY, max: maxY }
         }
       }
     });
