@@ -387,36 +387,68 @@ function requestDataForYear(year) {
 }
 
 /* --- Color Palettes --- */
+
+// Reserved colors for special use cases:
+// - green_hue: Used for "General Trend" line and reserved for future alert/warning features
+// - red_hue: Reserved for future highlight/danger/error features (e.g., highlighting data points above threshold)
+// - blue_hue: Reserved for "Men" when "Gender" category is selected
+// - pink_hue: Reserved for "Women" when "Gender" category is selected
+const RESERVED_COLORS = {
+  green_hue: '#228833',  // green - General Trend
+  red_hue: '#ee6677',    // red - future: danger/warning highlights
+  blue_hue: '#4477aa',   // blue - Men (Gender category)
+  pink_hue: '#cf7acf'    // pink - Women (Gender category)
+};
+
 function getPaletteColors() {
-  // High-contrast, perceptually distinct palette — no green (reserved for General Trend), no red
+  // Paul Tol's qualitative palette (designed for maximum distinguishability)
+  // Note: green_hue (#228833) and red_hue (#ee6677) are reserved - NOT included here
+  // blue_hue (#4477aa) and pink_hue (#cf7acf) are reserved for Gender category - NOT included here
   return [
-    '#6366f1', // indigo
-    '#06b6d4', // cyan
-    '#eab308', // amber
-    '#8b5cf6', // violet
-    '#f97316', // orange
-    '#0ea5e9', // sky blue
-    '#a855f7', // purple
-    '#fbbf24', // yellow
-    '#14b8a6', // teal
-    '#d946ef', // fuchsia
-    '#fb923c', // light orange
-    '#7dd3fc', // light blue
-    '#c084fc', // light purple
-    '#fdba74', // peach
-    '#5eead4', // light teal
+    '#ccbb44', // yellow
+    '#66ccee', // cyan
+    '#aa3377', // purple
+    '#bbbbbb', // grey
+    '#332288', // dark blue
+    '#6699cc', // light blue
+    '#888888', // medium grey
+    '#4b86b4', // medium blue
+    '#b86e6e', // muted red
+    '#6eb563', // muted green
+    '#7fb4ca', // steel blue
+    '#9e6d5c', // brown
+    '#63c4b7', // turquoise
+    '#c47ac4', // violet
+    '#7c7c7c', // dark grey
+    '#d4a76a', // tan
+    '#5a9fd4', // cornflower
+    '#d46a6a', // salmon
+    '#7ac47a', // sage
+    '#d4d46a', // olive
+    '#5ac4c4', // teal
+    '#a45ac4', // lavender
+    '#c4a46a', // gold
+    '#8bc4d4', // powder blue
   ];
 }
 
-function buildColorMap(subsets) {
+function buildColorMap(subsets, selectedCategory) {
   activeColorMap = {};
   const palette = getPaletteColors();
   let colorIdx = 0;
   
   subsets.forEach(sub => {
-    if (sub === 'Men') activeColorMap[sub] = '#3b82f6';
-    else if (sub === 'Women') activeColorMap[sub] = '#ec4899';
-    else {
+    // Special handling for Gender category: reserve blue_hue for Men, pink_hue for Women
+    if (selectedCategory === 'gender') {
+      if (sub === 'Men') {
+        activeColorMap[sub] = RESERVED_COLORS.blue_hue;
+      } else if (sub === 'Women') {
+        activeColorMap[sub] = RESERVED_COLORS.pink_hue;
+      } else {
+        activeColorMap[sub] = palette[colorIdx % palette.length];
+        colorIdx++;
+      }
+    } else {
       activeColorMap[sub] = palette[colorIdx % palette.length];
       colorIdx++;
     }
@@ -435,7 +467,7 @@ function renderTrendChart() {
 
   const selectedCategory = parameterSelect.value;
   const subsets = [...new Set(currentTrendData.map(d => d[selectedCategory]).filter(Boolean))];
-  buildColorMap(subsets);
+  buildColorMap(subsets, selectedCategory);
 
   const datasets = subsets.map((sub) => {
     const linePoints = currentTrendData.filter(d => d[selectedCategory] === sub).sort((a,b) => a.year - b.year);
@@ -457,14 +489,19 @@ function renderTrendChart() {
     datasets.push({
       label: 'General Trend',
       data: generalPoints.map(p => ({ x: p.year, y: getRate(p) })),
-      borderColor: '#22c55e',
-      backgroundColor: '#22c55e',
+      borderColor: RESERVED_COLORS.green_hue,
+      backgroundColor: RESERVED_COLORS.green_hue,
       borderWidth: 2,
       tension: 0.3,
       pointRadius: 0,
       pointHoverRadius: 6
     });
   }
+
+  // Calculate initial Y bounds from ALL data (including hidden datasets)
+  const allValues = datasets.flatMap(ds => ds.data.map(p => p.y)).filter(v => v !== null && v !== undefined);
+  const initialYMin = Math.floor(Math.min(...allValues) * 0.9);
+  const initialYMax = Math.ceil(Math.max(...allValues) * 1.1);
 
   trendChart = new Chart(ctx, {
     type: 'line',
@@ -473,32 +510,7 @@ function renderTrendChart() {
       responsive: true,
       maintainAspectRatio: false,
       plugins: {
-        legend: {
-          labels: {
-            usePointStyle: true,
-            pointStyle: 'circle',
-            padding: 16,
-            generateLabels: (chart) => {
-              return chart.data.datasets.map((ds, i) => {
-                const isHidden = ds.hidden === true;
-                return {
-                  text: ds.label,
-                  fillStyle: isHidden ? 'transparent' : ds.borderColor,
-                  strokeStyle: ds.borderColor,
-                  fontColor: ds.borderColor,
-                  lineWidth: isHidden ? 2 : 0,
-                  datasetIndex: i,
-                  hidden: false, // never set true here; suppresses strikethrough
-                };
-              });
-            }
-          },
-          onClick: (e, legendItem, legend) => {
-            const ds = legend.chart.data.datasets[legendItem.datasetIndex];
-            ds.hidden = !ds.hidden;
-            legend.chart.update();
-          }
-        },
+        legend: { display: false },
         tooltip: { enabled: false }
       },
       scales: {
@@ -524,10 +536,199 @@ function renderTrendChart() {
         y: {
           title: { display: true, text: 'Unemployment Rate (%)', color: '#a0a6b1' },
           grid: { color: 'rgba(255,255,255,0.05)' },
-          ticks: { color: '#a0a6b1', callback: val => val.toFixed(1) }
+          ticks: { color: '#a0a6b1', callback: val => val.toFixed(1) },
+          min: initialYMin,
+          max: initialYMax
         }
       }
     }
+  });
+
+  // Store initial bounds for preventing auto-scale on legend toggle
+  trendChart._initialYMin = initialYMin;
+  trendChart._initialYMax = initialYMax;
+
+  const optimalPosition = calculateOptimalLegendPosition(trendChart);
+  renderLineLegend(trendChart, optimalPosition);
+  
+  // After rendering, measure legend and optimize position considering legend dimensions
+  const legendContainer = document.getElementById('lineChartLegend');
+  if (legendContainer) {
+    const legendRect = legendContainer.getBoundingClientRect();
+    const canvasRect = trendChart.canvas.getBoundingClientRect();
+    const optimalPositionWithSize = calculateOptimalLegendPosition(trendChart, legendRect.width, legendRect.height);
+    if (optimalPositionWithSize !== optimalPosition) {
+      legendContainer.className = 'line-chart-legend legend-' + optimalPositionWithSize;
+    }
+  }
+}
+
+function calculateOptimalLegendPosition(chart, legendWidth = 200, legendHeight = 150) {
+  const chartArea = chart.chartArea;
+  const centerX = (chartArea.left + chartArea.right) / 2;
+  const centerY = (chartArea.top + chartArea.bottom) / 2;
+  
+  const chartWidth = chartArea.right - chartArea.left;
+  const chartHeight = chartArea.bottom - chartArea.top;
+
+  const quadrantCounts = { 'top-left': 0, 'top-right': 0, 'bottom-left': 0, 'bottom-right': 0 };
+
+  chart.data.datasets.forEach(ds => {
+    if (ds.hidden) return;
+    ds.data.forEach(point => {
+      if (point.x === null || point.y === null) return;
+      const chartX = chart.scales.x.getPixelForValue(point.x);
+      const chartY = chart.scales.y.getPixelForValue(point.y);
+      
+      const isLeft = chartX < centerX;
+      const isTop = chartY < centerY;
+      
+      if (isTop && isLeft) quadrantCounts['top-left']++;
+      else if (isTop && !isLeft) quadrantCounts['top-right']++;
+      else if (!isTop && isLeft) quadrantCounts['bottom-left']++;
+      else if (!isTop && !isLeft) quadrantCounts['bottom-right']++;
+    });
+  });
+
+  // Adjust quadrant counts for legend dimensions
+  // If legend is on the left, it takes up space from left quadrants
+  // If legend is on the right, it takes up space from right quadrants
+  const positions = Object.keys(quadrantCounts);
+  
+  // Find the best position considering both data density and legend size
+  let bestPosition = 'top-right';
+  let minScore = Infinity;
+  
+  const threshold = 0.3; // Legend occupies 30% of quadrant space to be considered "blocked"
+  
+  positions.forEach(position => {
+    let adjustedCount = quadrantCounts[position];
+    
+    // Check if legend would extend into this quadrant's space
+    const isTop = position.includes('top');
+    const isLeft = position.includes('left');
+    
+    // Legend takes space proportionally
+    // For corner positions, legend extends into both adjacent quadrants
+    if (isLeft && legendWidth > chartWidth * threshold) {
+      // Legend on left affects right quadrants more
+      if (!isLeft) adjustedCount += Math.floor(adjustedCount * 0.5);
+    }
+    if (!isLeft && legendWidth > chartWidth * threshold) {
+      if (isLeft) adjustedCount += Math.floor(adjustedCount * 0.5);
+    }
+    if (isTop && legendHeight > chartHeight * threshold) {
+      if (!isTop) adjustedCount += Math.floor(adjustedCount * 0.5);
+    }
+    if (!isTop && legendHeight > chartHeight * threshold) {
+      if (isTop) adjustedCount += Math.floor(adjustedCount * 0.5);
+    }
+    
+    if (adjustedCount < minScore) {
+      minScore = adjustedCount;
+      bestPosition = position;
+    }
+  });
+
+  return bestPosition;
+}
+
+function truncateLabel(text, maxChars = 15) {
+  if (text.length <= maxChars) return text;
+  return text.substring(0, maxChars) + '...';
+}
+
+function padTextForTwoLines(text, targetLineWidth = 18) {
+  const words = text.split(' ');
+  if (words.length <= 1) {
+    return text + ' '.repeat(targetLineWidth - text.length);
+  }
+  
+  let line1 = words[0];
+  let line2 = words.slice(1).join(' ');
+  
+  while (line1.length < targetLineWidth && words.length > 1) {
+    const remainingWords = line2.split(' ');
+    if (remainingWords.length <= 1) break;
+    const firstWord = remainingWords[0];
+    line1 += ' ' + firstWord;
+    line2 = remainingWords.slice(1).join(' ');
+  }
+  
+  if (line1.length < targetLineWidth) {
+    line1 += ' '.repeat(targetLineWidth - line1.length);
+  }
+  
+  return line1 + '\n' + line2;
+}
+
+function renderLineLegend(chart, optimalPosition) {
+  const legendContainer = document.getElementById('lineChartLegend');
+  if (!legendContainer) return;
+  
+  legendContainer.innerHTML = '';
+  legendContainer.className = 'line-chart-legend legend-' + optimalPosition;
+  
+  const legendItems = [];
+  
+  chart.data.datasets.forEach((ds, index) => {
+    // Skip General Trend from legend
+    if (ds.label === 'General Trend') return;
+    
+    const isHidden = ds.hidden === true;
+    const item = document.createElement('div');
+    item.className = 'line-legend-item' + (isHidden ? ' disabled' : '');
+    item.dataset.index = index;
+    item.dataset.fullLabel = ds.label;
+    
+    item.innerHTML = `
+      <label class="legend-toggle">
+        <input type="checkbox" ${!isHidden ? 'checked' : ''} data-index="${index}">
+        <span class="legend-slider"></span>
+      </label>
+      <div class="legend-color" style="background-color: ${ds.borderColor}"></div>
+      <span class="legend-label">${truncateLabel(ds.label)}</span>
+    `;
+    
+    legendContainer.appendChild(item);
+    legendItems.push(item);
+  });
+
+  // Add container-level hover handlers to expand/collapse all items
+  legendContainer.addEventListener('mouseenter', () => {
+    legendContainer.classList.add('expanded');
+    legendItems.forEach(item => {
+      const label = item.querySelector('.legend-label');
+      const fullLabel = item.dataset.fullLabel;
+      label.innerHTML = padTextForTwoLines(fullLabel).replace('\n', '<br>');
+    });
+  });
+
+  legendContainer.addEventListener('mouseleave', () => {
+    legendContainer.classList.remove('expanded');
+    legendItems.forEach(item => {
+      const label = item.querySelector('.legend-label');
+      label.innerHTML = truncateLabel(item.dataset.fullLabel);
+    });
+  });
+
+  legendContainer.querySelectorAll('input').forEach(input => {
+    input.addEventListener('change', (e) => {
+      const idx = parseInt(e.target.dataset.index);
+      const isChecked = e.target.checked;
+      chart.data.datasets[idx].hidden = !isChecked;
+      
+      // Prevent auto-scaling by restoring initial Y bounds
+      chart.options.scales.y.min = chart._initialYMin;
+      chart.options.scales.y.max = chart._initialYMax;
+      chart.update();
+      
+      // Re-render snapshot chart with new visible subsets
+      renderSnapshotChart();
+      
+      const legendItem = e.target.closest('.line-legend-item');
+      legendItem.classList.toggle('disabled', !isChecked);
+    });
   });
 }
 
@@ -593,7 +794,18 @@ function renderSnapshotChart() {
   const ctx = document.getElementById('mainChartCanvas').getContext('2d');
   if (snapshotChart) snapshotChart.destroy();
 
+  // Get visible subsets from trend chart (excluding General Trend)
+  // null means show all subsets (when trend chart hasn't been created yet)
+  const visibleSubsets = trendChart ? 
+    trendChart.data.datasets
+      .filter(ds => !ds.hidden && ds.label !== 'General Trend')
+      .map(ds => ds.label) : 
+    null;
+
+  // Check for missing data only among visible subsets
   const hasMissingData = currentSnapshotData.some(d => {
+    const subset = d.Subset || d[selectedCategory] || d.series_description;
+    if (visibleSubsets !== null && !visibleSubsets.includes(subset)) return false;
     return getRate(d) === null || d.level === null;
   });
   const chartTypeInputs = document.querySelectorAll('input[name="chartType"]');
@@ -648,15 +860,24 @@ function renderSnapshotChart() {
   const categoryConfig = CATEGORIES.find(c => c.id === selectedCategory);
   const subsetOrder = categoryConfig ? categoryConfig.subsets : [];
 
+  // Filter data to only visible subsets (null means show all)
+  let filteredData = [...currentSnapshotData].filter(d => {
+    if (visibleSubsets === null) return true;
+    const subset = d.Subset || d[selectedCategory] || d.series_description;
+    return visibleSubsets.includes(subset);
+  });
+
   let data = [];
-  if (activeType === 'bar' || activeType === 'pie') {
-    data = [...currentSnapshotData].sort((a, b) => {
+  if (activeType === 'bar') {
+    data = filteredData.filter(d => getRate(d) > 0).sort((a, b) => b.rate - a.rate);
+  } else if (activeType === 'pie') {
+    data = filteredData.sort((a, b) => {
       const idxA = subsetOrder.indexOf(a[selectedCategory]);
       const idxB = subsetOrder.indexOf(b[selectedCategory]);
       return idxA - idxB;
     });
   } else {
-    data = [...currentSnapshotData].filter(d => getRate(d) > 0).sort((a, b) => b.rate - a.rate);
+    data = filteredData.filter(d => getRate(d) > 0).sort((a, b) => b.rate - a.rate);
   }
   
   const emptyStateEl = document.querySelector('#mainChartContainer .chart-empty-state');

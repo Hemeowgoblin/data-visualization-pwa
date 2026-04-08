@@ -226,6 +226,145 @@ input:checked ~ .toggle-label { color: var(--text-primary); }
 
 .chart-empty-state { color: var(--text-secondary); font-size: 0.95rem; z-index: 10; font-family: var(--font-heading); }
 
+/* Line Chart Legend with Toggle Switches */
+.line-chart-legend {
+  position: absolute;
+  background: rgba(15, 17, 21, 0.9);
+  border: 1px solid var(--glass-border);
+  border-radius: 8px;
+  padding: 10px 14px;
+  max-height: calc(100% - 60px);
+  overflow-y: auto;
+  z-index: 10;
+  min-width: 180px;
+  max-width: 280px;
+}
+
+.line-chart-legend.legend-top-right {
+  top: 20px;
+  right: 20px;
+}
+
+.line-chart-legend.legend-top-left {
+  top: 20px;
+  left: 60px;
+}
+
+.line-chart-legend.legend-bottom-right {
+  bottom: 20px;
+  right: 20px;
+}
+
+.line-chart-legend.legend-bottom-left {
+  bottom: 20px;
+  left: 60px;
+}
+
+.line-legend-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 5px 0;
+  cursor: pointer;
+}
+
+.line-legend-item .legend-toggle {
+  position: relative;
+  width: 32px;
+  height: 16px;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.line-legend-item .legend-toggle input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.line-legend-item .legend-slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(255, 255, 255, 0.15);
+  border-radius: 12px;
+  transition: 0.2s;
+}
+
+.line-legend-item .legend-slider:before {
+  position: absolute;
+  content: "";
+  height: 12px;
+  width: 12px;
+  left: 2px;
+  bottom: 2px;
+  background-color: var(--text-secondary);
+  border-radius: 50%;
+  transition: 0.2s;
+}
+
+.line-legend-item .legend-toggle input:checked + .legend-slider {
+  background-color: var(--accent-color);
+}
+
+.line-legend-item .legend-toggle input:checked + .legend-slider:before {
+  transform: translateX(16px);
+  background-color: white;
+}
+
+.line-legend-item .legend-color {
+  width: 20px;
+  height: 3px;
+  border-radius: 2px;
+  flex-shrink: 0;
+  margin-top: 7px;
+}
+
+.line-legend-item .legend-label {
+  font-size: 0.78rem;
+  color: var(--text-secondary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 140px;
+  transition: color 0.2s, max-width 0.2s, white-space 0.2s;
+}
+
+.line-legend-item:hover .legend-label {
+  color: var(--text-primary);
+  white-space: normal;
+  overflow: visible;
+  text-overflow: unset;
+  max-width: 220px;
+  line-height: 1.4;
+}
+
+.line-legend-item.disabled .legend-color {
+  opacity: 0.3;
+}
+
+.line-legend-item.disabled .legend-label {
+  color: rgba(160, 166, 177, 0.4);
+}
+
+.line-chart-legend.expanded {
+  overflow-y: visible;
+}
+
+.line-chart-legend.expanded .legend-label {
+  white-space: pre-wrap;
+  max-width: 260px;
+  line-height: 1.5;
+  color: var(--text-primary);
+}
+
+.line-chart-legend.expanded .line-legend-item {
+  padding: 6px 0;
+}
+
 /* Global Slider */
 .slider-panel {
   background: var(--bg-panel); border: 1px solid var(--glass-border); border-radius: 12px; padding: 1rem 1.5rem; 
