@@ -1,6 +1,7 @@
 import './index.css';
 import Chart from 'chart.js/auto';
 import { pack, hierarchy } from 'd3-hierarchy';
+import { CATEGORIES, AGE_COMPARISON_SUBSETS } from './constants.js';
 
 console.log('Main thread initializing.');
 
@@ -12,7 +13,6 @@ const subjectSelect = document.getElementById('subjectSelect');
 const parameterSelect = document.getElementById('parameterSelect');
 const filtersArea = document.getElementById('filtersArea');
 const dynamicFiltersContainer = document.getElementById('dynamicFiltersContainer');
-const filterActionBtns = document.getElementById('filterActionBtns');
 const confirmChoicesBtn = document.getElementById('confirmChoicesBtn');
 const dateSelectionArea = document.getElementById('dateSelectionArea');
 const startYearSelect = document.getElementById('startYearSelect');
@@ -40,14 +40,8 @@ let currentValidYears = [];
 let currentStartYear = 1948;
 let currentEndYear = 2026;
 
-// Helper logic for single gender fetching based on Filter State checks
-function getActiveGenderString() {
-  const activeGenders = Array.from(document.querySelectorAll('.filter-checkbox:checked')).map(cb => cb.value);
-  if (activeGenders.includes('All')) return 'All';
-  if (activeGenders.includes('Men')) return 'Men';
-  if (activeGenders.includes('Women')) return 'Women';
-  return 'All'; // Fallback
-}
+// New state for multi-dimensional filtering
+let activeFilters = {}; // { categoryId: selectedSubfilter }
 
 // Custom plugin for drawing the vertical scrubber line on the trend chart
 const verticalLinePlugin = {
@@ -82,21 +76,30 @@ Chart.register(verticalLinePlugin);
 worker.onmessage = (e) => {
   const data = e.data;
   if (data.type === 'DATA_LOADED') {
-    worker.postMessage({ type: 'GET_METADATA' });
-  } else if (data.type === 'METADATA') {
-    globalMetadata = data.payload;
+    // Already populated immediately
   } else if (data.type === 'YEAR_INTERSECTION') {
     currentValidYears = data.years;
-    populateYearDropdowns(currentValidYears);
+    populateYearDropdowns(currentValidYears, data.isUnique);
   } else if (data.type === 'TREND_DATA') {
     currentTrendData = data.payload.lineData;
     currentGeneralData = data.payload.generalData;
     renderTrendChart();
+    renderSliderMarkers(data.payload.pieYears || []);
   } else if (data.type === 'FILTERED_DATA') {
     currentSnapshotData = data.payload;
     renderSnapshotChart();
+  } else if (data.type === 'VALID_SUBFILTERS') {
+    handleValidSubfilters(data.categoryId, data.validSubsets);
   }
 };
+
+function populateParameterSelect() {
+  parameterSelect.innerHTML = '<option value="" disabled selected>Select parameter...</option>';
+  CATEGORIES.forEach(cat => {
+    const opt = new Option(cat.label, cat.id);
+    parameterSelect.add(opt);
+  });
+}
 
 /* --- Wizard Setup --- */
 subjectSelect.addEventListener('change', () => { parameterSelect.disabled = false; });
@@ -106,95 +109,139 @@ parameterSelect.addEventListener('change', (e) => {
   buildFilters(category);
 });
 
-function buildFilters(category) {
+// Populate immediately as CATEGORIES is available via import
+populateParameterSelect();
+
+function buildFilters(selectedCategory) {
   dynamicFiltersContainer.innerHTML = '';
   filtersArea.classList.remove('hidden');
-  filterActionBtns.classList.remove('hidden');
   
-  const availableGenders = globalMetadata.categoryGenderMap[category] || [];
+  activeFilters = {};
   
-  if (availableGenders.length > 0) {
+  // Create a filter group for each category except the comparison parameter
+  CATEGORIES.filter(cat => cat.id !== selectedCategory).forEach(cat => {
     const groupEl = document.createElement('div');
     groupEl.className = 'filter-group';
-    groupEl.innerHTML = `<div class="filter-group-title">Gender</div><div class="chips-list" id="genderChips"></div>`;
+    groupEl.id = `group-${cat.id}`;
+    groupEl.innerHTML = `<div class="filter-group-title">${cat.label}</div><div class="chips-list" id="chips-${cat.id}"></div>`;
     dynamicFiltersContainer.appendChild(groupEl);
     
     const chipsContainer = groupEl.querySelector('.chips-list');
     
-    const customSort = (a, b) => {
-        const order = { 'Men': 1, 'Women': 2, 'All': 3 };
-        return (order[a] || 4) - (order[b] || 4);
-    };
-    const sorted = [...availableGenders].sort(customSort);
-    
-    sorted.forEach(gender => {
+    cat.subsets.forEach(subset => {
       const label = document.createElement('label');
       label.className = 'chip-label';
       label.innerHTML = `
-        <input type="checkbox" class="chip-checkbox filter-checkbox" data-type="Gender" value="${gender}" checked>
-        <span>${gender}</span>
+        <input type="radio" name="filter-${cat.id}" class="chip-radio filter-radio" value="${subset}">
+        <span>${subset}</span>
       `;
       chipsContainer.appendChild(label);
+      
+      const input = label.querySelector('input');
+      input.addEventListener('change', () => handleFilterChange(cat.id, subset));
     });
+
+    // Default to the rightmost option ("All")
+    const radios = chipsContainer.querySelectorAll('input');
+    const defaultRadio = radios[radios.length - 1];
+    defaultRadio.checked = true;
+    activeFilters[cat.id] = defaultRadio.value;
+  });
+
+  validateConfirmButton();
+  // Trigger initial validation for the first filter in sequence
+  const remainingCats = CATEGORIES.filter(cat => cat.id !== selectedCategory);
+  if (remainingCats.length > 0) {
+    updateSequentialValidation(0);
+  }
+}
+
+function handleFilterChange(categoryId, value) {
+  activeFilters[categoryId] = value;
+  
+  // Trigger sequential validation for all filters BELOW this one
+  const selectedCategory = parameterSelect.value;
+  const remainingCats = CATEGORIES.filter(cat => cat.id !== selectedCategory);
+  const index = remainingCats.findIndex(cat => cat.id === categoryId);
+  
+  if (index !== -1) {
+    updateSequentialValidation(index + 1);
+  }
+  
+  validateConfirmButton();
+}
+
+function updateSequentialValidation(startIndex) {
+  const selectedCategory = parameterSelect.value;
+  const remainingCats = CATEGORIES.filter(cat => cat.id !== selectedCategory);
+  
+  if (startIndex >= remainingCats.length) return;
+  
+  const nextCat = remainingCats[startIndex];
+  
+  // We need to check which subsets of nextCat are valid GIVEN current selections for 0..startIndex-1
+  const currentSelections = {};
+  for (let i = 0; i < startIndex; i++) {
+    const catId = remainingCats[i].id;
+    currentSelections[catId] = activeFilters[catId];
+  }
+  
+  worker.postMessage({
+    type: 'VALIDATE_SUBFILTERS',
+    filters: currentSelections,
+    nextCategoryId: nextCat.id,
+    comparisonCategory: selectedCategory
+  });
+}
+
+function handleValidSubfilters(categoryId, validSubsets) {
+  const container = document.getElementById(`chips-${categoryId}`);
+  if (!container) return;
+  
+  const labels = container.querySelectorAll('.chip-label');
+  labels.forEach(label => {
+    const radio = label.querySelector('input');
+    const value = radio.value;
     
-    bindCombinedLogic(chipsContainer);
-    validateConfirmButton();
-  } else {
-    dynamicFiltersContainer.innerHTML = '<div class="chart-empty-state">No filters available for this parameter.</div>';
-    confirmChoicesBtn.classList.remove('disabled');
-    confirmChoicesBtn.disabled = false;
+    if (validSubsets.some(s => s.toLowerCase() === value.toLowerCase())) {
+      label.classList.remove('disabled');
+      radio.disabled = false;
+    } else {
+      label.classList.add('disabled');
+      radio.disabled = true;
+    }
+  });
+  
+  // After validating this one, move to the next in sequence
+  const selectedCategory = parameterSelect.value;
+  const remainingCats = CATEGORIES.filter(cat => cat.id !== selectedCategory);
+  const currentIndex = remainingCats.findIndex(cat => cat.id === categoryId);
+  if (currentIndex !== -1 && currentIndex < remainingCats.length - 1) {
+    updateSequentialValidation(currentIndex + 1);
   }
 }
 
-function bindCombinedLogic(container) {
-  const checkboxes = container.querySelectorAll('.chip-checkbox');
-  const combinedBox = Array.from(checkboxes).find(cb => cb.value.toLowerCase() === 'all');
-  const otherBoxes = Array.from(checkboxes).filter(cb => cb !== combinedBox);
-
-  checkboxes.forEach(cb => { cb.addEventListener('change', validateConfirmButton); });
-
-  if (combinedBox) {
-    combinedBox.addEventListener('change', (e) => {
-      if (e.target.checked) otherBoxes.forEach(cb => cb.checked = true);
-      validateConfirmButton();
-    });
-
-    otherBoxes.forEach(cb => {
-      cb.addEventListener('change', () => {
-        if (!cb.checked && combinedBox.checked) combinedBox.checked = false;
-        const allOthersChecked = otherBoxes.every(box => box.checked);
-        if (allOthersChecked && !combinedBox.checked) combinedBox.checked = true;
-        validateConfirmButton();
-      });
-    });
-  }
-}
 
 function validateConfirmButton() {
-    const activeFilters = document.querySelectorAll('.filter-checkbox:checked');
-    if (activeFilters.length > 0) {
+    // Confirm button is enabled if a parameter is selected and all active filters have a choice (they do because of defaults)
+    if (parameterSelect.value) {
         confirmChoicesBtn.classList.remove('disabled');
         confirmChoicesBtn.disabled = false;
+        confirmChoicesBtn.style.opacity = '1';
+        confirmChoicesBtn.style.pointerEvents = 'auto';
     } else {
         confirmChoicesBtn.classList.add('disabled');
         confirmChoicesBtn.disabled = true;
     }
 }
 
-document.getElementById('checkAllFiltersBtn').addEventListener('click', () => {
-  document.querySelectorAll('.filter-checkbox').forEach(cb => cb.checked = true);
-  validateConfirmButton();
-});
-document.getElementById('uncheckAllFiltersBtn').addEventListener('click', () => {
-  document.querySelectorAll('.filter-checkbox').forEach(cb => cb.checked = false);
-  validateConfirmButton();
-});
 
 /* --- Transitions --- */
 confirmChoicesBtn.addEventListener('click', () => {
   if (confirmChoicesBtn.textContent === 'Edit Choices') {
     flowContainer.className = 'flow-container state-setup';
     dateSelectionArea.classList.add('hidden');
+    blockVisuals.classList.add('hidden');
     confirmChoicesBtn.textContent = 'Confirm Choices';
     window.scrollTo({ top: 0, behavior: 'smooth' });
     return;
@@ -203,34 +250,34 @@ confirmChoicesBtn.addEventListener('click', () => {
   flowContainer.className = 'flow-container state-confirmed';
   
   const selectedCategory = parameterSelect.value;
-  const resolvedGender = getActiveGenderString();
-
   confirmChoicesBtn.textContent = 'Edit Choices';
   dateSelectionArea.classList.remove('hidden');
 
   worker.postMessage({
     type: 'CALCULATE_YEARS',
     category: selectedCategory,
-    genders: [resolvedGender] 
+    filters: activeFilters
   });
 
   window.scrollTo({ top: 0, behavior: 'smooth' });
 });
 
-function populateYearDropdowns(years) {
+function populateYearDropdowns(years, isUnique = true) {
   startYearSelect.innerHTML = '';
   endYearSelect.innerHTML = '';
   
-  if (years.length === 0) {
-    startYearSelect.innerHTML = '<option disabled>No valid data</option>';
-    endYearSelect.innerHTML = '<option disabled>No valid data</option>';
-    generateVizBtn.classList.add('disabled');
+  if (years.length === 0 || !isUnique) {
+    startYearSelect.innerHTML = '<option disabled>No unique data series found...</option>';
+    endYearSelect.innerHTML = '<option disabled>Please check filters...</option>';
     generateVizBtn.disabled = true;
+    generateVizBtn.classList.add('disabled');
+    generateVizBtn.innerText = isUnique ? "No Data for Range" : "Multiple Series Detected";
     return;
   }
   
   generateVizBtn.classList.remove('disabled');
   generateVizBtn.disabled = false;
+  generateVizBtn.innerText = "Generate Visualization";
 
   years.sort((a,b) => a-b);
   years.forEach(y => {
@@ -266,7 +313,7 @@ generateVizBtn.addEventListener('click', () => {
     startYear: currentStartYear,
     endYear: currentEndYear,
     category: selectedCategory,
-    genders: [getActiveGenderString()]
+    filters: activeFilters
   });
 
   requestDataForYear(currentStartYear);
@@ -319,13 +366,30 @@ function requestDataForYear(year) {
     type: 'FILTER_BY_YEAR',
     year: year,
     category: parameterSelect.value,
-    genders: [getActiveGenderString()]
+    filters: activeFilters
   });
 }
 
 /* --- Color Palettes --- */
 function getPaletteColors() {
-  return ['#6366f1', '#eab308', '#06b6d4', '#f97316', '#8b5cf6', '#a855f7', '#64748b', '#38bdf8', '#fbbf24'];
+  // High-contrast, perceptually distinct palette — no green (reserved for General Trend), no red
+  return [
+    '#6366f1', // indigo
+    '#06b6d4', // cyan
+    '#eab308', // amber
+    '#8b5cf6', // violet
+    '#f97316', // orange
+    '#0ea5e9', // sky blue
+    '#a855f7', // purple
+    '#fbbf24', // yellow
+    '#14b8a6', // teal
+    '#d946ef', // fuchsia
+    '#fb923c', // light orange
+    '#7dd3fc', // light blue
+    '#c084fc', // light purple
+    '#fdba74', // peach
+    '#5eead4', // light teal
+  ];
 }
 
 function buildColorMap(subsets) {
@@ -334,9 +398,8 @@ function buildColorMap(subsets) {
   let colorIdx = 0;
   
   subsets.forEach(sub => {
-    if (sub.includes('Men')) activeColorMap[sub] = '#3b82f6';
-    else if (sub.includes('Women')) activeColorMap[sub] = '#ec4899';
-    else if (sub.includes('All')) activeColorMap[sub] = '#22c55e';
+    if (sub === 'Men') activeColorMap[sub] = '#3b82f6';
+    else if (sub === 'Women') activeColorMap[sub] = '#ec4899';
     else {
       activeColorMap[sub] = palette[colorIdx % palette.length];
       colorIdx++;
@@ -354,11 +417,12 @@ function renderTrendChart() {
   if (!ctx) return;
   if (trendChart) trendChart.destroy();
 
-  const subsets = [...new Set(currentTrendData.map(d => d.series_description))];
+  const selectedCategory = parameterSelect.value;
+  const subsets = [...new Set(currentTrendData.map(d => d[selectedCategory]).filter(Boolean))];
   buildColorMap(subsets);
 
-  const datasets = subsets.map((sub, idx) => {
-    const linePoints = currentTrendData.filter(d => d.series_description === sub).sort((a,b) => a.year - b.year);
+  const datasets = subsets.map((sub) => {
+    const linePoints = currentTrendData.filter(d => d[selectedCategory] === sub).sort((a,b) => a.year - b.year);
     const color = activeColorMap[sub];
     return {
       label: sub,
@@ -392,10 +456,34 @@ function renderTrendChart() {
     options: {
       responsive: true,
       maintainAspectRatio: false,
-      layout: { padding: { top: 70 } },
       plugins: {
-        legend: { labels: { color: '#a0a6b1' } },
-        tooltip: { mode: 'index', intersect: false }
+        legend: {
+          labels: {
+            usePointStyle: true,
+            pointStyle: 'circle',
+            padding: 16,
+            generateLabels: (chart) => {
+              return chart.data.datasets.map((ds, i) => {
+                const isHidden = ds.hidden === true;
+                return {
+                  text: ds.label,
+                  fillStyle: isHidden ? 'transparent' : ds.borderColor,
+                  strokeStyle: ds.borderColor,
+                  fontColor: ds.borderColor,
+                  lineWidth: isHidden ? 2 : 0,
+                  datasetIndex: i,
+                  hidden: false, // never set true here; suppresses strikethrough
+                };
+              });
+            }
+          },
+          onClick: (e, legendItem, legend) => {
+            const ds = legend.chart.data.datasets[legendItem.datasetIndex];
+            ds.hidden = !ds.hidden;
+            legend.chart.update();
+          }
+        },
+        tooltip: { enabled: false }
       },
       scales: {
         x: { 
@@ -403,12 +491,17 @@ function renderTrendChart() {
           min: currentStartYear, 
           max: currentEndYear, 
           grid: { color: 'rgba(255,255,255,0.05)' },
-          ticks: { color: '#a0a6b1', callback: val => val }
+          ticks: {
+            color: '#a0a6b1',
+            stepSize: (currentEndYear - currentStartYear) <= 10 ? 1
+                    : (currentEndYear - currentStartYear) <= 30 ? 5 : 10,
+            callback: val => Number.isInteger(val) ? val : null
+          }
         },
         y: {
           title: { display: true, text: 'Unemployment Rate (%)', color: '#a0a6b1' },
           grid: { color: 'rgba(255,255,255,0.05)' },
-          ticks: { color: '#a0a6b1' }
+          ticks: { color: '#a0a6b1', callback: val => val.toFixed(1) }
         }
       }
     }
@@ -416,6 +509,53 @@ function renderTrendChart() {
 }
 
 let userPreferredChartType = 'bar';
+
+/* --- Slider Pie Gradient --- */
+function renderSliderMarkers(pieYears) {
+  const slider = document.getElementById('yearSlider');
+  if (!slider) return;
+
+  const min = currentStartYear;
+  const max = currentEndYear;
+  const BASE = 'rgba(14,22,38,0.85)';
+  const PIE  = '#06b6d4';
+
+  if (min >= max || pieYears.length === 0) {
+    slider.style.background = BASE;
+    return;
+  }
+
+  const sorted = [...pieYears].filter(y => y >= min && y <= max).sort((a, b) => a - b);
+  if (sorted.length === 0) { slider.style.background = BASE; return; }
+
+  const toFrac = y => Math.max(0, Math.min(1, (y - min) / (max - min)));
+  const toPct  = f => (f * 100).toFixed(3) + '%';
+
+  // Build consecutive run-segments (adjacent years → one block)
+  const segs = [];
+  let s = sorted[0], e = sorted[0];
+  for (let i = 1; i < sorted.length; i++) {
+    if (sorted[i] === e + 1) { e = sorted[i]; }
+    else { segs.push([s, e]); s = e = sorted[i]; }
+  }
+  segs.push([s, e]);
+
+  // Build gradient stops for the full track
+  const stops = [];
+  let cursor = 0;
+  for (const [segS, segE] of segs) {
+    const f0 = toFrac(segS - 0.5);
+    const f1 = toFrac(segE + 0.5);
+    if (f0 > cursor) {
+      stops.push(`${BASE} ${toPct(cursor)}`, `${BASE} ${toPct(f0)}`);
+    }
+    stops.push(`${PIE} ${toPct(f0)}`, `${PIE} ${toPct(f1)}`);
+    cursor = f1;
+  }
+  if (cursor < 1) stops.push(`${BASE} ${toPct(cursor)}`, `${BASE} 100%`);
+
+  slider.style.background = `linear-gradient(to right, ${stops.join(', ')})`;
+}
 
 function getGlobalMaxRate() {
   const allRates = [
@@ -463,9 +603,11 @@ function renderSnapshotChart() {
     else if (activeType === 'bar') subtitleEl.textContent = 'Unemployment Rate Within the Category';
   }
 
+  const selectedCategory = parameterSelect.value;
+
   let data = [];
   if (activeType === 'bar') {
-    data = [...currentSnapshotData].sort((a,b) => a.series_description.localeCompare(b.series_description));
+    data = [...currentSnapshotData].sort((a,b) => (a[selectedCategory] || '').localeCompare(b[selectedCategory] || ''));
   } else {
     data = [...currentSnapshotData].filter(d => getRate(d) > 0).sort((a, b) => b.rate - a.rate);
   }
@@ -482,8 +624,8 @@ function renderSnapshotChart() {
     canvasEl.style.opacity = '1';
   }
 
-  let labels = data.map(d => d.series_description);
-  const bgColors = data.map(d => activeColorMap[d.series_description] || '#64748b');
+  let labels = data.map(d => d[selectedCategory] || d.series_description);
+  const bgColors = data.map(d => activeColorMap[d[selectedCategory]] || activeColorMap[d.series_description] || '#64748b');
 
   if (activeType === 'bar') {
     const globalMax = getGlobalMaxRate();
@@ -514,7 +656,7 @@ function renderSnapshotChart() {
           const { ctx, data } = chart;
           chart.getDatasetMeta(0).data.forEach((bar, index) => {
             const rawVal = data.datasets[0].data[index];
-            const label = (rawVal !== null && rawVal > 0) ? `${rawVal}%` : "N/A";
+            const label = (rawVal !== null && rawVal > 0) ? `${rawVal.toFixed(1)}%` : "N/A";
             const color = data.datasets[0].backgroundColor[index];
             ctx.save();
             ctx.fillStyle = color;
@@ -543,8 +685,25 @@ function renderSnapshotChart() {
         responsive: true,
         maintainAspectRatio: true,
         plugins: {
-          legend: { position: 'right' },
-          tooltip: { callbacks: { label: (ctx) => ` ${ctx.label}: ${ctx.raw}%` } }
+          legend: {
+            position: 'right',
+            labels: {
+              usePointStyle: true,
+              generateLabels: (chart) => {
+                const ds = chart.data.datasets[0];
+                return chart.data.labels.map((lbl, i) => ({
+                  text: `${lbl}   ${Number(ds.data[i]).toFixed(1)}%`,
+                  fillStyle: bgColors[i],
+                  strokeStyle: bgColors[i],
+                  fontColor: bgColors[i],
+                  lineWidth: 0,
+                  index: i,
+                  hidden: false,
+                }));
+              }
+            }
+          },
+          tooltip: { enabled: false }
         }
       }
     });
@@ -556,11 +715,12 @@ function renderSnapshotChart() {
     const packedNodes = packLayout(rootNode).leaves();
     
     let minX = Infinity, maxX = -Infinity, minY = Infinity, maxY = -Infinity;
-    const mappedData = packedNodes.map((node, i) => {
+    const mappedData = packedNodes.map((node) => {
       const r = node.r;
       minX = Math.min(minX, node.x - r); maxX = Math.max(maxX, node.x + r);
       minY = Math.min(minY, node.y - r); maxY = Math.max(maxY, node.y + r);
-      return { x: node.x, y: node.y, r: r, subset: node.data.series_description, value: node.data.level, backgroundColor: activeColorMap[node.data.series_description] || '#cbd5e1' };
+      const subsetKey = node.data[selectedCategory] || node.data.series_description;
+      return { x: node.x, y: node.y, r: r, subset: subsetKey, value: node.data.level, backgroundColor: activeColorMap[subsetKey] || '#cbd5e1' };
     });
 
     snapshotChart = new Chart(ctx, {
@@ -578,7 +738,7 @@ function renderSnapshotChart() {
         maintainAspectRatio: false,
         plugins: {
           legend: { position: 'right' },
-          tooltip: { callbacks: { label: (context) => `Unemployed: ${mappedData[context.datasetIndex].value} K` } }
+          tooltip: { callbacks: { label: (context) => `Unemployed: ${Number(mappedData[context.datasetIndex].value).toFixed(1)} K` } }
         },
         scales: { x: { display: false, min: minX - 20, max: maxX + 20 }, y: { display: false, min: minY - 20, max: maxY + 20 } }
       }

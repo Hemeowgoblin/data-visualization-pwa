@@ -36,15 +36,6 @@
         <label>Comparison Parameter</label>
         <select id="parameterSelect" disabled>
           <option value="" disabled selected>Select parameter...</option>
-          <option value="age">Age</option>
-          <option value="race">Race</option>
-          <option value="disability">Disability status</option>
-          <option value="educational_attainment">Education level</option>
-          <option value="occupation">Occupation</option>
-          <option value="veteran_status">Veteran Status</option>
-          <option value="industry_and_class">Industry and Class of Worker</option>
-          <option value="nativity">Nativity</option>
-          <option value="period_of_service">Period of Service</option>
         </select>
       </div>
 
@@ -52,10 +43,6 @@
         <label>Filters</label>
         <div id="dynamicFiltersContainer" class="filters-container">
           <!-- Populates dynamically -->
-        </div>
-        <div class="filter-actions hidden" id="filterActionBtns">
-          <button id="checkAllFiltersBtn" class="btn small outlined">Check All Filters</button>
-          <button id="uncheckAllFiltersBtn" class="btn small outlined">Uncheck All Filters</button>
         </div>
       </div>
     </div>
@@ -98,8 +85,8 @@
               <span class="toggle-label">Show General Trend</span>
             </label>
           </div>
+          <div class="chart-subtitle" id="trendSubtitle">Unemployment Rate Within the Category</div>
           <div id="lineChartContainer" class="canvas-wrapper placeholder line-canvas-wrapper">
-            <div class="panel-subtitle-box" id="trendSubtitle">Unemployment Rate Within the Category</div>
             <canvas id="lineChartCanvas"></canvas>
             <div class="chart-empty-state">Line Plot Render Area</div>
           </div>
@@ -124,8 +111,8 @@
               </label>
             </div>
           </div>
+          <div class="chart-subtitle" id="snapshotSubtitle"></div>
           <div id="mainChartContainer" class="canvas-wrapper placeholder">
-            <div class="panel-subtitle-box" id="snapshotSubtitle"></div>
             <canvas id="mainChartCanvas"></canvas>
             <div class="chart-empty-state">Main Chart Render Area</div>
           </div>
@@ -138,7 +125,10 @@
           </div>
           <div class="slider-wrapper">
             <button class="arrow-btn" id="prevYear" aria-label="Previous Year">◀</button>
-            <input type="range" id="yearSlider" min="1948" max="2026" value="2020" />
+            <div class="slider-track-container">
+              <input type="range" id="yearSlider" min="1948" max="2026" value="2020" />
+              <div id="sliderMarkers"></div>
+            </div>
             <button class="arrow-btn" id="nextYear" aria-label="Next Year">▶</button>
           </div>
         </div>
