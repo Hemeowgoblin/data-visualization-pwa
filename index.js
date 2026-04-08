@@ -318,6 +318,10 @@ generateVizBtn.addEventListener('click', () => {
 
   requestDataForYear(currentStartYear);
 
+  generateVizBtn.disabled = true;
+  startYearSelect.disabled = true;
+  endYearSelect.disabled = true;
+
   window.scrollTo({ top: 0, behavior: 'smooth' });
 });
 
@@ -489,13 +493,20 @@ function renderTrendChart() {
         x: { 
           type: 'linear', 
           min: currentStartYear, 
-          max: currentEndYear, 
+          max: Math.ceil(currentEndYear / 10) * 10, 
           grid: { color: 'rgba(255,255,255,0.05)' },
           ticks: {
             color: '#a0a6b1',
-            stepSize: (currentEndYear - currentStartYear) <= 10 ? 1
-                    : (currentEndYear - currentStartYear) <= 30 ? 5 : 10,
-            callback: val => Number.isInteger(val) ? val : null
+            source: 'array',
+            values: (() => {
+              const maxYear = Math.ceil(currentEndYear / 10) * 10;
+              const ticks = [];
+              for (let y = currentStartYear; y <= maxYear; y += 10) {
+                ticks.push(y);
+              }
+              return ticks;
+            })(),
+            callback: val => val
           }
         },
         y: {
@@ -692,7 +703,7 @@ function renderSnapshotChart() {
               generateLabels: (chart) => {
                 const ds = chart.data.datasets[0];
                 return chart.data.labels.map((lbl, i) => ({
-                  text: `${lbl}   ${Number(ds.data[i]).toFixed(1)}%`,
+                  text: `${lbl} - ${Number(ds.data[i]).toFixed(1)}%`,
                   fillStyle: bgColors[i],
                   strokeStyle: bgColors[i],
                   fontColor: bgColors[i],
@@ -703,7 +714,16 @@ function renderSnapshotChart() {
               }
             }
           },
-          tooltip: { enabled: false }
+          tooltip: {
+            enabled: true,
+            callbacks: {
+              label: (context) => {
+                const label = context.label;
+                const value = Number(context.raw).toFixed(1);
+                return `${label} - ${value}%`;
+              }
+            }
+          }
         }
       }
     });
