@@ -129,13 +129,20 @@ onmessage = function(e) {
        return true;
     });
 
-    const processedSnapshot = snapshotData.map(point => ({
-      ...point,
-      Subset: point[category],
-      Rate: point.rate,
-      UnemployedLevel: point.level,
-      PercentOfCategory: point.percent_of_group
-    }));
+    const totalLevel = snapshotData.reduce((acc, d) => acc + (Number(d.level) || 0), 0);
+    
+    const processedSnapshot = snapshotData.map(point => {
+      const level = Number(point.level) || 0;
+      const pct = totalLevel > 0 ? (level / totalLevel) * 100 : 0;
+      return {
+        ...point,
+        Subset: point[category],
+        Rate: point.rate,
+        UnemployedLevel: level,
+        PercentOfCategory: pct,
+        percent_of_group: pct
+      };
+    });
     
     postMessage({ type: 'FILTERED_DATA', year: year, payload: processedSnapshot });
   }

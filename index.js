@@ -212,6 +212,18 @@ function handleValidSubfilters(categoryId, validSubsets) {
     }
   });
   
+  // If the currently selected radio for this group is now disabled,
+  // select the last valid (enabled) radio in the group.
+  const currentSelected = container.querySelector('input:checked');
+  if (currentSelected && currentSelected.disabled) {
+    const allRadios = Array.from(container.querySelectorAll('input:not(:disabled)'));
+    if (allRadios.length > 0) {
+      const lastValid = allRadios[allRadios.length - 1];
+      lastValid.checked = true;
+      activeFilters[categoryId] = lastValid.value;
+    }
+  }
+  
   // After validating this one, move to the next in sequence
   const selectedCategory = parameterSelect.value;
   const remainingCats = CATEGORIES.filter(cat => cat.id !== selectedCategory);
@@ -607,6 +619,24 @@ function renderSnapshotChart() {
   if (!activeRadio) return;
   const activeType = activeRadio.value;
 
+  // Helper for multi-line labels
+  const wrapLabelText = (label, limit = 20) => {
+    if (!label) return '';
+    const words = label.split(' ');
+    const lines = [];
+    let currentLine = words[0];
+    for (let i = 1; i < words.length; i++) {
+      if (currentLine.length + words[i].length + 1 < limit) {
+        currentLine += ' ' + words[i];
+      } else {
+        lines.push(currentLine);
+        currentLine = words[i];
+      }
+    }
+    lines.push(currentLine);
+    return lines.slice(0, 3);
+  };
+
   const subtitleEl = document.getElementById('snapshotSubtitle');
   if (subtitleEl) {
     if (activeType === 'pie') subtitleEl.textContent = 'Unemployed People per Category to the Sum in All Categories';
@@ -615,10 +645,16 @@ function renderSnapshotChart() {
   }
 
   const selectedCategory = parameterSelect.value;
+  const categoryConfig = CATEGORIES.find(c => c.id === selectedCategory);
+  const subsetOrder = categoryConfig ? categoryConfig.subsets : [];
 
   let data = [];
-  if (activeType === 'bar') {
-    data = [...currentSnapshotData].sort((a,b) => (a[selectedCategory] || '').localeCompare(b[selectedCategory] || ''));
+  if (activeType === 'bar' || activeType === 'pie') {
+    data = [...currentSnapshotData].sort((a, b) => {
+      const idxA = subsetOrder.indexOf(a[selectedCategory]);
+      const idxB = subsetOrder.indexOf(b[selectedCategory]);
+      return idxA - idxB;
+    });
   } else {
     data = [...currentSnapshotData].filter(d => getRate(d) > 0).sort((a, b) => b.rate - a.rate);
   }
@@ -658,7 +694,23 @@ function renderSnapshotChart() {
         plugins: { legend: { display: false } },
         scales: {
           x: { display: false, min: 0, max: globalMax * 1.2 },
-          y: { grid: { display: false }, ticks: { color: '#f2f4f7', font: { size: 12, weight: 'bold' } } }
+          y: { 
+            grid: { display: false }, 
+            ticks: { 
+              color: (ctx) => {
+                if (!ctx.chart.data.labels) return '#f2f4f7';
+                const labelStr = ctx.chart.data.labels[ctx.index];
+                // Handle cases where label might be an array (for multi-line)
+                const lookup = Array.isArray(labelStr) ? labelStr.join(' ') : labelStr;
+                return activeColorMap[lookup] || '#f2f4f7';
+              },
+              font: { size: 12, weight: 'bold' },
+              callback: function(value) {
+                const label = this.getLabelForValue(value);
+                return wrapLabelText(label, 20);
+              }
+            } 
+          }
         }
       },
       plugins: [{
@@ -694,16 +746,21 @@ function renderSnapshotChart() {
       },
       options: {
         responsive: true,
-        maintainAspectRatio: true,
+        maintainAspectRatio: false,
+        layout: {
+          padding: { top: 20, bottom: 20, left: 20, right: 20 }
+        },
         plugins: {
           legend: {
             position: 'right',
             labels: {
               usePointStyle: true,
+              pointStyle: 'circle',
+              padding: 20,
               generateLabels: (chart) => {
                 const ds = chart.data.datasets[0];
                 return chart.data.labels.map((lbl, i) => ({
-                  text: `${lbl} - ${Number(ds.data[i]).toFixed(1)}%`,
+                  text: wrapLabelText(lbl, 25),
                   fillStyle: bgColors[i],
                   strokeStyle: bgColors[i],
                   fontColor: bgColors[i],
@@ -757,7 +814,24 @@ function renderSnapshotChart() {
         responsive: true,
         maintainAspectRatio: false,
         plugins: {
-          legend: { position: 'right' },
+          legend: { 
+            position: 'right',
+            labels: {
+              usePointStyle: true,
+              pointStyle: 'circle',
+              padding: 20,
+              generateLabels: (chart) => {
+                return chart.data.datasets.map((ds, i) => ({
+                  text: wrapLabelText(ds.label, 25),
+                  fillStyle: ds.backgroundColor,
+                  strokeStyle: ds.backgroundColor,
+                  lineWidth: 0,
+                  index: i,
+                  hidden: false,
+                }));
+              }
+            }
+          },
           tooltip: { callbacks: { label: (context) => `Unemployed: ${Number(mappedData[context.datasetIndex].value).toFixed(1)} K` } }
         },
         scales: { x: { display: false, min: minX - 20, max: maxX + 20 }, y: { display: false, min: minY - 20, max: maxY + 20 } }
