@@ -551,9 +551,16 @@ function renderTrendChart() {
         y: {
           title: { display: true, text: 'Unemployment Rate (%)', color: '#a0a6b1' },
           grid: { color: 'rgba(255,255,255,0.05)' },
-          ticks: { color: '#a0a6b1', callback: val => val.toFixed(1) },
-          min: initialYMin,
-          max: initialYMax
+          ticks: { 
+            color: '#a0a6b1', 
+            count: (() => {
+              const maxYear = Math.ceil(currentEndYear / 10) * 10;
+              return Math.floor((maxYear - currentStartYear) / 10) + 1;
+            })(), 
+            callback: val => val.toFixed(1) 
+          },
+          min: 0,
+          max: Math.ceil(initialYMax * 1.1)
         }
       }
     }
@@ -1047,6 +1054,18 @@ function renderSnapshotChart() {
     const xMinVal = xLow - (xMaxVal - xHigh);
     const yMinVal = yLow - (yMaxVal - yHigh);
     
+    const xTicks = [];
+    const xStep = (xMaxVal - xMinVal) / 6;
+    for (let i = 0; i <= 6; i++) {
+      xTicks.push(xMinVal + i * xStep);
+    }
+    
+    const yTicks = [];
+    const yStep = (yMaxVal - yMinVal) / 6;
+    for (let i = 0; i <= 6; i++) {
+      yTicks.push(yMinVal + i * yStep);
+    }
+    
     const quadrantBackgroundPlugin = {
       id: 'quadrantBackground',
       beforeDraw: (chart) => {
@@ -1104,6 +1123,7 @@ function renderSnapshotChart() {
       options: {
         responsive: true,
         maintainAspectRatio: false,
+        animation: { duration: 0 },
         layout: {
           padding: { top: 20, bottom: 20, left: 20, right: 20 }
         },
@@ -1156,14 +1176,28 @@ function renderSnapshotChart() {
             min: xMinVal,
             max: xMaxVal,
             grid: { color: 'rgba(255,255,255,0.05)' },
-            ticks: { color: '#a0a6b1', count: 7, includeBounds: false, callback: function(val) { if (val === this.min && val < 0) return ''; if (val === this.max && val > 100) return ''; return val.toFixed(1) + '%'; } }
+            ticks: { 
+              values: xTicks, 
+              source: 'array', 
+              count: 7,
+              bounds: 'ticks',
+              color: '#a0a6b1', 
+              callback: function(val) { if (val < 0 || val > 100) return ' '; return val.toFixed(1) + '%'; } 
+            }
           },
           y: {
             title: { display: true, text: 'Unemployment Rate (%)', color: '#a0a6b1' },
             min: yMinVal,
             max: yMaxVal,
             grid: { color: 'rgba(255,255,255,0.05)' },
-            ticks: { color: '#a0a6b1', count: 7, includeBounds: false, callback: function(val) { if (val === this.min && val < 0) return ''; if (val === this.max && val > 100) return ''; return val.toFixed(1); } }
+            ticks: { 
+              values: yTicks, 
+              source: 'array', 
+              count: 7,
+              bounds: 'ticks',
+              color: '#a0a6b1', 
+              callback: function(val) { if (val < 0 || val > 100) return ' '; return val.toFixed(1); } 
+            }
           }
         }
       },
@@ -1175,15 +1209,28 @@ function renderSnapshotChart() {
           const canvasWidth = chart.canvas.width;
           const canvasHeight = chart.canvas.height;
           const minCanvasDim = Math.min(canvasWidth, canvasHeight);
-          const maxRadius = minCanvasDim * 0.10;
-          const maxArea = Math.PI * maxRadius * maxRadius;
+          
+          const radiusCeiling = minCanvasDim * 0.10;
+          const maxArea = Math.PI * radiusCeiling * radiusCeiling;
           
           const maxLevel = Math.max(...bubbleData.map(d => d.level));
+          const minLevel = Math.min(...bubbleData.map(d => d.level));
           
-          const radii = bubbleData.map(d => {
-            const area = (d.level / maxLevel) * maxArea;
-            return Math.sqrt(area / Math.PI);
+          let radii = bubbleData.map(d => {
+            const scaledArea = (d.level / maxLevel) * maxArea;
+            return Math.sqrt(scaledArea / Math.PI);
           });
+          
+          const radiusFloor = minCanvasDim * 0.01;
+          const smallestRadius = Math.min(...radii);
+          
+          if (smallestRadius < radiusFloor) {
+            const minArea = Math.PI * radiusFloor * radiusFloor;
+            radii = bubbleData.map(d => {
+              const scaledArea = (d.level / minLevel) * minArea;
+              return Math.sqrt(scaledArea / Math.PI);
+            });
+          }
           
           const dataset = chart.data.datasets[0];
           dataset.data = bubbleData.map((d, i) => ({
