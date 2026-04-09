@@ -388,6 +388,13 @@ function requestDataForYear(year) {
 
 /* --- Color Palettes --- */
 
+function hexToRgba(hex, alpha) {
+  const r = parseInt(hex.slice(1, 3), 16);
+  const g = parseInt(hex.slice(3, 5), 16);
+  const b = parseInt(hex.slice(5, 7), 16);
+  return `rgba(${r}, ${g}, ${b}, ${alpha})`;
+}
+
 // Reserved colors for special use cases:
 // - green_hue: Used for "General Trend" line and reserved for future alert/warning features
 // - red_hue: Reserved for future highlight/danger/error features (e.g., highlighting data points above threshold)
@@ -828,30 +835,13 @@ function renderSnapshotChart() {
       .map(ds => ds.label) : 
     null;
 
-  // Check for missing data only among visible subsets
-  const hasMissingData = currentSnapshotData.some(d => {
-    const subset = d.Subset || d[selectedCategory] || d.series_description;
-    if (visibleSubsets !== null && !visibleSubsets.includes(subset)) return false;
-    return getRate(d) === null || d.level === null;
-  });
   const chartTypeInputs = document.querySelectorAll('input[name="chartType"]');
 
-  if (hasMissingData && currentSnapshotData.length > 0) {
-    chartTypeInputs.forEach(r => {
-      if (r.value !== 'bar') {
-        r.disabled = true;
-        r.parentElement.style.opacity = '0.4';
-      } else {
-        r.checked = true;
-      }
-    });
-  } else {
-    chartTypeInputs.forEach(r => {
-      r.disabled = false;
-      r.parentElement.style.opacity = '1';
-      if (r.value === userPreferredChartType) r.checked = true;
-    });
-  }
+  chartTypeInputs.forEach(r => {
+    r.disabled = false;
+    r.parentElement.style.opacity = '1';
+    if (r.value === userPreferredChartType) r.checked = true;
+  });
 
   const activeRadio = document.querySelector('input[name="chartType"]:checked');
   if (!activeRadio) return;
@@ -877,8 +867,8 @@ function renderSnapshotChart() {
 
   const subtitleEl = document.getElementById('snapshotSubtitle');
   if (subtitleEl) {
-    if (activeType === 'pie') subtitleEl.textContent = 'Unemployed People per Category to the Sum in All Categories';
-    else if (activeType === 'bubble') subtitleEl.textContent = 'Number of Unemployed People per Category';
+    if (activeType === 'pie') subtitleEl.textContent = 'Share of Total Unemployed in the Dataset';
+    else if (activeType === 'bubble') subtitleEl.textContent = 'Unemployment Impact (Weighted by Unemployment Level)';
     else if (activeType === 'bar') subtitleEl.textContent = 'Unemployment Rate Within the Category';
   }
 
@@ -1004,17 +994,25 @@ function renderSnapshotChart() {
               usePointStyle: true,
               pointStyle: 'circle',
               padding: 20,
+              wordWrap: true,
+              lineHeight: 25,
               generateLabels: (chart) => {
                 const ds = chart.data.datasets[0];
-                return chart.data.labels.map((lbl, i) => ({
-                  text: wrapLabelText(lbl, 20) + ' (' + Number(ds.data[i]).toFixed(1) + '%)',
-                  fillStyle: bgColors[i],
-                  strokeStyle: bgColors[i],
-                  fontColor: bgColors[i],
-                  lineWidth: 0,
-                  index: i,
-                  hidden: false,
-                }));
+                return chart.data.labels.map((lbl, i) => {
+                  const words = lbl.split(' ');
+                  const mid = Math.ceil(words.length / 2);
+                  const line1 = words.slice(0, mid).join(' ');
+                  const line2 = (words.slice(mid).join(' ') + ' ' + Number(ds.data[i]).toFixed(1) + '%').trim();
+                  return {
+                    text: [line1, line2],
+                    fillStyle: bgColors[i],
+                    strokeStyle: bgColors[i],
+                    fontColor: bgColors[i],
+                    lineWidth: 0,
+                    index: i,
+                    hidden: false,
+                  };
+                });
               }
             }
           },
@@ -1033,56 +1031,168 @@ function renderSnapshotChart() {
     });
   }
   else if (activeType === 'bubble') {
-    const rootData = { name: "root", children: data };
-    const packLayout = pack().size([600, 600]).padding(2);
-    const rootNode = hierarchy(rootData).sum(d => d.level);
-    const packedNodes = packLayout(rootNode).leaves();
+    const bubbleData = data.map(d => ({
+      percent: d.percent_of_group,
+      rate: getRate(d),
+      level: d.level,
+      subset: d[selectedCategory] || d.series_description
+    }));
     
-    let minX = Infinity, maxX = -Infinity, minY = Infinity, maxY = -Infinity;
-    const mappedData = packedNodes.map((node) => {
-      const r = node.r;
-      minX = Math.min(minX, node.x - r); maxX = Math.max(maxX, node.x + r);
-      minY = Math.min(minY, node.y - r); maxY = Math.max(maxY, node.y + r);
-      const subsetKey = node.data[selectedCategory] || node.data.series_description;
-      return { x: node.x, y: node.y, r: r, subset: subsetKey, value: node.data.level, backgroundColor: activeColorMap[subsetKey] || activeColorMap[subsetKey?.toLowerCase()] || '#cbd5e1' };
-    });
-
+    const xLow = Math.min(...bubbleData.map(d => d.percent));
+    const xHigh = Math.max(...bubbleData.map(d => d.percent));
+    const yLow = Math.min(...bubbleData.map(d => d.rate));
+    const yHigh = Math.max(...bubbleData.map(d => d.rate));
+    const xMaxVal = xHigh * 1.3;
+    const yMaxVal = yHigh * 1.3;
+    const xMinVal = xLow - (xMaxVal - xHigh);
+    const yMinVal = yLow - (yMaxVal - yHigh);
+    
+    const quadrantBackgroundPlugin = {
+      id: 'quadrantBackground',
+      beforeDraw: (chart) => {
+        const ctx = chart.ctx;
+        const xScale = chart.scales.x;
+        const yScale = chart.scales.y;
+        
+        if (!xScale || !yScale) return;
+        
+        const xMin = xScale.min;
+        const xMax = xScale.max;
+        const yMin = yScale.min;
+        const yMax = yScale.max;
+        const midX = (xMax + xMin) / 2;
+        const midY = (yMax + yMin) / 2;
+        
+        const left = xScale.getPixelForValue(xMin);
+        const right = xScale.getPixelForValue(xMax);
+        const top = yScale.getPixelForValue(yMax);
+        const bottom = yScale.getPixelForValue(yMin);
+        const midXPixel = xScale.getPixelForValue(midX);
+        const midYPixel = yScale.getPixelForValue(midY);
+        
+        ctx.save();
+        
+        // Top-right quarter (red_hue at 10% opacity)
+        ctx.fillStyle = 'rgba(238, 102, 119, 0.1)';
+        ctx.fillRect(midXPixel, top, right - midXPixel, midYPixel - top);
+        
+        // Bottom-left quarter (green_hue at 10% opacity)
+        ctx.fillStyle = 'rgba(34, 136, 51, 0.1)';
+        ctx.fillRect(left, midYPixel, midXPixel - left, bottom - midYPixel);
+        
+        ctx.restore();
+      }
+    };
+    
     snapshotChart = new Chart(ctx, {
       type: 'bubble',
       data: {
-        datasets: mappedData.map(node => ({
-          label: node.subset,
-          data: [{ x: node.x, y: node.y, r: node.r }],
-          backgroundColor: node.backgroundColor,
-          volume: node.value
-        }))
+        datasets: [{
+          label: 'Unemployment',
+          data: bubbleData.map(d => ({ x: d.percent, y: d.rate })),
+          backgroundColor: bubbleData.map(d => {
+            const color = activeColorMap[d.subset] || activeColorMap[d.subset?.toLowerCase()] || '#cbd5e1';
+            return hexToRgba(color, 0.6);
+          }),
+          borderColor: bubbleData.map(d => {
+            const color = activeColorMap[d.subset] || activeColorMap[d.subset?.toLowerCase()] || '#cbd5e1';
+            return hexToRgba(color, 0.6);
+          }),
+          borderWidth: 1
+        }]
       },
       options: {
         responsive: true,
         maintainAspectRatio: false,
+        layout: {
+          padding: { top: 20, bottom: 20, left: 20, right: 20 }
+        },
         plugins: {
-          legend: { 
-            position: 'right',
+          legend: {
+            position: 'top',
             labels: {
               usePointStyle: true,
               pointStyle: 'circle',
-              padding: 20,
+              padding:  15,
               generateLabels: (chart) => {
-                return chart.data.datasets.map((ds, i) => ({
-                  text: wrapLabelText(ds.label, 18) + ' (' + (ds.volume / 1000).toFixed(1) + 'K)',
-                  fillStyle: ds.backgroundColor,
-                  strokeStyle: ds.backgroundColor,
-                  lineWidth: 0,
-                  index: i,
-                  hidden: false,
-                }));
+                const sortedIndices = bubbleData
+                  .map((d, i) => ({ subset: d.subset, index: i }))
+                  .sort((a, b) => {
+                    const idxA = subsetOrder.indexOf(a.subset);
+                    const idxB = subsetOrder.indexOf(b.subset);
+                    return idxA - idxB;
+                  })
+                  .map(item => item.index);
+                
+                return sortedIndices.map(i => {
+                  const subset = bubbleData[i].subset;
+                  const color = activeColorMap[subset] || activeColorMap[subset?.toLowerCase()] || '#cbd5e1';
+                  return {
+                    text: subset,
+                    fillStyle: color,
+                    strokeStyle: color,
+                    fontColor: color,
+                    lineWidth: 0,
+                    index: i,
+                    hidden: false
+                  };
+                });
               }
             }
           },
-          tooltip: { callbacks: { label: (context) => `Unemployed: ${Number(mappedData[context.datasetIndex].value).toFixed(1)} K` } }
+          tooltip: {
+            callbacks: {
+              label: (context) => {
+                const idx = context.dataIndex;
+                const d = bubbleData[idx];
+                return `${d.subset}: ${d.rate.toFixed(1)}% rate, ${(d.level / 1000).toFixed(1)}K unemployed, ${d.percent.toFixed(1)}% share`;
+              }
+            }
+          }
         },
-        scales: { x: { display: false, min: minX - 20, max: maxX + 20 }, y: { display: false, min: minY - 20, max: maxY + 20 } }
-      }
+        scales: {
+          x: {
+            title: { display: true, text: 'Share of Total Unemployed in the Dataset', color: '#a0a6b1' },
+            min: xMinVal,
+            max: xMaxVal,
+            grid: { color: 'rgba(255,255,255,0.05)' },
+            ticks: { color: '#a0a6b1', count: 7, includeBounds: false, callback: function(val) { if (val === this.min && val < 0) return ''; if (val === this.max && val > 100) return ''; return val.toFixed(1) + '%'; } }
+          },
+          y: {
+            title: { display: true, text: 'Unemployment Rate (%)', color: '#a0a6b1' },
+            min: yMinVal,
+            max: yMaxVal,
+            grid: { color: 'rgba(255,255,255,0.05)' },
+            ticks: { color: '#a0a6b1', count: 7, includeBounds: false, callback: function(val) { if (val === this.min && val < 0) return ''; if (val === this.max && val > 100) return ''; return val.toFixed(1); } }
+          }
+        }
+      },
+      plugins: [quadrantBackgroundPlugin, {
+        id: 'bubbleRadius',
+        beforeDatasetsDraw: (chart) => {
+          if (!chart.canvas) return;
+          
+          const canvasWidth = chart.canvas.width;
+          const canvasHeight = chart.canvas.height;
+          const minCanvasDim = Math.min(canvasWidth, canvasHeight);
+          const maxRadius = minCanvasDim * 0.10;
+          const maxArea = Math.PI * maxRadius * maxRadius;
+          
+          const maxLevel = Math.max(...bubbleData.map(d => d.level));
+          
+          const radii = bubbleData.map(d => {
+            const area = (d.level / maxLevel) * maxArea;
+            return Math.sqrt(area / Math.PI);
+          });
+          
+          const dataset = chart.data.datasets[0];
+          dataset.data = bubbleData.map((d, i) => ({
+            x: d.percent,
+            y: d.rate,
+            r: radii[i]
+          }));
+        }
+      }]
     });
   }
 }
