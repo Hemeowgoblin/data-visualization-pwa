@@ -401,24 +401,25 @@ const RESERVED_COLORS = {
 };
 
 function getPaletteColors() {
-  // Paul Tol's qualitative palette (designed for maximum distinguishability)
-  // Note: green_hue (#228833) and red_hue (#ee6677) are reserved - NOT included here
-  // blue_hue (#4477aa) and pink_hue (#cf7acf) are reserved for Gender category - NOT included here
+  // Paul Tol's qualitative palette optimized for max 8 subsets
+  // First 8 colors prioritized by distinguishability (excluding reserved colors)
+  // Reserved: green_hue (#228833), red_hue (#ee6677), blue_hue (#4477aa), pink_hue (#cf7acf)
   return [
-    '#ccbb44', // yellow
-    '#66ccee', // cyan
-    '#aa3377', // purple
-    '#bbbbbb', // grey
-    '#332288', // dark blue
-    '#6699cc', // light blue
-    '#888888', // medium grey
-    '#4b86b4', // medium blue
+    '#ccbb44', // yellow - most distinct
+    '#66ccee', // cyan - high contrast
+    '#aa3377', // purple - high contrast
+    '#332288', // dark blue - distinct
+    '#ffffff', // white - for maximum contrast
     '#b86e6e', // muted red
+    '#88ffaa', // light mint green - replaced mint green for lighter shade
+    '#c47ac4', // violet
+    // Remaining colors for overflow
+    '#bbbbbb', // grey
+    '#4b86b4', // medium blue
+    '#888888', // medium grey
     '#6eb563', // muted green
     '#7fb4ca', // steel blue
     '#9e6d5c', // brown
-    '#63c4b7', // turquoise
-    '#c47ac4', // violet
     '#7c7c7c', // dark grey
     '#d4a76a', // tan
     '#5a9fd4', // cornflower
@@ -438,20 +439,23 @@ function buildColorMap(subsets, selectedCategory) {
   let colorIdx = 0;
   
   subsets.forEach(sub => {
-    // Special handling for Gender category: reserve blue_hue for Men, pink_hue for Women
+    let color;
     if (selectedCategory === 'gender') {
       if (sub === 'Men') {
-        activeColorMap[sub] = RESERVED_COLORS.blue_hue;
+        color = RESERVED_COLORS.blue_hue;
       } else if (sub === 'Women') {
-        activeColorMap[sub] = RESERVED_COLORS.pink_hue;
+        color = RESERVED_COLORS.pink_hue;
       } else {
-        activeColorMap[sub] = palette[colorIdx % palette.length];
+        color = palette[colorIdx % palette.length];
         colorIdx++;
       }
     } else {
-      activeColorMap[sub] = palette[colorIdx % palette.length];
+      color = palette[colorIdx % palette.length];
       colorIdx++;
     }
+    
+    activeColorMap[sub] = color;
+    activeColorMap[sub.toLowerCase()] = color;
   });
 }
 
@@ -466,7 +470,11 @@ function renderTrendChart() {
   if (trendChart) trendChart.destroy();
 
   const selectedCategory = parameterSelect.value;
-  const subsets = [...new Set(currentTrendData.map(d => d[selectedCategory]).filter(Boolean))];
+  const categoryConfig = CATEGORIES.find(c => c.id === selectedCategory);
+  const subsetOrder = categoryConfig ? categoryConfig.subsets : [];
+  const subsets = subsetOrder.filter(sub => 
+    currentTrendData.some(d => d[selectedCategory] === sub)
+  );
   buildColorMap(subsets, selectedCategory);
 
   const datasets = subsets.map((sub) => {
@@ -563,7 +571,21 @@ function renderTrendChart() {
   }
 }
 
-function calculateOptimalLegendPosition(chart, legendWidth = 200, legendHeight = 150) {
+function calculateOptimalLegendPosition(chart, legendWidth = 200, legendHeight = 150, isHovered = false) {
+  // When hovering, skip re-optimization and return current position
+  if (isHovered) {
+    const legendContainer = document.getElementById('lineChartLegend');
+    if (legendContainer) {
+      const classes = legendContainer.className.split(' ');
+      for (const cls of classes) {
+        if (cls.startsWith('legend-')) {
+          return cls.replace('legend-', '');
+        }
+      }
+    }
+    return 'top-right';
+  }
+
   const chartArea = chart.chartArea;
   const centerX = (chartArea.left + chartArea.right) / 2;
   const centerY = (chartArea.top + chartArea.bottom) / 2;
@@ -702,6 +724,8 @@ function renderLineLegend(chart, optimalPosition) {
       const fullLabel = item.dataset.fullLabel;
       label.innerHTML = padTextForTwoLines(fullLabel).replace('\n', '<br>');
     });
+    const optimalPosition = calculateOptimalLegendPosition(chart, 0, 0, true);
+    legendContainer.className = 'line-chart-legend legend-' + optimalPosition + ' expanded';
   });
 
   legendContainer.addEventListener('mouseleave', () => {
@@ -710,6 +734,8 @@ function renderLineLegend(chart, optimalPosition) {
       const label = item.querySelector('.legend-label');
       label.innerHTML = truncateLabel(item.dataset.fullLabel);
     });
+    const optimalPosition = calculateOptimalLegendPosition(chart, 200, 150, true);
+    legendContainer.className = 'line-chart-legend legend-' + optimalPosition;
   });
 
   legendContainer.querySelectorAll('input').forEach(input => {
@@ -893,7 +919,7 @@ function renderSnapshotChart() {
   }
 
   let labels = data.map(d => d[selectedCategory] || d.series_description);
-  const bgColors = data.map(d => activeColorMap[d[selectedCategory]] || activeColorMap[d.series_description] || '#64748b');
+  const bgColors = data.map(d => activeColorMap[d[selectedCategory]] || activeColorMap[d.series_description?.toLowerCase()] || '#64748b');
 
   if (activeType === 'bar') {
     const globalMax = getGlobalMaxRate();
@@ -981,7 +1007,7 @@ function renderSnapshotChart() {
               generateLabels: (chart) => {
                 const ds = chart.data.datasets[0];
                 return chart.data.labels.map((lbl, i) => ({
-                  text: wrapLabelText(lbl, 25),
+                  text: wrapLabelText(lbl, 20) + ' (' + Number(ds.data[i]).toFixed(1) + '%)',
                   fillStyle: bgColors[i],
                   strokeStyle: bgColors[i],
                   fontColor: bgColors[i],
@@ -1018,7 +1044,7 @@ function renderSnapshotChart() {
       minX = Math.min(minX, node.x - r); maxX = Math.max(maxX, node.x + r);
       minY = Math.min(minY, node.y - r); maxY = Math.max(maxY, node.y + r);
       const subsetKey = node.data[selectedCategory] || node.data.series_description;
-      return { x: node.x, y: node.y, r: r, subset: subsetKey, value: node.data.level, backgroundColor: activeColorMap[subsetKey] || '#cbd5e1' };
+      return { x: node.x, y: node.y, r: r, subset: subsetKey, value: node.data.level, backgroundColor: activeColorMap[subsetKey] || activeColorMap[subsetKey?.toLowerCase()] || '#cbd5e1' };
     });
 
     snapshotChart = new Chart(ctx, {
@@ -1043,7 +1069,7 @@ function renderSnapshotChart() {
               padding: 20,
               generateLabels: (chart) => {
                 return chart.data.datasets.map((ds, i) => ({
-                  text: wrapLabelText(ds.label, 25),
+                  text: wrapLabelText(ds.label, 18) + ' (' + (ds.volume / 1000).toFixed(1) + 'K)',
                   fillStyle: ds.backgroundColor,
                   strokeStyle: ds.backgroundColor,
                   lineWidth: 0,

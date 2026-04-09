@@ -238,6 +238,9 @@ input:checked ~ .toggle-label { color: var(--text-primary); }
   z-index: 10;
   min-width: 180px;
   max-width: 280px;
+  opacity: 0.2;
+  columns: 2;
+  column-gap: 8px;
 }
 
 .line-chart-legend.legend-top-right {
@@ -266,6 +269,7 @@ input:checked ~ .toggle-label { color: var(--text-primary); }
   gap: 8px;
   padding: 5px 0;
   cursor: pointer;
+  break-inside: avoid;
 }
 
 .line-legend-item .legend-toggle {
@@ -350,7 +354,12 @@ input:checked ~ .toggle-label { color: var(--text-primary); }
   color: rgba(160, 166, 177, 0.4);
 }
 
+.line-chart-legend:hover, .line-chart-legend.expanded {
+  opacity: 1;
+}
+
 .line-chart-legend.expanded {
+  columns: 1;
   overflow-y: visible;
 }
 
