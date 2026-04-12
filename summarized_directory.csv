@@ -1,523 +1,523 @@
-﻿Series ID,Units,Gender,Age [years],Disability,Race,Industry and Class of Worker,Educational Attainment,Occupation,Veteran Status,Period of Service,Nativity,Metric
-LNU03000000,Thousands of Persons,All,All,All,All,All,All,All,ALL,ALL,ALL,level
-UNRATENSA,Percent,All,All,All,All,All,All,All,ALL,ALL,ALL,rate
-CGBD16O,Percent,All,≥16,All,All,All,Bachelor's Degree,All,ALL,ALL,ALL,rate
-CGBDU16O,Thousands of Persons,All,≥16,All,All,All,Bachelor's Degree,All,ALL,ALL,ALL,level
-CGDD16O,Percent,All,≥16,All,All,All,Doctoral Degree,All,ALL,ALL,ALL,rate
-CGDDU16O,Thousands of Persons,All,≥16,All,All,All,Doctoral Degree,All,ALL,ALL,ALL,level
-HSGS16O,Percent,All,≥16,All,All,All,"High School Graduates, No College",All,ALL,ALL,ALL,rate
-HSGSU16O,Thousands of Persons,All,≥16,All,All,All,"High School Graduates, No College",All,ALL,ALL,ALL,level
-LHSD16O,Percent,All,≥16,All,All,All,Less than a High School Diploma,All,ALL,ALL,ALL,rate
-LHSDU16O,Thousands of Persons,All,≥16,All,All,All,Less than a High School Diploma,All,ALL,ALL,ALL,level
-CGMD16O,Percent,All,≥16,All,All,All,Master's Degree,All,ALL,ALL,ALL,rate
-CGMDU16O,Thousands of Persons,All,≥16,All,All,All,Master's Degree,All,ALL,ALL,ALL,level
-CGBD16OM,Percent,Men,≥16,All,All,All,Bachelor's Degree,All,ALL,ALL,ALL,rate
-CGBDUM16O,Thousands of Persons,Men,≥16,All,All,All,Bachelor's Degree,All,ALL,ALL,ALL,level
-CGDD16OM,Percent,Men,≥16,All,All,All,Doctoral Degree,All,ALL,ALL,ALL,rate
-CGDDUM16O,Thousands of Persons,Men,≥16,All,All,All,Doctoral Degree,All,ALL,ALL,ALL,level
-HSGS16OM,Percent,Men,≥16,All,All,All,"High School Graduates, No College",All,ALL,ALL,ALL,rate
-HSGSUM16O,Thousands of Persons,Men,≥16,All,All,All,"High School Graduates, No College",All,ALL,ALL,ALL,level
-CGMD16OM,Percent,Men,≥16,All,All,All,Master's Degree,All,ALL,ALL,ALL,rate
-CGMDUM16O,Thousands of Persons,Men,≥16,All,All,All,Master's Degree,All,ALL,ALL,ALL,level
-CGPD16OM,Percent,Men,≥16,All,All,All,Professional Degree,All,ALL,ALL,ALL,rate
-CGPDUM16O,Thousands of Persons,Men,≥16,All,All,All,Professional Degree,All,ALL,ALL,ALL,level
-SCAD16OM,Percent,Men,≥16,All,All,All,Some College or Associate Degree,All,ALL,ALL,ALL,rate
-SCADUM16O,Thousands of Persons,Men,≥16,All,All,All,Some College or Associate Degree,All,ALL,ALL,ALL,level
-CGPD16O,Percent,All,≥16,All,All,All,Professional Degree,All,ALL,ALL,ALL,rate
-CGPDU16O,Thousands of Persons,All,≥16,All,All,All,Professional Degree,All,ALL,ALL,ALL,level
-SCAD16O,Percent,All,≥16,All,All,All,Some College or Associate Degree,All,ALL,ALL,ALL,rate
-SCADU16O,Thousands of Persons,All,≥16,All,All,All,Some College or Associate Degree,All,ALL,ALL,ALL,level
-LNU03074597,Thousands of Persons,All,≥16,With a Disability,All,All,All,All,ALL,ALL,ALL,level
-LNU04074597,Percent,All,≥16,With a Disability,All,All,All,All,ALL,ALL,ALL,rate
-LNU03074593,Thousands of Persons,All,≥16,With No Disability,All,All,All,All,ALL,ALL,ALL,level
-LNU04074593,Percent,All,≥16,With No Disability,All,All,All,All,ALL,ALL,ALL,rate
-CGBD16OW,Percent,Women,≥16,All,All,All,Bachelor's Degree,All,ALL,ALL,ALL,rate
-CGBDUW16O,Thousands of Persons,Women,≥16,All,All,All,Bachelor's Degree,All,ALL,ALL,ALL,level
-CGDD16OW,Percent,Women,≥16,All,All,All,Doctoral Degree,All,ALL,ALL,ALL,rate
-CGDDUW16O,Thousands of Persons,Women,≥16,All,All,All,Doctoral Degree,All,ALL,ALL,ALL,level
-HSGS16OW,Percent,Women,≥16,All,All,All,"High School Graduates, No College",All,ALL,ALL,ALL,rate
-HSGSUW16O,Thousands of Persons,Women,≥16,All,All,All,"High School Graduates, No College",All,ALL,ALL,ALL,level
-LHSD16OW,Percent,Women,≥16,All,All,All,Less than a High School Diploma,All,ALL,ALL,ALL,rate
-LHSDUW16O,Thousands of Persons,Women,≥16,All,All,All,Less than a High School Diploma,All,ALL,ALL,ALL,level
-CGMD16OW,Percent,Women,≥16,All,All,All,Master's Degree,All,ALL,ALL,ALL,rate
-CGMDUW16O,Thousands of Persons,Women,≥16,All,All,All,Master's Degree,All,ALL,ALL,ALL,level
-CGPD16OW,Percent,Women,≥16,All,All,All,Professional Degree,All,ALL,ALL,ALL,rate
-CGPDUW16O,Thousands of Persons,Women,≥16,All,All,All,Professional Degree,All,ALL,ALL,ALL,level
-SCAD16OW,Percent,Women,≥16,All,All,All,Some College or Associate Degree,All,ALL,ALL,ALL,rate
-SCADUW16O,Thousands of Persons,Women,≥16,All,All,All,Some College or Associate Degree,All,ALL,ALL,ALL,level
-LNU04049526,Percent,All,≥18,All,All,All,All,All,Total Veterans,ALL,ALL,rate
-LNU04049527,Percent,Men,≥18,All,All,All,All,All,Total Veterans,ALL,ALL,rate
-LNU03049602,Thousands of Persons,Men,≥18,All,All,All,All,All,Nonveterans,ALL,ALL,level
-LNU04049602,Percent,Men,≥18,All,All,All,All,All,Nonveterans,ALL,ALL,rate
-LNU03049527,Thousands of Persons,Men,≥18,All,All,All,All,All,Total Veterans,ALL,ALL,level
-LNU03066420,Thousands of Persons,Men,≥18,All,All,All,All,All,Veterans,Gulf War Era I,ALL,level
-LNU04066420,Percent,Men,≥18,All,All,All,All,All,Veterans,Gulf War Era I,ALL,rate
-LNU03066413,Thousands of Persons,Men,≥18,All,All,All,All,All,Veterans,Gulf War Era II,ALL,level
-LNU04066413,Percent,Men,≥18,All,All,All,All,All,Veterans,Gulf War Era II,ALL,rate
-LNU03049587,Thousands of Persons,Men,≥18,All,All,All,All,All,Veterans,Other Service Periods,ALL,level
-LNU04049587,Percent,Men,≥18,All,All,All,All,All,Veterans,Other Service Periods,ALL,rate
-LNU03073765,Thousands of Persons,Men,≥18,All,All,All,All,All,Veterans,Vietnam-Era and Earlier Wartime Periods,ALL,level
-LNU04073765,Percent,Men,≥18,All,All,All,All,All,Veterans,Vietnam-Era and Earlier Wartime Periods,ALL,rate
-LNU03049601,Thousands of Persons,All,≥18,All,All,All,All,All,Nonveterans,ALL,ALL,level
-LNU04049601,Percent,All,≥18,All,All,All,All,All,Nonveterans,ALL,ALL,rate
-LNU03049526,Thousands of Persons,All,≥18,All,All,All,All,All,Total Veterans,ALL,ALL,level
-LNU03066415,Thousands of Persons,All,≥18,All,All,All,All,All,Veterans,Gulf War Era I,ALL,level
-LNU04066415,Percent,All,≥18,All,All,All,All,All,Veterans,Gulf War Era I,ALL,rate
-LNU03049586,Thousands of Persons,All,≥18,All,All,All,All,All,Veterans,Other Service Periods,ALL,level
-LNU04049586,Percent,All,≥18,All,All,All,All,All,Veterans,Other Service Periods,ALL,rate
-LNU03077884,Thousands of Persons,All,≥18,All,All,All,All,All,Veterans,Vietnam-Era and Earlier Wartime Periods,ALL,level
-LNU04077884,Percent,All,≥18,All,All,All,All,All,Veterans,Vietnam-Era and Earlier Wartime Periods,ALL,rate
-LNU04049528,Percent,Women,≥18,All,All,All,All,All,Total Veterans,ALL,ALL,rate
-LNU03049603,Thousands of Persons,Women,≥18,All,All,All,All,All,Nonveterans,ALL,ALL,level
-LNU04049603,Percent,Women,≥18,All,All,All,All,All,Nonveterans,ALL,ALL,rate
-LNU03049528,Thousands of Persons,Women,≥18,All,All,All,All,All,Total Veterans,ALL,ALL,level
-LNU03066421,Thousands of Persons,Women,≥18,All,All,All,All,All,Veterans,Gulf War Era I,ALL,level
-LNU04066421,Percent,Women,≥18,All,All,All,All,All,Veterans,Gulf War Era I,ALL,rate
-LNU03066414,Thousands of Persons,Women,≥18,All,All,All,All,All,Veterans,Gulf War Era II,ALL,level
-LNU04066414,Percent,Women,≥18,All,All,All,All,All,Veterans,Gulf War Era II,ALL,rate
-LNU03049588,Thousands of Persons,Women,≥18,All,All,All,All,All,Veterans,Other Service Periods,ALL,level
-LNU04049588,Percent,Women,≥18,All,All,All,All,All,Veterans,Other Service Periods,ALL,rate
-LNU03073766,Thousands of Persons,Women,≥18,All,All,All,All,All,Veterans,Vietnam-Era and Earlier Wartime Periods,ALL,level
-LNU04073766,Percent,Women,≥18,All,All,All,All,All,Veterans,Vietnam-Era and Earlier Wartime Periods,ALL,rate
-TOTLU1617,Thousands of Persons,All,16-17,All,All,All,All,All,ALL,ALL,ALL,level
-TOTLUM1617,Thousands of Persons,Men,16-17,All,All,All,All,All,ALL,ALL,ALL,level
-LNU03000031,Thousands of Persons,Men,≥20,All,Black or African American,All,All,All,ALL,ALL,ALL,level
-LNU04000031,Percent,Men,≥20,All,Black or African American,All,All,All,ALL,ALL,ALL,rate
-LNU03000034,Thousands of Persons,Men,≥20,All,Hispanic or Latino,All,All,All,ALL,ALL,ALL,level
-LNU04000034,Percent,Men,≥20,All,Hispanic or Latino,All,All,All,ALL,ALL,ALL,rate
-LNU03000028,Thousands of Persons,Men,≥20,All,White,All,All,All,ALL,ALL,ALL,level
-LNU04000028,Percent,Men,≥20,All,White,All,All,All,ALL,ALL,ALL,rate
-TOTLUW1617,Thousands of Persons,Women,16-17,All,All,All,All,All,ALL,ALL,ALL,level
-LNU03000032,Thousands of Persons,Women,≥20,All,Black or African American,All,All,All,ALL,ALL,ALL,level
-LNU04000032,Percent,Women,≥20,All,Black or African American,All,All,All,ALL,ALL,ALL,rate
-LNU03000035,Thousands of Persons,Women,≥20,All,Hispanic or Latino,All,All,All,ALL,ALL,ALL,level
-LNU04000035,Percent,Women,≥20,All,Hispanic or Latino,All,All,All,ALL,ALL,ALL,rate
-LNU03000029,Thousands of Persons,Women,≥20,All,White,All,All,All,ALL,ALL,ALL,level
-LNU04000029,Percent,Women,≥20,All,White,All,All,All,ALL,ALL,ALL,rate
-TOTLU1819,Thousands of Persons,All,18-19,All,All,All,All,All,ALL,ALL,ALL,level
-TOTLUM1819,Thousands of Persons,Men,18-19,All,All,All,All,All,ALL,ALL,ALL,level
-TOTLUW1819,Thousands of Persons,Women,18-19,All,All,All,All,All,ALL,ALL,ALL,level
-TOTLUM2024,Thousands of Persons,Men,20-24,All,All,All,All,All,ALL,ALL,ALL,level
-TOTLUW2024,Thousands of Persons,Women,20-24,All,All,All,All,All,ALL,ALL,ALL,level
-CGBD65O,Percent,All,≥65,All,All,All,Bachelor's Degree,All,ALL,ALL,ALL,rate
-CGBDU65O,Thousands of Persons,All,≥65,All,All,All,Bachelor's Degree,All,ALL,ALL,ALL,level
-CGDD65O,Percent,All,≥65,All,All,All,Doctoral Degree,All,ALL,ALL,ALL,rate
-CGDDU65O,Thousands of Persons,All,≥65,All,All,All,Doctoral Degree,All,ALL,ALL,ALL,level
-HSGS65O,Percent,All,≥65,All,All,All,"High School Graduates, No College",All,ALL,ALL,ALL,rate
-HSGSU65O,Thousands of Persons,All,≥65,All,All,All,"High School Graduates, No College",All,ALL,ALL,ALL,level
-LHSD65O,Percent,All,≥65,All,All,All,Less than a High School Diploma,All,ALL,ALL,ALL,rate
-LHSDU65O,Thousands of Persons,All,≥65,All,All,All,Less than a High School Diploma,All,ALL,ALL,ALL,level
-CGMD65O,Percent,All,≥65,All,All,All,Master's Degree,All,ALL,ALL,ALL,rate
-CGMDU65O,Thousands of Persons,All,≥65,All,All,All,Master's Degree,All,ALL,ALL,ALL,level
-CGBD65OM,Percent,Men,≥65,All,All,All,Bachelor's Degree,All,ALL,ALL,ALL,rate
-CGBDUM65O,Thousands of Persons,Men,≥65,All,All,All,Bachelor's Degree,All,ALL,ALL,ALL,level
-CGDD65OM,Percent,Men,≥65,All,All,All,Doctoral Degree,All,ALL,ALL,ALL,rate
-CGDDUM65O,Thousands of Persons,Men,≥65,All,All,All,Doctoral Degree,All,ALL,ALL,ALL,level
-HSGS65OM,Percent,Men,≥65,All,All,All,"High School Graduates, No College",All,ALL,ALL,ALL,rate
-HSGSUM65O,Thousands of Persons,Men,≥65,All,All,All,"High School Graduates, No College",All,ALL,ALL,ALL,level
-LHSD65OM,Percent,Men,≥65,All,All,All,Less than a High School Diploma,All,ALL,ALL,ALL,rate
-LHSDUM65O,Thousands of Persons,Men,≥65,All,All,All,Less than a High School Diploma,All,ALL,ALL,ALL,level
-CGMD65OM,Percent,Men,≥65,All,All,All,Master's Degree,All,ALL,ALL,ALL,rate
-CGMDUM65O,Thousands of Persons,Men,≥65,All,All,All,Master's Degree,All,ALL,ALL,ALL,level
-CGPD65OM,Percent,Men,≥65,All,All,All,Professional Degree,All,ALL,ALL,ALL,rate
-CGPDUM65O,Thousands of Persons,Men,≥65,All,All,All,Professional Degree,All,ALL,ALL,ALL,level
-SCAD65OM,Percent,Men,≥65,All,All,All,Some College or Associate Degree,All,ALL,ALL,ALL,rate
-SCADUM65O,Thousands of Persons,Men,≥65,All,All,All,Some College or Associate Degree,All,ALL,ALL,ALL,level
-CGPD65O,Percent,All,≥65,All,All,All,Professional Degree,All,ALL,ALL,ALL,rate
-CGPDU65O,Thousands of Persons,All,≥65,All,All,All,Professional Degree,All,ALL,ALL,ALL,level
-SCAD65O,Percent,All,≥65,All,All,All,Some College or Associate Degree,All,ALL,ALL,ALL,rate
-SCADU65O,Thousands of Persons,All,≥65,All,All,All,Some College or Associate Degree,All,ALL,ALL,ALL,level
-LNU03075600,Thousands of Persons,All,≥65,With a Disability,All,All,All,All,ALL,ALL,ALL,level
-LNU04075600,Percent,All,≥65,With a Disability,All,All,All,All,ALL,ALL,ALL,rate
-LNU03075379,Thousands of Persons,All,≥65,With No Disability,All,All,All,All,ALL,ALL,ALL,level
-LNU04075379,Percent,All,≥65,With No Disability,All,All,All,All,ALL,ALL,ALL,rate
-LNU03000036,Thousands of Persons,All,20-24,All,All,All,All,All,ALL,ALL,ALL,level
-TOTLU2534,Thousands of Persons,All,25-34,All,All,All,All,All,ALL,ALL,ALL,level
-CGBD65OW,Percent,Women,≥65,All,All,All,Bachelor's Degree,All,ALL,ALL,ALL,rate
-CGBDUW65O,Thousands of Persons,Women,≥65,All,All,All,Bachelor's Degree,All,ALL,ALL,ALL,level
-CGDD65OW,Percent,Women,≥65,All,All,All,Doctoral Degree,All,ALL,ALL,ALL,rate
-CGDDUW65O,Thousands of Persons,Women,≥65,All,All,All,Doctoral Degree,All,ALL,ALL,ALL,level
-HSGS65OW,Percent,Women,≥65,All,All,All,"High School Graduates, No College",All,ALL,ALL,ALL,rate
-HSGSUW65O,Thousands of Persons,Women,≥65,All,All,All,"High School Graduates, No College",All,ALL,ALL,ALL,level
-LHSD65OW,Percent,Women,≥65,All,All,All,Less than a High School Diploma,All,ALL,ALL,ALL,rate
-LHSDUW65O,Thousands of Persons,Women,≥65,All,All,All,Less than a High School Diploma,All,ALL,ALL,ALL,level
-CGMD65OW,Percent,Women,≥65,All,All,All,Master's Degree,All,ALL,ALL,ALL,rate
-CGMDUW65O,Thousands of Persons,Women,≥65,All,All,All,Master's Degree,All,ALL,ALL,ALL,level
-CGPD65OW,Percent,Women,≥65,All,All,All,Professional Degree,All,ALL,ALL,ALL,rate
-CGPDUW65O,Thousands of Persons,Women,≥65,All,All,All,Professional Degree,All,ALL,ALL,ALL,level
-SCAD65OW,Percent,Women,≥65,All,All,All,Some College or Associate Degree,All,ALL,ALL,ALL,rate
-SCADUW65O,Thousands of Persons,Women,≥65,All,All,All,Some College or Associate Degree,All,ALL,ALL,ALL,level
-TOTLUM2534,Thousands of Persons,Men,25-34,All,All,All,All,All,ALL,ALL,ALL,level
-TOTLUW2534,Thousands of Persons,Women,25-34,All,All,All,All,All,ALL,ALL,ALL,level
-CGBD1617,Percent,All,16-17,All,All,All,Bachelor's Degree,All,ALL,ALL,ALL,rate
-CGBDU1617,Thousands of Persons,All,16-17,All,All,All,Bachelor's Degree,All,ALL,ALL,ALL,level
-HSGS1617,Percent,All,16-17,All,All,All,"High School Graduates, No College",All,ALL,ALL,ALL,rate
-HSGSU1617,Thousands of Persons,All,16-17,All,All,All,"High School Graduates, No College",All,ALL,ALL,ALL,level
-LHSD1617,Percent,All,16-17,All,All,All,Less than a High School Diploma,All,ALL,ALL,ALL,rate
-LHSDU1617,Thousands of Persons,All,16-17,All,All,All,Less than a High School Diploma,All,ALL,ALL,ALL,level
-CGMD1617,Percent,All,16-17,All,All,All,Master's Degree,All,ALL,ALL,ALL,rate
-CGMDU1617,Thousands of Persons,All,16-17,All,All,All,Master's Degree,All,ALL,ALL,ALL,level
-TOTLU3544,Thousands of Persons,All,35-44,All,All,All,All,All,ALL,ALL,ALL,level
-TOTLUM3544,Thousands of Persons,Men,35-44,All,All,All,All,All,ALL,ALL,ALL,level
-CGBD1617M,Percent,Men,16-17,All,All,All,Bachelor's Degree,All,ALL,ALL,ALL,rate
-CGBDUM1617,Thousands of Persons,Men,16-17,All,All,All,Bachelor's Degree,All,ALL,ALL,ALL,level
-HSGS1617M,Percent,Men,16-17,All,All,All,"High School Graduates, No College",All,ALL,ALL,ALL,rate
-HSGSUM1617,Thousands of Persons,Men,16-17,All,All,All,"High School Graduates, No College",All,ALL,ALL,ALL,level
-LHSD1617M,Percent,Men,16-17,All,All,All,Less than a High School Diploma,All,ALL,ALL,ALL,rate
-LHSDUM1617,Thousands of Persons,Men,16-17,All,All,All,Less than a High School Diploma,All,ALL,ALL,ALL,level
-CGMD1617M,Percent,Men,16-17,All,All,All,Master's Degree,All,ALL,ALL,ALL,rate
-CGMDUM1617,Thousands of Persons,Men,16-17,All,All,All,Master's Degree,All,ALL,ALL,ALL,level
-CGPD1617M,Percent,Men,16-17,All,All,All,Professional Degree,All,ALL,ALL,ALL,rate
-CGPDUM1617,Thousands of Persons,Men,16-17,All,All,All,Professional Degree,All,ALL,ALL,ALL,level
-SCAD1617M,Percent,Men,16-17,All,All,All,Some College or Associate Degree,All,ALL,ALL,ALL,rate
-SCADUM1617,Thousands of Persons,Men,16-17,All,All,All,Some College or Associate Degree,All,ALL,ALL,ALL,level
-CGPD1617,Percent,All,16-17,All,All,All,Professional Degree,All,ALL,ALL,ALL,rate
-CGPDU1617,Thousands of Persons,All,16-17,All,All,All,Professional Degree,All,ALL,ALL,ALL,level
-SCAD1617,Percent,All,16-17,All,All,All,Some College or Associate Degree,All,ALL,ALL,ALL,rate
-SCADU1617,Thousands of Persons,All,16-17,All,All,All,Some College or Associate Degree,All,ALL,ALL,ALL,level
-TOTLUW3544,Thousands of Persons,Women,35-44,All,All,All,All,All,ALL,ALL,ALL,level
-TOTLU4554,Thousands of Persons,All,45-54,All,All,All,All,All,ALL,ALL,ALL,level
-CGBD1617W,Percent,Women,16-17,All,All,All,Bachelor's Degree,All,ALL,ALL,ALL,rate
-CGBDUW1617,Thousands of Persons,Women,16-17,All,All,All,Bachelor's Degree,All,ALL,ALL,ALL,level
-HSGS1617W,Percent,Women,16-17,All,All,All,"High School Graduates, No College",All,ALL,ALL,ALL,rate
-HSGSUW1617,Thousands of Persons,Women,16-17,All,All,All,"High School Graduates, No College",All,ALL,ALL,ALL,level
-LHSD1617W,Percent,Women,16-17,All,All,All,Less than a High School Diploma,All,ALL,ALL,ALL,rate
-LHSDUW1617,Thousands of Persons,Women,16-17,All,All,All,Less than a High School Diploma,All,ALL,ALL,ALL,level
-SCAD1617W,Percent,Women,16-17,All,All,All,Some College or Associate Degree,All,ALL,ALL,ALL,rate
-SCADUW1617,Thousands of Persons,Women,16-17,All,All,All,Some College or Associate Degree,All,ALL,ALL,ALL,level
-TOTLUM4554,Thousands of Persons,Men,45-54,All,All,All,All,All,ALL,ALL,ALL,level
-TOTLUW4554,Thousands of Persons,Women,45-54,All,All,All,All,All,ALL,ALL,ALL,level
-LNU03000018,Thousands of Persons,All,16-19,All,Black or African American,All,All,All,ALL,ALL,ALL,level
-LNU04000018,Percent,All,16-19,All,Black or African American,All,All,All,ALL,ALL,ALL,rate
-CGMD1617W,Percent,Women,16-17,All,All,All,Master's Degree,All,ALL,ALL,ALL,rate
-LNU03000021,Thousands of Persons,All,16-19,All,Hispanic or Latino,All,All,All,ALL,ALL,ALL,level
-LNU04000021,Percent,All,16-19,All,Hispanic or Latino,All,All,All,ALL,ALL,ALL,rate
-CGMDLW1617,Thousands of Persons,Women,16-17,All,All,All,Master's Degree,All,ALL,ALL,ALL,labor_force
-LNU03000015,Thousands of Persons,All,16-19,All,White,All,All,All,ALL,ALL,ALL,level
-LNU04000015,Percent,All,16-19,All,White,All,All,All,ALL,ALL,ALL,rate
-LNU03076955,Thousands of Persons,Men,16-64,With a Disability,All,All,All,All,ALL,ALL,ALL,level
-LNU04076955,Percent,Men,16-64,With a Disability,All,All,All,All,ALL,ALL,ALL,rate
-LNU03076940,Thousands of Persons,Men,16-64,With No Disability,All,All,All,All,ALL,ALL,ALL,level
-LNU04076940,Percent,Men,16-64,With No Disability,All,All,All,All,ALL,ALL,ALL,rate
-LNU03076960,Thousands of Persons,Women,16-64,With a Disability,All,All,All,All,ALL,ALL,ALL,level
-LNU04076960,Percent,Women,16-64,With a Disability,All,All,All,All,ALL,ALL,ALL,rate
-LNU03076945,Thousands of Persons,Women,16-64,With No Disability,All,All,All,All,ALL,ALL,ALL,level
-LNU04076945,Percent,Women,16-64,With No Disability,All,All,All,All,ALL,ALL,ALL,rate
-TOTLU5564,Thousands of Persons,All,55-64,All,All,All,All,All,ALL,ALL,ALL,level
-TOTLUM5564,Thousands of Persons,Men,55-64,All,All,All,All,All,ALL,ALL,ALL,level
-CGBD1819,Percent,All,18-19,All,All,All,Bachelor's Degree,All,ALL,ALL,ALL,rate
-CGBDU1819,Thousands of Persons,All,18-19,All,All,All,Bachelor's Degree,All,ALL,ALL,ALL,level
-HSGS1819,Percent,All,18-19,All,All,All,"High School Graduates, No College",All,ALL,ALL,ALL,rate
-HSGSU1819,Thousands of Persons,All,18-19,All,All,All,"High School Graduates, No College",All,ALL,ALL,ALL,level
-LHSD1819,Percent,All,18-19,All,All,All,Less than a High School Diploma,All,ALL,ALL,ALL,rate
-LHSDU1819,Thousands of Persons,All,18-19,All,All,All,Less than a High School Diploma,All,ALL,ALL,ALL,level
-CGMD1819,Percent,All,18-19,All,All,All,Master's Degree,All,ALL,ALL,ALL,rate
-CGMDU1819,Thousands of Persons,All,18-19,All,All,All,Master's Degree,All,ALL,ALL,ALL,level
-TOTLUW5564,Thousands of Persons,Women,55-64,All,All,All,All,All,ALL,ALL,ALL,level
-TOTLU65O,Thousands of Persons,All,≥65,All,All,All,All,All,ALL,ALL,ALL,level
-CGBD1819M,Percent,Men,18-19,All,All,All,Bachelor's Degree,All,ALL,ALL,ALL,rate
-CGBDUM1819,Thousands of Persons,Men,18-19,All,All,All,Bachelor's Degree,All,ALL,ALL,ALL,level
-HSGS1819M,Percent,Men,18-19,All,All,All,"High School Graduates, No College",All,ALL,ALL,ALL,rate
-HSGSUM1819,Thousands of Persons,Men,18-19,All,All,All,"High School Graduates, No College",All,ALL,ALL,ALL,level
-LHSD1819M,Percent,Men,18-19,All,All,All,Less than a High School Diploma,All,ALL,ALL,ALL,rate
-LHSDUM1819,Thousands of Persons,Men,18-19,All,All,All,Less than a High School Diploma,All,ALL,ALL,ALL,level
-CGMD1819M,Percent,Men,18-19,All,All,All,Master's Degree,All,ALL,ALL,ALL,rate
-CGMDUM1819,Thousands of Persons,Men,18-19,All,All,All,Master's Degree,All,ALL,ALL,ALL,level
-CGPD1819M,Percent,Men,18-19,All,All,All,Professional Degree,All,ALL,ALL,ALL,rate
-CGPDUM1819,Thousands of Persons,Men,18-19,All,All,All,Professional Degree,All,ALL,ALL,ALL,level
-SCAD1819M,Percent,Men,18-19,All,All,All,Some College or Associate Degree,All,ALL,ALL,ALL,rate
-SCADUM1819,Thousands of Persons,Men,18-19,All,All,All,Some College or Associate Degree,All,ALL,ALL,ALL,level
-CGPD1819,Percent,All,18-19,All,All,All,Professional Degree,All,ALL,ALL,ALL,rate
-CGPDU1819,Thousands of Persons,All,18-19,All,All,All,Professional Degree,All,ALL,ALL,ALL,level
-SCAD1819,Percent,All,18-19,All,All,All,Some College or Associate Degree,All,ALL,ALL,ALL,rate
-SCADU1819,Thousands of Persons,All,18-19,All,All,All,Some College or Associate Degree,All,ALL,ALL,ALL,level
-TOTLUM65O,Thousands of Persons,Men,≥65,All,All,All,All,All,ALL,ALL,ALL,level
-TOTLUW65O,Thousands of Persons,Women,≥65,All,All,All,All,All,ALL,ALL,ALL,level
-CGBD1819W,Percent,Women,18-19,All,All,All,Bachelor's Degree,All,ALL,ALL,ALL,rate
-CGBDUW1819,Thousands of Persons,Women,18-19,All,All,All,Bachelor's Degree,All,ALL,ALL,ALL,level
-HSGS1819W,Percent,Women,18-19,All,All,All,"High School Graduates, No College",All,ALL,ALL,ALL,rate
-HSGSUW1819,Thousands of Persons,Women,18-19,All,All,All,"High School Graduates, No College",All,ALL,ALL,ALL,level
-LHSD1819W,Percent,Women,18-19,All,All,All,Less than a High School Diploma,All,ALL,ALL,ALL,rate
-LHSDUW1819,Thousands of Persons,Women,18-19,All,All,All,Less than a High School Diploma,All,ALL,ALL,ALL,level
-CGMD1819W,Percent,Women,18-19,All,All,All,Master's Degree,All,ALL,ALL,ALL,rate
-CGMDUW1819,Thousands of Persons,Women,18-19,All,All,All,Master's Degree,All,ALL,ALL,ALL,level
-CGPD1819W,Percent,Women,18-19,All,All,All,Professional Degree,All,ALL,ALL,ALL,rate
-CGPDUW1819,Thousands of Persons,Women,18-19,All,All,All,Professional Degree,All,ALL,ALL,ALL,level
-SCAD1819W,Percent,Women,18-19,All,All,All,Some College or Associate Degree,All,ALL,ALL,ALL,rate
-SCADUW1819,Thousands of Persons,Women,18-19,All,All,All,Some College or Associate Degree,All,ALL,ALL,ALL,level
-LNU04000086,Percent,All,16-17,All,All,All,All,All,ALL,ALL,ALL,rate
-LNU04000152,Percent,Men,16-17,All,All,All,All,All,ALL,ALL,ALL,rate
-CGBD2024,Percent,All,20-24,All,All,All,Bachelor's Degree,All,ALL,ALL,ALL,rate
-CGBDU2024,Thousands of Persons,All,20-24,All,All,All,Bachelor's Degree,All,ALL,ALL,ALL,level
-CGDD2024,Percent,All,20-24,All,All,All,Doctoral Degree,All,ALL,ALL,ALL,rate
-CGDDU2024,Thousands of Persons,All,20-24,All,All,All,Doctoral Degree,All,ALL,ALL,ALL,level
-HSGS2024,Percent,All,20-24,All,All,All,"High School Graduates, No College",All,ALL,ALL,ALL,rate
-HSGSU2024,Thousands of Persons,All,20-24,All,All,All,"High School Graduates, No College",All,ALL,ALL,ALL,level
-LHSD2024,Percent,All,20-24,All,All,All,Less than a High School Diploma,All,ALL,ALL,ALL,rate
-LHSDU2024,Thousands of Persons,All,20-24,All,All,All,Less than a High School Diploma,All,ALL,ALL,ALL,level
-CGMD2024,Percent,All,20-24,All,All,All,Master's Degree,All,ALL,ALL,ALL,rate
-CGMDU2024,Thousands of Persons,All,20-24,All,All,All,Master's Degree,All,ALL,ALL,ALL,level
-LNU04000317,Percent,Women,16-17,All,All,All,All,All,ALL,ALL,ALL,rate
-CGBD2024M,Percent,Men,20-24,All,All,All,Bachelor's Degree,All,ALL,ALL,ALL,rate
-CGBDUM2024,Thousands of Persons,Men,20-24,All,All,All,Bachelor's Degree,All,ALL,ALL,ALL,level
-CGDD2024M,Percent,Men,20-24,All,All,All,Doctoral Degree,All,ALL,ALL,ALL,rate
-CGDDUM2024,Thousands of Persons,Men,20-24,All,All,All,Doctoral Degree,All,ALL,ALL,ALL,level
-HSGS2024M,Percent,Men,20-24,All,All,All,"High School Graduates, No College",All,ALL,ALL,ALL,rate
-HSGSUM2024,Thousands of Persons,Men,20-24,All,All,All,"High School Graduates, No College",All,ALL,ALL,ALL,level
-LHSD2024M,Percent,Men,20-24,All,All,All,Less than a High School Diploma,All,ALL,ALL,ALL,rate
-LHSDUM2024,Thousands of Persons,Men,20-24,All,All,All,Less than a High School Diploma,All,ALL,ALL,ALL,level
-CGMD2024M,Percent,Men,20-24,All,All,All,Master's Degree,All,ALL,ALL,ALL,rate
-CGMDUM2024,Thousands of Persons,Men,20-24,All,All,All,Master's Degree,All,ALL,ALL,ALL,level
-CGPD2024M,Percent,Men,20-24,All,All,All,Professional Degree,All,ALL,ALL,ALL,rate
-CGPDUM2024,Thousands of Persons,Men,20-24,All,All,All,Professional Degree,All,ALL,ALL,ALL,level
-SCAD2024M,Percent,Men,20-24,All,All,All,Some College or Associate Degree,All,ALL,ALL,ALL,rate
-SCADUM2024,Thousands of Persons,Men,20-24,All,All,All,Some College or Associate Degree,All,ALL,ALL,ALL,level
-CGPD2024,Percent,All,20-24,All,All,All,Professional Degree,All,ALL,ALL,ALL,rate
-CGPDU2024,Thousands of Persons,All,20-24,All,All,All,Professional Degree,All,ALL,ALL,ALL,level
-SCAD2024,Percent,All,20-24,All,All,All,Some College or Associate Degree,All,ALL,ALL,ALL,rate
-SCADU2024,Thousands of Persons,All,20-24,All,All,All,Some College or Associate Degree,All,ALL,ALL,ALL,level
-LNU04000088,Percent,All,18-19,All,All,All,All,All,ALL,ALL,ALL,rate
-LNU04000154,Percent,Men,18-19,All,All,All,All,All,ALL,ALL,ALL,rate
-CGBD2024W,Percent,Women,20-24,All,All,All,Bachelor's Degree,All,ALL,ALL,ALL,rate
-CGBDUW2024,Thousands of Persons,Women,20-24,All,All,All,Bachelor's Degree,All,ALL,ALL,ALL,level
-CGDD2024W,Percent,Women,20-24,All,All,All,Doctoral Degree,All,ALL,ALL,ALL,rate
-CGDDUW2024,Thousands of Persons,Women,20-24,All,All,All,Doctoral Degree,All,ALL,ALL,ALL,level
-HSGS2024W,Percent,Women,20-24,All,All,All,"High School Graduates, No College",All,ALL,ALL,ALL,rate
-HSGSUW2024,Thousands of Persons,Women,20-24,All,All,All,"High School Graduates, No College",All,ALL,ALL,ALL,level
-LHSD2024W,Percent,Women,20-24,All,All,All,Less than a High School Diploma,All,ALL,ALL,ALL,rate
-LHSDUW2024,Thousands of Persons,Women,20-24,All,All,All,Less than a High School Diploma,All,ALL,ALL,ALL,level
-CGMD2024W,Percent,Women,20-24,All,All,All,Master's Degree,All,ALL,ALL,ALL,rate
-CGMDUW2024,Thousands of Persons,Women,20-24,All,All,All,Master's Degree,All,ALL,ALL,ALL,level
-CGPD2024W,Percent,Women,20-24,All,All,All,Professional Degree,All,ALL,ALL,ALL,rate
-CGPDUW2024,Thousands of Persons,Women,20-24,All,All,All,Professional Degree,All,ALL,ALL,ALL,level
-SCAD2024W,Percent,Women,20-24,All,All,All,Some College or Associate Degree,All,ALL,ALL,ALL,rate
-SCADUW2024,Thousands of Persons,Women,20-24,All,All,All,Some College or Associate Degree,All,ALL,ALL,ALL,level
-LNU04000319,Percent,Women,18-19,All,All,All,All,All,ALL,ALL,ALL,rate
-CGBD2534,Percent,All,25-34,All,All,All,Bachelor's Degree,All,ALL,ALL,ALL,rate
-CGBDU2534,Thousands of Persons,All,25-34,All,All,All,Bachelor's Degree,All,ALL,ALL,ALL,level
-CGDD2534,Percent,All,25-34,All,All,All,Doctoral Degree,All,ALL,ALL,ALL,rate
-CGDDU2534,Thousands of Persons,All,25-34,All,All,All,Doctoral Degree,All,ALL,ALL,ALL,level
-HSGS2534,Percent,All,25-34,All,All,All,"High School Graduates, No College",All,ALL,ALL,ALL,rate
-HSGSU2534,Thousands of Persons,All,25-34,All,All,All,"High School Graduates, No College",All,ALL,ALL,ALL,level
-LHSD2534,Percent,All,25-34,All,All,All,Less than a High School Diploma,All,ALL,ALL,ALL,rate
-LHSDU2534,Thousands of Persons,All,25-34,All,All,All,Less than a High School Diploma,All,ALL,ALL,ALL,level
-CGMD2534,Percent,All,25-34,All,All,All,Master's Degree,All,ALL,ALL,ALL,rate
-CGMDU2534,Thousands of Persons,All,25-34,All,All,All,Master's Degree,All,ALL,ALL,ALL,level
-LNU04000036,Percent,All,20-24,All,All,All,All,All,ALL,ALL,ALL,rate
-CGBD2534M,Percent,Men,25-34,All,All,All,Bachelor's Degree,All,ALL,ALL,ALL,rate
-CGBDUM2534,Thousands of Persons,Men,25-34,All,All,All,Bachelor's Degree,All,ALL,ALL,ALL,level
-CGDD2534M,Percent,Men,25-34,All,All,All,Doctoral Degree,All,ALL,ALL,ALL,rate
-CGDDUM2534,Thousands of Persons,Men,25-34,All,All,All,Doctoral Degree,All,ALL,ALL,ALL,level
-HSGS2534M,Percent,Men,25-34,All,All,All,"High School Graduates, No College",All,ALL,ALL,ALL,rate
-HSGSUM2534,Thousands of Persons,Men,25-34,All,All,All,"High School Graduates, No College",All,ALL,ALL,ALL,level
-LHSD2534M,Percent,Men,25-34,All,All,All,Less than a High School Diploma,All,ALL,ALL,ALL,rate
-LHSDUM2534,Thousands of Persons,Men,25-34,All,All,All,Less than a High School Diploma,All,ALL,ALL,ALL,level
-CGMD2534M,Percent,Men,25-34,All,All,All,Master's Degree,All,ALL,ALL,ALL,rate
-CGMDUM2534,Thousands of Persons,Men,25-34,All,All,All,Master's Degree,All,ALL,ALL,ALL,level
-CGPD2534M,Percent,Men,25-34,All,All,All,Professional Degree,All,ALL,ALL,ALL,rate
-CGPDUM2534,Thousands of Persons,Men,25-34,All,All,All,Professional Degree,All,ALL,ALL,ALL,level
-SCAD2534M,Percent,Men,25-34,All,All,All,Some College or Associate Degree,All,ALL,ALL,ALL,rate
-SCADUM2534,Thousands of Persons,Men,25-34,All,All,All,Some College or Associate Degree,All,ALL,ALL,ALL,level
-CGPD2534,Percent,All,25-34,All,All,All,Professional Degree,All,ALL,ALL,ALL,rate
-CGPDU2534,Thousands of Persons,All,25-34,All,All,All,Professional Degree,All,ALL,ALL,ALL,level
-SCAD2534,Percent,All,25-34,All,All,All,Some College or Associate Degree,All,ALL,ALL,ALL,rate
-SCADU2534,Thousands of Persons,All,25-34,All,All,All,Some College or Associate Degree,All,ALL,ALL,ALL,level
-LNU04000037,Percent,Men,20-24,All,All,All,All,All,ALL,ALL,ALL,rate
-LNU04000038,Percent,Women,20-24,All,All,All,All,All,ALL,ALL,ALL,rate
-CGBD2534W,Percent,Women,25-34,All,All,All,Bachelor's Degree,All,ALL,ALL,ALL,rate
-CGBDUW2534,Thousands of Persons,Women,25-34,All,All,All,Bachelor's Degree,All,ALL,ALL,ALL,level
-CGDD2534W,Percent,Women,25-34,All,All,All,Doctoral Degree,All,ALL,ALL,ALL,rate
-CGDDUW2534,Thousands of Persons,Women,25-34,All,All,All,Doctoral Degree,All,ALL,ALL,ALL,level
-HSGS2534W,Percent,Women,25-34,All,All,All,"High School Graduates, No College",All,ALL,ALL,ALL,rate
-HSGSUW2534,Thousands of Persons,Women,25-34,All,All,All,"High School Graduates, No College",All,ALL,ALL,ALL,level
-LHSD2534W,Percent,Women,25-34,All,All,All,Less than a High School Diploma,All,ALL,ALL,ALL,rate
-LHSDUW2534,Thousands of Persons,Women,25-34,All,All,All,Less than a High School Diploma,All,ALL,ALL,ALL,level
-CGMD2534W,Percent,Women,25-34,All,All,All,Master's Degree,All,ALL,ALL,ALL,rate
-CGMDUW2534,Thousands of Persons,Women,25-34,All,All,All,Master's Degree,All,ALL,ALL,ALL,level
-CGPD2534W,Percent,Women,25-34,All,All,All,Professional Degree,All,ALL,ALL,ALL,rate
-CGPDUW2534,Thousands of Persons,Women,25-34,All,All,All,Professional Degree,All,ALL,ALL,ALL,level
-SCAD2534W,Percent,Women,25-34,All,All,All,Some College or Associate Degree,All,ALL,ALL,ALL,rate
-SCADUW2534,Thousands of Persons,Women,25-34,All,All,All,Some College or Associate Degree,All,ALL,ALL,ALL,level
-CGBD3544,Percent,All,35-44,All,All,All,Bachelor's Degree,All,ALL,ALL,ALL,rate
-CGBDU3544,Thousands of Persons,All,35-44,All,All,All,Bachelor's Degree,All,ALL,ALL,ALL,level
-CGDD3544,Percent,All,35-44,All,All,All,Doctoral Degree,All,ALL,ALL,ALL,rate
-CGDDU3544,Thousands of Persons,All,35-44,All,All,All,Doctoral Degree,All,ALL,ALL,ALL,level
-HSGS3544,Percent,All,35-44,All,All,All,"High School Graduates, No College",All,ALL,ALL,ALL,rate
-HSGSU3544,Thousands of Persons,All,35-44,All,All,All,"High School Graduates, No College",All,ALL,ALL,ALL,level
-LHSD3544,Percent,All,35-44,All,All,All,Less than a High School Diploma,All,ALL,ALL,ALL,rate
-LHSDU3544,Thousands of Persons,All,35-44,All,All,All,Less than a High School Diploma,All,ALL,ALL,ALL,level
-CGMD3544,Percent,All,35-44,All,All,All,Master's Degree,All,ALL,ALL,ALL,rate
-CGMDU3544,Thousands of Persons,All,35-44,All,All,All,Master's Degree,All,ALL,ALL,ALL,level
-LNU04000089,Percent,All,25-34,All,All,All,All,All,ALL,ALL,ALL,rate
-CGBD3544M,Percent,Men,35-44,All,All,All,Bachelor's Degree,All,ALL,ALL,ALL,rate
-CGBDUM3544,Thousands of Persons,Men,35-44,All,All,All,Bachelor's Degree,All,ALL,ALL,ALL,level
-CGDD3544M,Percent,Men,35-44,All,All,All,Doctoral Degree,All,ALL,ALL,ALL,rate
-CGDDUM3544,Thousands of Persons,Men,35-44,All,All,All,Doctoral Degree,All,ALL,ALL,ALL,level
-HSGS3544M,Percent,Men,35-44,All,All,All,"High School Graduates, No College",All,ALL,ALL,ALL,rate
-HSGSUM3544,Thousands of Persons,Men,35-44,All,All,All,"High School Graduates, No College",All,ALL,ALL,ALL,level
-LHSD3544M,Percent,Men,35-44,All,All,All,Less than a High School Diploma,All,ALL,ALL,ALL,rate
-LHSDUM3544,Thousands of Persons,Men,35-44,All,All,All,Less than a High School Diploma,All,ALL,ALL,ALL,level
-CGMD3544M,Percent,Men,35-44,All,All,All,Master's Degree,All,ALL,ALL,ALL,rate
-CGMDUM3544,Thousands of Persons,Men,35-44,All,All,All,Master's Degree,All,ALL,ALL,ALL,level
-CGPD3544M,Percent,Men,35-44,All,All,All,Professional Degree,All,ALL,ALL,ALL,rate
-CGPDUM3544,Thousands of Persons,Men,35-44,All,All,All,Professional Degree,All,ALL,ALL,ALL,level
-SCAD3544M,Percent,Men,35-44,All,All,All,Some College or Associate Degree,All,ALL,ALL,ALL,rate
-SCADUM3544,Thousands of Persons,Men,35-44,All,All,All,Some College or Associate Degree,All,ALL,ALL,ALL,level
-CGPD3544,Percent,All,35-44,All,All,All,Professional Degree,All,ALL,ALL,ALL,rate
-CGPDU3544,Thousands of Persons,All,35-44,All,All,All,Professional Degree,All,ALL,ALL,ALL,level
-SCAD3544,Percent,All,35-44,All,All,All,Some College or Associate Degree,All,ALL,ALL,ALL,rate
-SCADU3544,Thousands of Persons,All,35-44,All,All,All,Some College or Associate Degree,All,ALL,ALL,ALL,level
-LNU04000164,Percent,Men,25-34,All,All,All,All,All,ALL,ALL,ALL,rate
-LNU04000327,Percent,Women,25-34,All,All,All,All,All,ALL,ALL,ALL,rate
-CGBD3544W,Percent,Women,35-44,All,All,All,Bachelor's Degree,All,ALL,ALL,ALL,rate
-CGBDUW3544,Thousands of Persons,Women,35-44,All,All,All,Bachelor's Degree,All,ALL,ALL,ALL,level
-CGDD3544W,Percent,Women,35-44,All,All,All,Doctoral Degree,All,ALL,ALL,ALL,rate
-CGDDUW3544,Thousands of Persons,Women,35-44,All,All,All,Doctoral Degree,All,ALL,ALL,ALL,level
-HSGS3544W,Percent,Women,35-44,All,All,All,"High School Graduates, No College",All,ALL,ALL,ALL,rate
-HSGSUW3544,Thousands of Persons,Women,35-44,All,All,All,"High School Graduates, No College",All,ALL,ALL,ALL,level
-LHSD3544W,Percent,Women,35-44,All,All,All,Less than a High School Diploma,All,ALL,ALL,ALL,rate
-LHSDUW3544,Thousands of Persons,Women,35-44,All,All,All,Less than a High School Diploma,All,ALL,ALL,ALL,level
-CGMD3544W,Percent,Women,35-44,All,All,All,Master's Degree,All,ALL,ALL,ALL,rate
-CGMDUW3544,Thousands of Persons,Women,35-44,All,All,All,Master's Degree,All,ALL,ALL,ALL,level
-CGPD3544W,Percent,Women,35-44,All,All,All,Professional Degree,All,ALL,ALL,ALL,rate
-CGPDUW3544,Thousands of Persons,Women,35-44,All,All,All,Professional Degree,All,ALL,ALL,ALL,level
-SCAD3544W,Percent,Women,35-44,All,All,All,Some College or Associate Degree,All,ALL,ALL,ALL,rate
-SCADUW3544,Thousands of Persons,Women,35-44,All,All,All,Some College or Associate Degree,All,ALL,ALL,ALL,level
-LNU04000091,Percent,All,35-44,All,All,All,All,All,ALL,ALL,ALL,rate
-LNU04000173,Percent,Men,35-44,All,All,All,All,All,ALL,ALL,ALL,rate
-CGBD4554,Percent,All,45-54,All,All,All,Bachelor's Degree,All,ALL,ALL,ALL,rate
-CGBDU4554,Thousands of Persons,All,45-54,All,All,All,Bachelor's Degree,All,ALL,ALL,ALL,level
-CGDD4554,Percent,All,45-54,All,All,All,Doctoral Degree,All,ALL,ALL,ALL,rate
-CGDDU4554,Thousands of Persons,All,45-54,All,All,All,Doctoral Degree,All,ALL,ALL,ALL,level
-HSGS4554,Percent,All,45-54,All,All,All,"High School Graduates, No College",All,ALL,ALL,ALL,rate
-HSGSU4554,Thousands of Persons,All,45-54,All,All,All,"High School Graduates, No College",All,ALL,ALL,ALL,level
-LHSD4554,Percent,All,45-54,All,All,All,Less than a High School Diploma,All,ALL,ALL,ALL,rate
-LHSDU4554,Thousands of Persons,All,45-54,All,All,All,Less than a High School Diploma,All,ALL,ALL,ALL,level
-CGMD4554,Percent,All,45-54,All,All,All,Master's Degree,All,ALL,ALL,ALL,rate
-CGMDU4554,Thousands of Persons,All,45-54,All,All,All,Master's Degree,All,ALL,ALL,ALL,level
-LNU04000334,Percent,Women,35-44,All,All,All,All,All,ALL,ALL,ALL,rate
-LNU04000093,Percent,All,45-54,All,All,All,All,All,ALL,ALL,ALL,rate
-CGBD4554M,Percent,Men,45-54,All,All,All,Bachelor's Degree,All,ALL,ALL,ALL,rate
-CGBDUM4554,Thousands of Persons,Men,45-54,All,All,All,Bachelor's Degree,All,ALL,ALL,ALL,level
-CGDD4554M,Percent,Men,45-54,All,All,All,Doctoral Degree,All,ALL,ALL,ALL,rate
-CGDDUM4554,Thousands of Persons,Men,45-54,All,All,All,Doctoral Degree,All,ALL,ALL,ALL,level
-HSGS4554M,Percent,Men,45-54,All,All,All,"High School Graduates, No College",All,ALL,ALL,ALL,rate
-HSGSUM4554,Thousands of Persons,Men,45-54,All,All,All,"High School Graduates, No College",All,ALL,ALL,ALL,level
-LHSD4554M,Percent,Men,45-54,All,All,All,Less than a High School Diploma,All,ALL,ALL,ALL,rate
-LHSDUM4554,Thousands of Persons,Men,45-54,All,All,All,Less than a High School Diploma,All,ALL,ALL,ALL,level
-CGMD4554M,Percent,Men,45-54,All,All,All,Master's Degree,All,ALL,ALL,ALL,rate
-CGMDUM4554,Thousands of Persons,Men,45-54,All,All,All,Master's Degree,All,ALL,ALL,ALL,level
-CGPD4554M,Percent,Men,45-54,All,All,All,Professional Degree,All,ALL,ALL,ALL,rate
-CGPDUM4554,Thousands of Persons,Men,45-54,All,All,All,Professional Degree,All,ALL,ALL,ALL,level
-SCAD4554M,Percent,Men,45-54,All,All,All,Some College or Associate Degree,All,ALL,ALL,ALL,rate
-SCADUM4554,Thousands of Persons,Men,45-54,All,All,All,Some College or Associate Degree,All,ALL,ALL,ALL,level
-CGPD4554,Percent,All,45-54,All,All,All,Professional Degree,All,ALL,ALL,ALL,rate
-CGPDU4554,Thousands of Persons,All,45-54,All,All,All,Professional Degree,All,ALL,ALL,ALL,level
-SCAD4554,Percent,All,45-54,All,All,All,Some College or Associate Degree,All,ALL,ALL,ALL,rate
-SCADU4554,Thousands of Persons,All,45-54,All,All,All,Some College or Associate Degree,All,ALL,ALL,ALL,level
-LNU04000182,Percent,Men,45-54,All,All,All,All,All,ALL,ALL,ALL,rate
-LNU04000341,Percent,Women,45-54,All,All,All,All,All,ALL,ALL,ALL,rate
-CGBD4554W,Percent,Women,45-54,All,All,All,Bachelor's Degree,All,ALL,ALL,ALL,rate
-CGBDUW4554,Thousands of Persons,Women,45-54,All,All,All,Bachelor's Degree,All,ALL,ALL,ALL,level
-CGDD4554W,Percent,Women,45-54,All,All,All,Doctoral Degree,All,ALL,ALL,ALL,rate
-CGDDUW4554,Thousands of Persons,Women,45-54,All,All,All,Doctoral Degree,All,ALL,ALL,ALL,level
-HSGS4554W,Percent,Women,45-54,All,All,All,"High School Graduates, No College",All,ALL,ALL,ALL,rate
-HSGSUW4554,Thousands of Persons,Women,45-54,All,All,All,"High School Graduates, No College",All,ALL,ALL,ALL,level
-LHSD4554W,Percent,Women,45-54,All,All,All,Less than a High School Diploma,All,ALL,ALL,ALL,rate
-LHSDUW4554,Thousands of Persons,Women,45-54,All,All,All,Less than a High School Diploma,All,ALL,ALL,ALL,level
-CGMD4554W,Percent,Women,45-54,All,All,All,Master's Degree,All,ALL,ALL,ALL,rate
-CGMDUW4554,Thousands of Persons,Women,45-54,All,All,All,Master's Degree,All,ALL,ALL,ALL,level
-CGPD4554W,Percent,Women,45-54,All,All,All,Professional Degree,All,ALL,ALL,ALL,rate
-CGPDUW4554,Thousands of Persons,Women,45-54,All,All,All,Professional Degree,All,ALL,ALL,ALL,level
-SCAD4554W,Percent,Women,45-54,All,All,All,Some College or Associate Degree,All,ALL,ALL,ALL,rate
-SCADUW4554,Thousands of Persons,Women,45-54,All,All,All,Some College or Associate Degree,All,ALL,ALL,ALL,level
-LNU04000095,Percent,All,55-64,All,All,All,All,All,ALL,ALL,ALL,rate
-LNU04000190,Percent,Men,55-64,All,All,All,All,All,ALL,ALL,ALL,rate
-CGBD5564,Percent,All,55-64,All,All,All,Bachelor's Degree,All,ALL,ALL,ALL,rate
-CGBDU5564,Thousands of Persons,All,55-64,All,All,All,Bachelor's Degree,All,ALL,ALL,ALL,level
-CGDD5564,Percent,All,55-64,All,All,All,Doctoral Degree,All,ALL,ALL,ALL,rate
-CGDDU5564,Thousands of Persons,All,55-64,All,All,All,Doctoral Degree,All,ALL,ALL,ALL,level
-HSGS5564,Percent,All,55-64,All,All,All,"High School Graduates, No College",All,ALL,ALL,ALL,rate
-HSGSU5564,Thousands of Persons,All,55-64,All,All,All,"High School Graduates, No College",All,ALL,ALL,ALL,level
-LHSD5564,Percent,All,55-64,All,All,All,Less than a High School Diploma,All,ALL,ALL,ALL,rate
-LHSDU5564,Thousands of Persons,All,55-64,All,All,All,Less than a High School Diploma,All,ALL,ALL,ALL,level
-CGMD5564,Percent,All,55-64,All,All,All,Master's Degree,All,ALL,ALL,ALL,rate
-CGMDU5564,Thousands of Persons,All,55-64,All,All,All,Master's Degree,All,ALL,ALL,ALL,level
-LNU04000347,Percent,Women,55-64,All,All,All,All,All,ALL,ALL,ALL,rate
-LNU04000097,Percent,All,≥65,All,All,All,All,All,ALL,ALL,ALL,rate
-CGBD5564M,Percent,Men,55-64,All,All,All,Bachelor's Degree,All,ALL,ALL,ALL,rate
-CGBDUM5564,Thousands of Persons,Men,55-64,All,All,All,Bachelor's Degree,All,ALL,ALL,ALL,level
-CGDD5564M,Percent,Men,55-64,All,All,All,Doctoral Degree,All,ALL,ALL,ALL,rate
-CGDDUM5564,Thousands of Persons,Men,55-64,All,All,All,Doctoral Degree,All,ALL,ALL,ALL,level
-HSGS5564M,Percent,Men,55-64,All,All,All,"High School Graduates, No College",All,ALL,ALL,ALL,rate
-HSGSUM5564,Thousands of Persons,Men,55-64,All,All,All,"High School Graduates, No College",All,ALL,ALL,ALL,level
-LHSD5564M,Percent,Men,55-64,All,All,All,Less than a High School Diploma,All,ALL,ALL,ALL,rate
-LHSDUM5564,Thousands of Persons,Men,55-64,All,All,All,Less than a High School Diploma,All,ALL,ALL,ALL,level
-CGMD5564M,Percent,Men,55-64,All,All,All,Master's Degree,All,ALL,ALL,ALL,rate
-CGMDUM5564,Thousands of Persons,Men,55-64,All,All,All,Master's Degree,All,ALL,ALL,ALL,level
-CGPD5564M,Percent,Men,55-64,All,All,All,Professional Degree,All,ALL,ALL,ALL,rate
-CGPDUM5564,Thousands of Persons,Men,55-64,All,All,All,Professional Degree,All,ALL,ALL,ALL,level
-SCAD5564M,Percent,Men,55-64,All,All,All,Some College or Associate Degree,All,ALL,ALL,ALL,rate
-SCADUM5564,Thousands of Persons,Men,55-64,All,All,All,Some College or Associate Degree,All,ALL,ALL,ALL,level
-CGPD5564,Percent,All,55-64,All,All,All,Professional Degree,All,ALL,ALL,ALL,rate
-CGPDU5564,Thousands of Persons,All,55-64,All,All,All,Professional Degree,All,ALL,ALL,ALL,level
-SCAD5564,Percent,All,55-64,All,All,All,Some College or Associate Degree,All,ALL,ALL,ALL,rate
-SCADU5564,Thousands of Persons,All,55-64,All,All,All,Some College or Associate Degree,All,ALL,ALL,ALL,level
-LNU04000199,Percent,Men,≥65,All,All,All,All,All,ALL,ALL,ALL,rate
-LNU04000354,Percent,Women,≥65,All,All,All,All,All,ALL,ALL,ALL,rate
-CGBD5564W,Percent,Women,55-64,All,All,All,Bachelor's Degree,All,ALL,ALL,ALL,rate
-CGBDUW5564,Thousands of Persons,Women,55-64,All,All,All,Bachelor's Degree,All,ALL,ALL,ALL,level
-CGDD5564W,Percent,Women,55-64,All,All,All,Doctoral Degree,All,ALL,ALL,ALL,rate
-CGDDUW5564,Thousands of Persons,Women,55-64,All,All,All,Doctoral Degree,All,ALL,ALL,ALL,level
-HSGS5564W,Percent,Women,55-64,All,All,All,"High School Graduates, No College",All,ALL,ALL,ALL,rate
-HSGSUW5564,Thousands of Persons,Women,55-64,All,All,All,"High School Graduates, No College",All,ALL,ALL,ALL,level
-LHSD5564W,Percent,Women,55-64,All,All,All,Less than a High School Diploma,All,ALL,ALL,ALL,rate
-LHSDUW5564,Thousands of Persons,Women,55-64,All,All,All,Less than a High School Diploma,All,ALL,ALL,ALL,level
-CGMD5564W,Percent,Women,55-64,All,All,All,Master's Degree,All,ALL,ALL,ALL,rate
-CGMDUW5564,Thousands of Persons,Women,55-64,All,All,All,Master's Degree,All,ALL,ALL,ALL,level
-CGPD5564W,Percent,Women,55-64,All,All,All,Professional Degree,All,ALL,ALL,ALL,rate
-CGPDUW5564,Thousands of Persons,Women,55-64,All,All,All,Professional Degree,All,ALL,ALL,ALL,level
-SCAD5564W,Percent,Women,55-64,All,All,All,Some College or Associate Degree,All,ALL,ALL,ALL,rate
-SCADUW5564,Thousands of Persons,Women,55-64,All,All,All,Some College or Associate Degree,All,ALL,ALL,ALL,level
-LNU03035109,Thousands of Persons,All,All,All,All,Agricultural and Related Private Wage and Salary Workers,All,All,ALL,ALL,ALL,level
-LNU04035109,Percent,All,All,All,All,Agricultural and Related Private Wage and Salary Workers,All,All,ALL,ALL,ALL,rate
-LNU03028615,Thousands of Persons,All,All,All,All,All Industries Government Wage & Salary Workers,All,All,ALL,ALL,ALL,level
-LNU04028615,Percent,All,All,All,All,All Industries Government Wage & Salary Workers,All,All,ALL,ALL,ALL,rate
-LNU03035181,Thousands of Persons,All,All,All,All,"All Industries, Self-Employed, Unincorporated, and Unpaid Family Workers",All,All,ALL,ALL,ALL,level
-LNU04035181,Percent,All,All,All,All,"All Industries, Self-Employed, Unincorporated, and Unpaid Family Workers",All,All,ALL,ALL,ALL,rate
-LNU03032183,Thousands of Persons,All,All,All,Asian,All,All,All,ALL,ALL,ALL,level
-LNU04032183,Percent,All,All,All,Asian,All,All,All,ALL,ALL,ALL,rate
-LNU03000006,Thousands of Persons,All,All,All,Black or African American,All,All,All,ALL,ALL,ALL,level
-LNU04000006,Percent,All,All,All,Black or African American,All,All,All,ALL,ALL,ALL,rate
-LNU03073395,Thousands of Persons,All,All,All,All,All,All,All,ALL,ALL,Foreign Born,level
-LNU04073395,Percent,All,All,All,All,All,All,All,ALL,ALL,Foreign Born,rate
-LNU03000009,Thousands of Persons,All,All,All,Hispanic or Latino,All,All,All,ALL,ALL,ALL,level
-LNU04000009,Percent,All,All,All,Hispanic or Latino,All,All,All,ALL,ALL,ALL,rate
-LNU03032215,Thousands of Persons,All,All,All,All,All,All,"Management, Professional, and Related Occupations",ALL,ALL,ALL,level
-LNU04032215,Percent,All,All,All,All,All,All,"Management, Professional, and Related Occupations",ALL,ALL,ALL,rate
-LNU03000001,Thousands of Persons,Men,All,All,All,All,All,All,ALL,ALL,ALL,level
-LNU04000001,Percent,Men,All,All,All,All,All,All,ALL,ALL,ALL,rate
-LNU03073396,Thousands of Persons,Men,All,All,All,All,All,All,ALL,ALL,Foreign Born,level
-LNU04073396,Percent,Men,All,All,All,All,All,All,ALL,ALL,Foreign Born,rate
-LNU03073414,Thousands of Persons,Men,All,All,All,All,All,All,ALL,ALL,Native Born,level
-LNU04073414,Percent,Men,All,All,All,All,All,All,ALL,ALL,Native Born,rate
-LNU03073413,Thousands of Persons,All,All,All,All,All,All,All,ALL,ALL,Native Born,level
-LNU04073413,Percent,All,All,All,All,All,All,All,ALL,ALL,Native Born,rate
-LNU03032222,Thousands of Persons,All,All,All,All,All,All,"Natural Resources, Construction, and Maintenance Occupations",ALL,ALL,ALL,level
-LNU04032222,Percent,All,All,All,All,All,All,"Natural Resources, Construction, and Maintenance Occupations",ALL,ALL,ALL,rate
-LNU03032229,Thousands of Persons,All,All,All,All,"Nonagriculture, Private Wage and Salary Workers",All,All,ALL,ALL,ALL,level
-LNU04032229,Percent,All,All,All,All,"Nonagriculture, Private Wage and Salary Workers",All,All,ALL,ALL,ALL,rate
-LNU03032226,Thousands of Persons,All,All,All,All,All,All,"Production, Transportation and Material Moving Occupations",ALL,ALL,ALL,level
-LNU04032226,Percent,All,All,All,All,All,All,"Production, Transportation and Material Moving Occupations",ALL,ALL,ALL,rate
-LNU03032219,Thousands of Persons,All,All,All,All,All,All,Sales and Office Occupations,ALL,ALL,ALL,level
-LNU04032219,Percent,All,All,All,All,All,All,Sales and Office Occupations,ALL,ALL,ALL,rate
-LNU03032218,Thousands of Persons,All,All,All,All,All,All,Service Occupations,ALL,ALL,ALL,level
-LNU04032218,Percent,All,All,All,All,All,All,Service Occupations,ALL,ALL,ALL,rate
-LNU03000003,Thousands of Persons,All,All,All,White,All,All,All,ALL,ALL,ALL,level
-LNU04000003,Percent,All,All,All,White,All,All,All,ALL,ALL,ALL,rate
-LNU03000002,Thousands of Persons,Women,All,All,All,All,All,All,ALL,ALL,ALL,level
-LNU04000002,Percent,Women,All,All,All,All,All,All,ALL,ALL,ALL,rate
-LNU03073397,Thousands of Persons,Women,All,All,All,All,All,All,ALL,ALL,Foreign Born,level
-LNU04073397,Percent,Women,All,All,All,All,All,All,ALL,ALL,Foreign Born,rate
-LNU03073415,Thousands of Persons,Women,All,All,All,All,All,All,ALL,ALL,Native Born,level
-LNU04073415,Percent,Women,All,All,All,All,All,All,ALL,ALL,Native Born,rate
+﻿Series ID,Units,Gender,Age [years],Disability,Race,Industry and Class of Worker,Educational Attainment,Occupation,Veteran Status,Period of Service,Nativity,Metric,Series Description
+LNU03000000,Thousands of Persons,All,All,All,All,All,All,All,All,All,All,level,All/All/All/All/All/All/All/All/All/All
+UNRATENSA,Percent,All,All,All,All,All,All,All,All,All,All,rate,All/All/All/All/All/All/All/All/All/All
+CGBD16O,Percent,All,≥16,All,All,All,Bachelor's Degree,All,All,All,All,rate,All/≥16/All/All/All/Bachelor's Degree/All/All/All/All
+CGBDU16O,Thousands of Persons,All,≥16,All,All,All,Bachelor's Degree,All,All,All,All,level,All/≥16/All/All/All/Bachelor's Degree/All/All/All/All
+CGDD16O,Percent,All,≥16,All,All,All,Doctoral Degree,All,All,All,All,rate,All/≥16/All/All/All/Doctoral Degree/All/All/All/All
+CGDDU16O,Thousands of Persons,All,≥16,All,All,All,Doctoral Degree,All,All,All,All,level,All/≥16/All/All/All/Doctoral Degree/All/All/All/All
+HSGS16O,Percent,All,≥16,All,All,All,"High School Graduates, No College",All,All,All,All,rate,"All/≥16/All/All/All/High School Graduates, No College/All/All/All/All"
+HSGSU16O,Thousands of Persons,All,≥16,All,All,All,"High School Graduates, No College",All,All,All,All,level,"All/≥16/All/All/All/High School Graduates, No College/All/All/All/All"
+LHSD16O,Percent,All,≥16,All,All,All,Less than a High School Diploma,All,All,All,All,rate,All/≥16/All/All/All/Less than a High School Diploma/All/All/All/All
+LHSDU16O,Thousands of Persons,All,≥16,All,All,All,Less than a High School Diploma,All,All,All,All,level,All/≥16/All/All/All/Less than a High School Diploma/All/All/All/All
+CGMD16O,Percent,All,≥16,All,All,All,Master's Degree,All,All,All,All,rate,All/≥16/All/All/All/Master's Degree/All/All/All/All
+CGMDU16O,Thousands of Persons,All,≥16,All,All,All,Master's Degree,All,All,All,All,level,All/≥16/All/All/All/Master's Degree/All/All/All/All
+CGBD16OM,Percent,Men,≥16,All,All,All,Bachelor's Degree,All,All,All,All,rate,Men/≥16/All/All/All/Bachelor's Degree/All/All/All/All
+CGBDUM16O,Thousands of Persons,Men,≥16,All,All,All,Bachelor's Degree,All,All,All,All,level,Men/≥16/All/All/All/Bachelor's Degree/All/All/All/All
+CGDD16OM,Percent,Men,≥16,All,All,All,Doctoral Degree,All,All,All,All,rate,Men/≥16/All/All/All/Doctoral Degree/All/All/All/All
+CGDDUM16O,Thousands of Persons,Men,≥16,All,All,All,Doctoral Degree,All,All,All,All,level,Men/≥16/All/All/All/Doctoral Degree/All/All/All/All
+HSGS16OM,Percent,Men,≥16,All,All,All,"High School Graduates, No College",All,All,All,All,rate,"Men/≥16/All/All/All/High School Graduates, No College/All/All/All/All"
+HSGSUM16O,Thousands of Persons,Men,≥16,All,All,All,"High School Graduates, No College",All,All,All,All,level,"Men/≥16/All/All/All/High School Graduates, No College/All/All/All/All"
+CGMD16OM,Percent,Men,≥16,All,All,All,Master's Degree,All,All,All,All,rate,Men/≥16/All/All/All/Master's Degree/All/All/All/All
+CGMDUM16O,Thousands of Persons,Men,≥16,All,All,All,Master's Degree,All,All,All,All,level,Men/≥16/All/All/All/Master's Degree/All/All/All/All
+CGPD16OM,Percent,Men,≥16,All,All,All,Professional Degree,All,All,All,All,rate,Men/≥16/All/All/All/Professional Degree/All/All/All/All
+CGPDUM16O,Thousands of Persons,Men,≥16,All,All,All,Professional Degree,All,All,All,All,level,Men/≥16/All/All/All/Professional Degree/All/All/All/All
+SCAD16OM,Percent,Men,≥16,All,All,All,Some College or Associate Degree,All,All,All,All,rate,Men/≥16/All/All/All/Some College or Associate Degree/All/All/All/All
+SCADUM16O,Thousands of Persons,Men,≥16,All,All,All,Some College or Associate Degree,All,All,All,All,level,Men/≥16/All/All/All/Some College or Associate Degree/All/All/All/All
+CGPD16O,Percent,All,≥16,All,All,All,Professional Degree,All,All,All,All,rate,All/≥16/All/All/All/Professional Degree/All/All/All/All
+CGPDU16O,Thousands of Persons,All,≥16,All,All,All,Professional Degree,All,All,All,All,level,All/≥16/All/All/All/Professional Degree/All/All/All/All
+SCAD16O,Percent,All,≥16,All,All,All,Some College or Associate Degree,All,All,All,All,rate,All/≥16/All/All/All/Some College or Associate Degree/All/All/All/All
+SCADU16O,Thousands of Persons,All,≥16,All,All,All,Some College or Associate Degree,All,All,All,All,level,All/≥16/All/All/All/Some College or Associate Degree/All/All/All/All
+LNU03074597,Thousands of Persons,All,≥16,With a Disability,All,All,All,All,All,All,All,level,All/≥16/With a Disability/All/All/All/All/All/All/All
+LNU04074597,Percent,All,≥16,With a Disability,All,All,All,All,All,All,All,rate,All/≥16/With a Disability/All/All/All/All/All/All/All
+LNU03074593,Thousands of Persons,All,≥16,With No Disability,All,All,All,All,All,All,All,level,All/≥16/With No Disability/All/All/All/All/All/All/All
+LNU04074593,Percent,All,≥16,With No Disability,All,All,All,All,All,All,All,rate,All/≥16/With No Disability/All/All/All/All/All/All/All
+CGBD16OW,Percent,Women,≥16,All,All,All,Bachelor's Degree,All,All,All,All,rate,Women/≥16/All/All/All/Bachelor's Degree/All/All/All/All
+CGBDUW16O,Thousands of Persons,Women,≥16,All,All,All,Bachelor's Degree,All,All,All,All,level,Women/≥16/All/All/All/Bachelor's Degree/All/All/All/All
+CGDD16OW,Percent,Women,≥16,All,All,All,Doctoral Degree,All,All,All,All,rate,Women/≥16/All/All/All/Doctoral Degree/All/All/All/All
+CGDDUW16O,Thousands of Persons,Women,≥16,All,All,All,Doctoral Degree,All,All,All,All,level,Women/≥16/All/All/All/Doctoral Degree/All/All/All/All
+HSGS16OW,Percent,Women,≥16,All,All,All,"High School Graduates, No College",All,All,All,All,rate,"Women/≥16/All/All/All/High School Graduates, No College/All/All/All/All"
+HSGSUW16O,Thousands of Persons,Women,≥16,All,All,All,"High School Graduates, No College",All,All,All,All,level,"Women/≥16/All/All/All/High School Graduates, No College/All/All/All/All"
+LHSD16OW,Percent,Women,≥16,All,All,All,Less than a High School Diploma,All,All,All,All,rate,Women/≥16/All/All/All/Less than a High School Diploma/All/All/All/All
+LHSDUW16O,Thousands of Persons,Women,≥16,All,All,All,Less than a High School Diploma,All,All,All,All,level,Women/≥16/All/All/All/Less than a High School Diploma/All/All/All/All
+CGMD16OW,Percent,Women,≥16,All,All,All,Master's Degree,All,All,All,All,rate,Women/≥16/All/All/All/Master's Degree/All/All/All/All
+CGMDUW16O,Thousands of Persons,Women,≥16,All,All,All,Master's Degree,All,All,All,All,level,Women/≥16/All/All/All/Master's Degree/All/All/All/All
+CGPD16OW,Percent,Women,≥16,All,All,All,Professional Degree,All,All,All,All,rate,Women/≥16/All/All/All/Professional Degree/All/All/All/All
+CGPDUW16O,Thousands of Persons,Women,≥16,All,All,All,Professional Degree,All,All,All,All,level,Women/≥16/All/All/All/Professional Degree/All/All/All/All
+SCAD16OW,Percent,Women,≥16,All,All,All,Some College or Associate Degree,All,All,All,All,rate,Women/≥16/All/All/All/Some College or Associate Degree/All/All/All/All
+SCADUW16O,Thousands of Persons,Women,≥16,All,All,All,Some College or Associate Degree,All,All,All,All,level,Women/≥16/All/All/All/Some College or Associate Degree/All/All/All/All
+LNU04049526,Percent,All,≥18,All,All,All,All,All,Total Veterans,All,All,rate,All/≥18/All/All/All/All/All/Total Veterans/All/All
+LNU04049527,Percent,Men,≥18,All,All,All,All,All,Total Veterans,All,All,rate,Men/≥18/All/All/All/All/All/Total Veterans/All/All
+LNU03049602,Thousands of Persons,Men,≥18,All,All,All,All,All,Nonveterans,All,All,level,Men/≥18/All/All/All/All/All/Nonveterans/All/All
+LNU04049602,Percent,Men,≥18,All,All,All,All,All,Nonveterans,All,All,rate,Men/≥18/All/All/All/All/All/Nonveterans/All/All
+LNU03049527,Thousands of Persons,Men,≥18,All,All,All,All,All,Total Veterans,All,All,level,Men/≥18/All/All/All/All/All/Total Veterans/All/All
+LNU03066420,Thousands of Persons,Men,≥18,All,All,All,All,All,Veterans,Gulf War Era I,All,level,Men/≥18/All/All/All/All/All/Veterans/Gulf War Era I/All
+LNU04066420,Percent,Men,≥18,All,All,All,All,All,Veterans,Gulf War Era I,All,rate,Men/≥18/All/All/All/All/All/Veterans/Gulf War Era I/All
+LNU03066413,Thousands of Persons,Men,≥18,All,All,All,All,All,Veterans,Gulf War Era II,All,level,Men/≥18/All/All/All/All/All/Veterans/Gulf War Era II/All
+LNU04066413,Percent,Men,≥18,All,All,All,All,All,Veterans,Gulf War Era II,All,rate,Men/≥18/All/All/All/All/All/Veterans/Gulf War Era II/All
+LNU03049587,Thousands of Persons,Men,≥18,All,All,All,All,All,Veterans,Other Service Periods,All,level,Men/≥18/All/All/All/All/All/Veterans/Other Service Periods/All
+LNU04049587,Percent,Men,≥18,All,All,All,All,All,Veterans,Other Service Periods,All,rate,Men/≥18/All/All/All/All/All/Veterans/Other Service Periods/All
+LNU03073765,Thousands of Persons,Men,≥18,All,All,All,All,All,Veterans,Vietnam-Era and Earlier Wartime Periods,All,level,Men/≥18/All/All/All/All/All/Veterans/Vietnam-Era and Earlier Wartime Periods/All
+LNU04073765,Percent,Men,≥18,All,All,All,All,All,Veterans,Vietnam-Era and Earlier Wartime Periods,All,rate,Men/≥18/All/All/All/All/All/Veterans/Vietnam-Era and Earlier Wartime Periods/All
+LNU03049601,Thousands of Persons,All,≥18,All,All,All,All,All,Nonveterans,All,All,level,All/≥18/All/All/All/All/All/Nonveterans/All/All
+LNU04049601,Percent,All,≥18,All,All,All,All,All,Nonveterans,All,All,rate,All/≥18/All/All/All/All/All/Nonveterans/All/All
+LNU03049526,Thousands of Persons,All,≥18,All,All,All,All,All,Total Veterans,All,All,level,All/≥18/All/All/All/All/All/Total Veterans/All/All
+LNU03066415,Thousands of Persons,All,≥18,All,All,All,All,All,Veterans,Gulf War Era I,All,level,All/≥18/All/All/All/All/All/Veterans/Gulf War Era I/All
+LNU04066415,Percent,All,≥18,All,All,All,All,All,Veterans,Gulf War Era I,All,rate,All/≥18/All/All/All/All/All/Veterans/Gulf War Era I/All
+LNU03049586,Thousands of Persons,All,≥18,All,All,All,All,All,Veterans,Other Service Periods,All,level,All/≥18/All/All/All/All/All/Veterans/Other Service Periods/All
+LNU04049586,Percent,All,≥18,All,All,All,All,All,Veterans,Other Service Periods,All,rate,All/≥18/All/All/All/All/All/Veterans/Other Service Periods/All
+LNU03077884,Thousands of Persons,All,≥18,All,All,All,All,All,Veterans,Vietnam-Era and Earlier Wartime Periods,All,level,All/≥18/All/All/All/All/All/Veterans/Vietnam-Era and Earlier Wartime Periods/All
+LNU04077884,Percent,All,≥18,All,All,All,All,All,Veterans,Vietnam-Era and Earlier Wartime Periods,All,rate,All/≥18/All/All/All/All/All/Veterans/Vietnam-Era and Earlier Wartime Periods/All
+LNU04049528,Percent,Women,≥18,All,All,All,All,All,Total Veterans,All,All,rate,Women/≥18/All/All/All/All/All/Total Veterans/All/All
+LNU03049603,Thousands of Persons,Women,≥18,All,All,All,All,All,Nonveterans,All,All,level,Women/≥18/All/All/All/All/All/Nonveterans/All/All
+LNU04049603,Percent,Women,≥18,All,All,All,All,All,Nonveterans,All,All,rate,Women/≥18/All/All/All/All/All/Nonveterans/All/All
+LNU03049528,Thousands of Persons,Women,≥18,All,All,All,All,All,Total Veterans,All,All,level,Women/≥18/All/All/All/All/All/Total Veterans/All/All
+LNU03066421,Thousands of Persons,Women,≥18,All,All,All,All,All,Veterans,Gulf War Era I,All,level,Women/≥18/All/All/All/All/All/Veterans/Gulf War Era I/All
+LNU04066421,Percent,Women,≥18,All,All,All,All,All,Veterans,Gulf War Era I,All,rate,Women/≥18/All/All/All/All/All/Veterans/Gulf War Era I/All
+LNU03066414,Thousands of Persons,Women,≥18,All,All,All,All,All,Veterans,Gulf War Era II,All,level,Women/≥18/All/All/All/All/All/Veterans/Gulf War Era II/All
+LNU04066414,Percent,Women,≥18,All,All,All,All,All,Veterans,Gulf War Era II,All,rate,Women/≥18/All/All/All/All/All/Veterans/Gulf War Era II/All
+LNU03049588,Thousands of Persons,Women,≥18,All,All,All,All,All,Veterans,Other Service Periods,All,level,Women/≥18/All/All/All/All/All/Veterans/Other Service Periods/All
+LNU04049588,Percent,Women,≥18,All,All,All,All,All,Veterans,Other Service Periods,All,rate,Women/≥18/All/All/All/All/All/Veterans/Other Service Periods/All
+LNU03073766,Thousands of Persons,Women,≥18,All,All,All,All,All,Veterans,Vietnam-Era and Earlier Wartime Periods,All,level,Women/≥18/All/All/All/All/All/Veterans/Vietnam-Era and Earlier Wartime Periods/All
+LNU04073766,Percent,Women,≥18,All,All,All,All,All,Veterans,Vietnam-Era and Earlier Wartime Periods,All,rate,Women/≥18/All/All/All/All/All/Veterans/Vietnam-Era and Earlier Wartime Periods/All
+TOTLU1617,Thousands of Persons,All,16-17,All,All,All,All,All,All,All,All,level,All/16-17/All/All/All/All/All/All/All/All
+TOTLUM1617,Thousands of Persons,Men,16-17,All,All,All,All,All,All,All,All,level,Men/16-17/All/All/All/All/All/All/All/All
+LNU03000031,Thousands of Persons,Men,≥20,All,Black or African American,All,All,All,All,All,All,level,Men/≥20/All/Black or African American/All/All/All/All/All/All
+LNU04000031,Percent,Men,≥20,All,Black or African American,All,All,All,All,All,All,rate,Men/≥20/All/Black or African American/All/All/All/All/All/All
+LNU03000034,Thousands of Persons,Men,≥20,All,Hispanic or Latino,All,All,All,All,All,All,level,Men/≥20/All/Hispanic or Latino/All/All/All/All/All/All
+LNU04000034,Percent,Men,≥20,All,Hispanic or Latino,All,All,All,All,All,All,rate,Men/≥20/All/Hispanic or Latino/All/All/All/All/All/All
+LNU03000028,Thousands of Persons,Men,≥20,All,White,All,All,All,All,All,All,level,Men/≥20/All/White/All/All/All/All/All/All
+LNU04000028,Percent,Men,≥20,All,White,All,All,All,All,All,All,rate,Men/≥20/All/White/All/All/All/All/All/All
+TOTLUW1617,Thousands of Persons,Women,16-17,All,All,All,All,All,All,All,All,level,Women/16-17/All/All/All/All/All/All/All/All
+LNU03000032,Thousands of Persons,Women,≥20,All,Black or African American,All,All,All,All,All,All,level,Women/≥20/All/Black or African American/All/All/All/All/All/All
+LNU04000032,Percent,Women,≥20,All,Black or African American,All,All,All,All,All,All,rate,Women/≥20/All/Black or African American/All/All/All/All/All/All
+LNU03000035,Thousands of Persons,Women,≥20,All,Hispanic or Latino,All,All,All,All,All,All,level,Women/≥20/All/Hispanic or Latino/All/All/All/All/All/All
+LNU04000035,Percent,Women,≥20,All,Hispanic or Latino,All,All,All,All,All,All,rate,Women/≥20/All/Hispanic or Latino/All/All/All/All/All/All
+LNU03000029,Thousands of Persons,Women,≥20,All,White,All,All,All,All,All,All,level,Women/≥20/All/White/All/All/All/All/All/All
+LNU04000029,Percent,Women,≥20,All,White,All,All,All,All,All,All,rate,Women/≥20/All/White/All/All/All/All/All/All
+TOTLU1819,Thousands of Persons,All,18-19,All,All,All,All,All,All,All,All,level,All/18-19/All/All/All/All/All/All/All/All
+TOTLUM1819,Thousands of Persons,Men,18-19,All,All,All,All,All,All,All,All,level,Men/18-19/All/All/All/All/All/All/All/All
+TOTLUW1819,Thousands of Persons,Women,18-19,All,All,All,All,All,All,All,All,level,Women/18-19/All/All/All/All/All/All/All/All
+TOTLUM2024,Thousands of Persons,Men,20-24,All,All,All,All,All,All,All,All,level,Men/20-24/All/All/All/All/All/All/All/All
+TOTLUW2024,Thousands of Persons,Women,20-24,All,All,All,All,All,All,All,All,level,Women/20-24/All/All/All/All/All/All/All/All
+CGBD65O,Percent,All,≥65,All,All,All,Bachelor's Degree,All,All,All,All,rate,All/≥65/All/All/All/Bachelor's Degree/All/All/All/All
+CGBDU65O,Thousands of Persons,All,≥65,All,All,All,Bachelor's Degree,All,All,All,All,level,All/≥65/All/All/All/Bachelor's Degree/All/All/All/All
+CGDD65O,Percent,All,≥65,All,All,All,Doctoral Degree,All,All,All,All,rate,All/≥65/All/All/All/Doctoral Degree/All/All/All/All
+CGDDU65O,Thousands of Persons,All,≥65,All,All,All,Doctoral Degree,All,All,All,All,level,All/≥65/All/All/All/Doctoral Degree/All/All/All/All
+HSGS65O,Percent,All,≥65,All,All,All,"High School Graduates, No College",All,All,All,All,rate,"All/≥65/All/All/All/High School Graduates, No College/All/All/All/All"
+HSGSU65O,Thousands of Persons,All,≥65,All,All,All,"High School Graduates, No College",All,All,All,All,level,"All/≥65/All/All/All/High School Graduates, No College/All/All/All/All"
+LHSD65O,Percent,All,≥65,All,All,All,Less than a High School Diploma,All,All,All,All,rate,All/≥65/All/All/All/Less than a High School Diploma/All/All/All/All
+LHSDU65O,Thousands of Persons,All,≥65,All,All,All,Less than a High School Diploma,All,All,All,All,level,All/≥65/All/All/All/Less than a High School Diploma/All/All/All/All
+CGMD65O,Percent,All,≥65,All,All,All,Master's Degree,All,All,All,All,rate,All/≥65/All/All/All/Master's Degree/All/All/All/All
+CGMDU65O,Thousands of Persons,All,≥65,All,All,All,Master's Degree,All,All,All,All,level,All/≥65/All/All/All/Master's Degree/All/All/All/All
+CGBD65OM,Percent,Men,≥65,All,All,All,Bachelor's Degree,All,All,All,All,rate,Men/≥65/All/All/All/Bachelor's Degree/All/All/All/All
+CGBDUM65O,Thousands of Persons,Men,≥65,All,All,All,Bachelor's Degree,All,All,All,All,level,Men/≥65/All/All/All/Bachelor's Degree/All/All/All/All
+CGDD65OM,Percent,Men,≥65,All,All,All,Doctoral Degree,All,All,All,All,rate,Men/≥65/All/All/All/Doctoral Degree/All/All/All/All
+CGDDUM65O,Thousands of Persons,Men,≥65,All,All,All,Doctoral Degree,All,All,All,All,level,Men/≥65/All/All/All/Doctoral Degree/All/All/All/All
+HSGS65OM,Percent,Men,≥65,All,All,All,"High School Graduates, No College",All,All,All,All,rate,"Men/≥65/All/All/All/High School Graduates, No College/All/All/All/All"
+HSGSUM65O,Thousands of Persons,Men,≥65,All,All,All,"High School Graduates, No College",All,All,All,All,level,"Men/≥65/All/All/All/High School Graduates, No College/All/All/All/All"
+LHSD65OM,Percent,Men,≥65,All,All,All,Less than a High School Diploma,All,All,All,All,rate,Men/≥65/All/All/All/Less than a High School Diploma/All/All/All/All
+LHSDUM65O,Thousands of Persons,Men,≥65,All,All,All,Less than a High School Diploma,All,All,All,All,level,Men/≥65/All/All/All/Less than a High School Diploma/All/All/All/All
+CGMD65OM,Percent,Men,≥65,All,All,All,Master's Degree,All,All,All,All,rate,Men/≥65/All/All/All/Master's Degree/All/All/All/All
+CGMDUM65O,Thousands of Persons,Men,≥65,All,All,All,Master's Degree,All,All,All,All,level,Men/≥65/All/All/All/Master's Degree/All/All/All/All
+CGPD65OM,Percent,Men,≥65,All,All,All,Professional Degree,All,All,All,All,rate,Men/≥65/All/All/All/Professional Degree/All/All/All/All
+CGPDUM65O,Thousands of Persons,Men,≥65,All,All,All,Professional Degree,All,All,All,All,level,Men/≥65/All/All/All/Professional Degree/All/All/All/All
+SCAD65OM,Percent,Men,≥65,All,All,All,Some College or Associate Degree,All,All,All,All,rate,Men/≥65/All/All/All/Some College or Associate Degree/All/All/All/All
+SCADUM65O,Thousands of Persons,Men,≥65,All,All,All,Some College or Associate Degree,All,All,All,All,level,Men/≥65/All/All/All/Some College or Associate Degree/All/All/All/All
+CGPD65O,Percent,All,≥65,All,All,All,Professional Degree,All,All,All,All,rate,All/≥65/All/All/All/Professional Degree/All/All/All/All
+CGPDU65O,Thousands of Persons,All,≥65,All,All,All,Professional Degree,All,All,All,All,level,All/≥65/All/All/All/Professional Degree/All/All/All/All
+SCAD65O,Percent,All,≥65,All,All,All,Some College or Associate Degree,All,All,All,All,rate,All/≥65/All/All/All/Some College or Associate Degree/All/All/All/All
+SCADU65O,Thousands of Persons,All,≥65,All,All,All,Some College or Associate Degree,All,All,All,All,level,All/≥65/All/All/All/Some College or Associate Degree/All/All/All/All
+LNU03075600,Thousands of Persons,All,≥65,With a Disability,All,All,All,All,All,All,All,level,All/≥65/With a Disability/All/All/All/All/All/All/All
+LNU04075600,Percent,All,≥65,With a Disability,All,All,All,All,All,All,All,rate,All/≥65/With a Disability/All/All/All/All/All/All/All
+LNU03075379,Thousands of Persons,All,≥65,With No Disability,All,All,All,All,All,All,All,level,All/≥65/With No Disability/All/All/All/All/All/All/All
+LNU04075379,Percent,All,≥65,With No Disability,All,All,All,All,All,All,All,rate,All/≥65/With No Disability/All/All/All/All/All/All/All
+LNU03000036,Thousands of Persons,All,20-24,All,All,All,All,All,All,All,All,level,All/20-24/All/All/All/All/All/All/All/All
+TOTLU2534,Thousands of Persons,All,25-34,All,All,All,All,All,All,All,All,level,All/25-34/All/All/All/All/All/All/All/All
+CGBD65OW,Percent,Women,≥65,All,All,All,Bachelor's Degree,All,All,All,All,rate,Women/≥65/All/All/All/Bachelor's Degree/All/All/All/All
+CGBDUW65O,Thousands of Persons,Women,≥65,All,All,All,Bachelor's Degree,All,All,All,All,level,Women/≥65/All/All/All/Bachelor's Degree/All/All/All/All
+CGDD65OW,Percent,Women,≥65,All,All,All,Doctoral Degree,All,All,All,All,rate,Women/≥65/All/All/All/Doctoral Degree/All/All/All/All
+CGDDUW65O,Thousands of Persons,Women,≥65,All,All,All,Doctoral Degree,All,All,All,All,level,Women/≥65/All/All/All/Doctoral Degree/All/All/All/All
+HSGS65OW,Percent,Women,≥65,All,All,All,"High School Graduates, No College",All,All,All,All,rate,"Women/≥65/All/All/All/High School Graduates, No College/All/All/All/All"
+HSGSUW65O,Thousands of Persons,Women,≥65,All,All,All,"High School Graduates, No College",All,All,All,All,level,"Women/≥65/All/All/All/High School Graduates, No College/All/All/All/All"
+LHSD65OW,Percent,Women,≥65,All,All,All,Less than a High School Diploma,All,All,All,All,rate,Women/≥65/All/All/All/Less than a High School Diploma/All/All/All/All
+LHSDUW65O,Thousands of Persons,Women,≥65,All,All,All,Less than a High School Diploma,All,All,All,All,level,Women/≥65/All/All/All/Less than a High School Diploma/All/All/All/All
+CGMD65OW,Percent,Women,≥65,All,All,All,Master's Degree,All,All,All,All,rate,Women/≥65/All/All/All/Master's Degree/All/All/All/All
+CGMDUW65O,Thousands of Persons,Women,≥65,All,All,All,Master's Degree,All,All,All,All,level,Women/≥65/All/All/All/Master's Degree/All/All/All/All
+CGPD65OW,Percent,Women,≥65,All,All,All,Professional Degree,All,All,All,All,rate,Women/≥65/All/All/All/Professional Degree/All/All/All/All
+CGPDUW65O,Thousands of Persons,Women,≥65,All,All,All,Professional Degree,All,All,All,All,level,Women/≥65/All/All/All/Professional Degree/All/All/All/All
+SCAD65OW,Percent,Women,≥65,All,All,All,Some College or Associate Degree,All,All,All,All,rate,Women/≥65/All/All/All/Some College or Associate Degree/All/All/All/All
+SCADUW65O,Thousands of Persons,Women,≥65,All,All,All,Some College or Associate Degree,All,All,All,All,level,Women/≥65/All/All/All/Some College or Associate Degree/All/All/All/All
+TOTLUM2534,Thousands of Persons,Men,25-34,All,All,All,All,All,All,All,All,level,Men/25-34/All/All/All/All/All/All/All/All
+TOTLUW2534,Thousands of Persons,Women,25-34,All,All,All,All,All,All,All,All,level,Women/25-34/All/All/All/All/All/All/All/All
+CGBD1617,Percent,All,16-17,All,All,All,Bachelor's Degree,All,All,All,All,rate,All/16-17/All/All/All/Bachelor's Degree/All/All/All/All
+CGBDU1617,Thousands of Persons,All,16-17,All,All,All,Bachelor's Degree,All,All,All,All,level,All/16-17/All/All/All/Bachelor's Degree/All/All/All/All
+HSGS1617,Percent,All,16-17,All,All,All,"High School Graduates, No College",All,All,All,All,rate,"All/16-17/All/All/All/High School Graduates, No College/All/All/All/All"
+HSGSU1617,Thousands of Persons,All,16-17,All,All,All,"High School Graduates, No College",All,All,All,All,level,"All/16-17/All/All/All/High School Graduates, No College/All/All/All/All"
+LHSD1617,Percent,All,16-17,All,All,All,Less than a High School Diploma,All,All,All,All,rate,All/16-17/All/All/All/Less than a High School Diploma/All/All/All/All
+LHSDU1617,Thousands of Persons,All,16-17,All,All,All,Less than a High School Diploma,All,All,All,All,level,All/16-17/All/All/All/Less than a High School Diploma/All/All/All/All
+CGMD1617,Percent,All,16-17,All,All,All,Master's Degree,All,All,All,All,rate,All/16-17/All/All/All/Master's Degree/All/All/All/All
+CGMDU1617,Thousands of Persons,All,16-17,All,All,All,Master's Degree,All,All,All,All,level,All/16-17/All/All/All/Master's Degree/All/All/All/All
+TOTLU3544,Thousands of Persons,All,35-44,All,All,All,All,All,All,All,All,level,All/35-44/All/All/All/All/All/All/All/All
+TOTLUM3544,Thousands of Persons,Men,35-44,All,All,All,All,All,All,All,All,level,Men/35-44/All/All/All/All/All/All/All/All
+CGBD1617M,Percent,Men,16-17,All,All,All,Bachelor's Degree,All,All,All,All,rate,Men/16-17/All/All/All/Bachelor's Degree/All/All/All/All
+CGBDUM1617,Thousands of Persons,Men,16-17,All,All,All,Bachelor's Degree,All,All,All,All,level,Men/16-17/All/All/All/Bachelor's Degree/All/All/All/All
+HSGS1617M,Percent,Men,16-17,All,All,All,"High School Graduates, No College",All,All,All,All,rate,"Men/16-17/All/All/All/High School Graduates, No College/All/All/All/All"
+HSGSUM1617,Thousands of Persons,Men,16-17,All,All,All,"High School Graduates, No College",All,All,All,All,level,"Men/16-17/All/All/All/High School Graduates, No College/All/All/All/All"
+LHSD1617M,Percent,Men,16-17,All,All,All,Less than a High School Diploma,All,All,All,All,rate,Men/16-17/All/All/All/Less than a High School Diploma/All/All/All/All
+LHSDUM1617,Thousands of Persons,Men,16-17,All,All,All,Less than a High School Diploma,All,All,All,All,level,Men/16-17/All/All/All/Less than a High School Diploma/All/All/All/All
+CGMD1617M,Percent,Men,16-17,All,All,All,Master's Degree,All,All,All,All,rate,Men/16-17/All/All/All/Master's Degree/All/All/All/All
+CGMDUM1617,Thousands of Persons,Men,16-17,All,All,All,Master's Degree,All,All,All,All,level,Men/16-17/All/All/All/Master's Degree/All/All/All/All
+CGPD1617M,Percent,Men,16-17,All,All,All,Professional Degree,All,All,All,All,rate,Men/16-17/All/All/All/Professional Degree/All/All/All/All
+CGPDUM1617,Thousands of Persons,Men,16-17,All,All,All,Professional Degree,All,All,All,All,level,Men/16-17/All/All/All/Professional Degree/All/All/All/All
+SCAD1617M,Percent,Men,16-17,All,All,All,Some College or Associate Degree,All,All,All,All,rate,Men/16-17/All/All/All/Some College or Associate Degree/All/All/All/All
+SCADUM1617,Thousands of Persons,Men,16-17,All,All,All,Some College or Associate Degree,All,All,All,All,level,Men/16-17/All/All/All/Some College or Associate Degree/All/All/All/All
+CGPD1617,Percent,All,16-17,All,All,All,Professional Degree,All,All,All,All,rate,All/16-17/All/All/All/Professional Degree/All/All/All/All
+CGPDU1617,Thousands of Persons,All,16-17,All,All,All,Professional Degree,All,All,All,All,level,All/16-17/All/All/All/Professional Degree/All/All/All/All
+SCAD1617,Percent,All,16-17,All,All,All,Some College or Associate Degree,All,All,All,All,rate,All/16-17/All/All/All/Some College or Associate Degree/All/All/All/All
+SCADU1617,Thousands of Persons,All,16-17,All,All,All,Some College or Associate Degree,All,All,All,All,level,All/16-17/All/All/All/Some College or Associate Degree/All/All/All/All
+TOTLUW3544,Thousands of Persons,Women,35-44,All,All,All,All,All,All,All,All,level,Women/35-44/All/All/All/All/All/All/All/All
+TOTLU4554,Thousands of Persons,All,45-54,All,All,All,All,All,All,All,All,level,All/45-54/All/All/All/All/All/All/All/All
+CGBD1617W,Percent,Women,16-17,All,All,All,Bachelor's Degree,All,All,All,All,rate,Women/16-17/All/All/All/Bachelor's Degree/All/All/All/All
+CGBDUW1617,Thousands of Persons,Women,16-17,All,All,All,Bachelor's Degree,All,All,All,All,level,Women/16-17/All/All/All/Bachelor's Degree/All/All/All/All
+HSGS1617W,Percent,Women,16-17,All,All,All,"High School Graduates, No College",All,All,All,All,rate,"Women/16-17/All/All/All/High School Graduates, No College/All/All/All/All"
+HSGSUW1617,Thousands of Persons,Women,16-17,All,All,All,"High School Graduates, No College",All,All,All,All,level,"Women/16-17/All/All/All/High School Graduates, No College/All/All/All/All"
+LHSD1617W,Percent,Women,16-17,All,All,All,Less than a High School Diploma,All,All,All,All,rate,Women/16-17/All/All/All/Less than a High School Diploma/All/All/All/All
+LHSDUW1617,Thousands of Persons,Women,16-17,All,All,All,Less than a High School Diploma,All,All,All,All,level,Women/16-17/All/All/All/Less than a High School Diploma/All/All/All/All
+SCAD1617W,Percent,Women,16-17,All,All,All,Some College or Associate Degree,All,All,All,All,rate,Women/16-17/All/All/All/Some College or Associate Degree/All/All/All/All
+SCADUW1617,Thousands of Persons,Women,16-17,All,All,All,Some College or Associate Degree,All,All,All,All,level,Women/16-17/All/All/All/Some College or Associate Degree/All/All/All/All
+TOTLUM4554,Thousands of Persons,Men,45-54,All,All,All,All,All,All,All,All,level,Men/45-54/All/All/All/All/All/All/All/All
+TOTLUW4554,Thousands of Persons,Women,45-54,All,All,All,All,All,All,All,All,level,Women/45-54/All/All/All/All/All/All/All/All
+LNU03000018,Thousands of Persons,All,16-19,All,Black or African American,All,All,All,All,All,All,level,All/16-19/All/Black or African American/All/All/All/All/All/All
+LNU04000018,Percent,All,16-19,All,Black or African American,All,All,All,All,All,All,rate,All/16-19/All/Black or African American/All/All/All/All/All/All
+CGMD1617W,Percent,Women,16-17,All,All,All,Master's Degree,All,All,All,All,rate,Women/16-17/All/All/All/Master's Degree/All/All/All/All
+LNU03000021,Thousands of Persons,All,16-19,All,Hispanic or Latino,All,All,All,All,All,All,level,All/16-19/All/Hispanic or Latino/All/All/All/All/All/All
+LNU04000021,Percent,All,16-19,All,Hispanic or Latino,All,All,All,All,All,All,rate,All/16-19/All/Hispanic or Latino/All/All/All/All/All/All
+CGMDLW1617,Thousands of Persons,Women,16-17,All,All,All,Master's Degree,All,All,All,All,labor_force,Women/16-17/All/All/All/Master's Degree/All/All/All/All
+LNU03000015,Thousands of Persons,All,16-19,All,White,All,All,All,All,All,All,level,All/16-19/All/White/All/All/All/All/All/All
+LNU04000015,Percent,All,16-19,All,White,All,All,All,All,All,All,rate,All/16-19/All/White/All/All/All/All/All/All
+LNU03076955,Thousands of Persons,Men,16-64,With a Disability,All,All,All,All,All,All,All,level,Men/16-64/With a Disability/All/All/All/All/All/All/All
+LNU04076955,Percent,Men,16-64,With a Disability,All,All,All,All,All,All,All,rate,Men/16-64/With a Disability/All/All/All/All/All/All/All
+LNU03076940,Thousands of Persons,Men,16-64,With No Disability,All,All,All,All,All,All,All,level,Men/16-64/With No Disability/All/All/All/All/All/All/All
+LNU04076940,Percent,Men,16-64,With No Disability,All,All,All,All,All,All,All,rate,Men/16-64/With No Disability/All/All/All/All/All/All/All
+LNU03076960,Thousands of Persons,Women,16-64,With a Disability,All,All,All,All,All,All,All,level,Women/16-64/With a Disability/All/All/All/All/All/All/All
+LNU04076960,Percent,Women,16-64,With a Disability,All,All,All,All,All,All,All,rate,Women/16-64/With a Disability/All/All/All/All/All/All/All
+LNU03076945,Thousands of Persons,Women,16-64,With No Disability,All,All,All,All,All,All,All,level,Women/16-64/With No Disability/All/All/All/All/All/All/All
+LNU04076945,Percent,Women,16-64,With No Disability,All,All,All,All,All,All,All,rate,Women/16-64/With No Disability/All/All/All/All/All/All/All
+TOTLU5564,Thousands of Persons,All,55-64,All,All,All,All,All,All,All,All,level,All/55-64/All/All/All/All/All/All/All/All
+TOTLUM5564,Thousands of Persons,Men,55-64,All,All,All,All,All,All,All,All,level,Men/55-64/All/All/All/All/All/All/All/All
+CGBD1819,Percent,All,18-19,All,All,All,Bachelor's Degree,All,All,All,All,rate,All/18-19/All/All/All/Bachelor's Degree/All/All/All/All
+CGBDU1819,Thousands of Persons,All,18-19,All,All,All,Bachelor's Degree,All,All,All,All,level,All/18-19/All/All/All/Bachelor's Degree/All/All/All/All
+HSGS1819,Percent,All,18-19,All,All,All,"High School Graduates, No College",All,All,All,All,rate,"All/18-19/All/All/All/High School Graduates, No College/All/All/All/All"
+HSGSU1819,Thousands of Persons,All,18-19,All,All,All,"High School Graduates, No College",All,All,All,All,level,"All/18-19/All/All/All/High School Graduates, No College/All/All/All/All"
+LHSD1819,Percent,All,18-19,All,All,All,Less than a High School Diploma,All,All,All,All,rate,All/18-19/All/All/All/Less than a High School Diploma/All/All/All/All
+LHSDU1819,Thousands of Persons,All,18-19,All,All,All,Less than a High School Diploma,All,All,All,All,level,All/18-19/All/All/All/Less than a High School Diploma/All/All/All/All
+CGMD1819,Percent,All,18-19,All,All,All,Master's Degree,All,All,All,All,rate,All/18-19/All/All/All/Master's Degree/All/All/All/All
+CGMDU1819,Thousands of Persons,All,18-19,All,All,All,Master's Degree,All,All,All,All,level,All/18-19/All/All/All/Master's Degree/All/All/All/All
+TOTLUW5564,Thousands of Persons,Women,55-64,All,All,All,All,All,All,All,All,level,Women/55-64/All/All/All/All/All/All/All/All
+TOTLU65O,Thousands of Persons,All,≥65,All,All,All,All,All,All,All,All,level,All/≥65/All/All/All/All/All/All/All/All
+CGBD1819M,Percent,Men,18-19,All,All,All,Bachelor's Degree,All,All,All,All,rate,Men/18-19/All/All/All/Bachelor's Degree/All/All/All/All
+CGBDUM1819,Thousands of Persons,Men,18-19,All,All,All,Bachelor's Degree,All,All,All,All,level,Men/18-19/All/All/All/Bachelor's Degree/All/All/All/All
+HSGS1819M,Percent,Men,18-19,All,All,All,"High School Graduates, No College",All,All,All,All,rate,"Men/18-19/All/All/All/High School Graduates, No College/All/All/All/All"
+HSGSUM1819,Thousands of Persons,Men,18-19,All,All,All,"High School Graduates, No College",All,All,All,All,level,"Men/18-19/All/All/All/High School Graduates, No College/All/All/All/All"
+LHSD1819M,Percent,Men,18-19,All,All,All,Less than a High School Diploma,All,All,All,All,rate,Men/18-19/All/All/All/Less than a High School Diploma/All/All/All/All
+LHSDUM1819,Thousands of Persons,Men,18-19,All,All,All,Less than a High School Diploma,All,All,All,All,level,Men/18-19/All/All/All/Less than a High School Diploma/All/All/All/All
+CGMD1819M,Percent,Men,18-19,All,All,All,Master's Degree,All,All,All,All,rate,Men/18-19/All/All/All/Master's Degree/All/All/All/All
+CGMDUM1819,Thousands of Persons,Men,18-19,All,All,All,Master's Degree,All,All,All,All,level,Men/18-19/All/All/All/Master's Degree/All/All/All/All
+CGPD1819M,Percent,Men,18-19,All,All,All,Professional Degree,All,All,All,All,rate,Men/18-19/All/All/All/Professional Degree/All/All/All/All
+CGPDUM1819,Thousands of Persons,Men,18-19,All,All,All,Professional Degree,All,All,All,All,level,Men/18-19/All/All/All/Professional Degree/All/All/All/All
+SCAD1819M,Percent,Men,18-19,All,All,All,Some College or Associate Degree,All,All,All,All,rate,Men/18-19/All/All/All/Some College or Associate Degree/All/All/All/All
+SCADUM1819,Thousands of Persons,Men,18-19,All,All,All,Some College or Associate Degree,All,All,All,All,level,Men/18-19/All/All/All/Some College or Associate Degree/All/All/All/All
+CGPD1819,Percent,All,18-19,All,All,All,Professional Degree,All,All,All,All,rate,All/18-19/All/All/All/Professional Degree/All/All/All/All
+CGPDU1819,Thousands of Persons,All,18-19,All,All,All,Professional Degree,All,All,All,All,level,All/18-19/All/All/All/Professional Degree/All/All/All/All
+SCAD1819,Percent,All,18-19,All,All,All,Some College or Associate Degree,All,All,All,All,rate,All/18-19/All/All/All/Some College or Associate Degree/All/All/All/All
+SCADU1819,Thousands of Persons,All,18-19,All,All,All,Some College or Associate Degree,All,All,All,All,level,All/18-19/All/All/All/Some College or Associate Degree/All/All/All/All
+TOTLUM65O,Thousands of Persons,Men,≥65,All,All,All,All,All,All,All,All,level,Men/≥65/All/All/All/All/All/All/All/All
+TOTLUW65O,Thousands of Persons,Women,≥65,All,All,All,All,All,All,All,All,level,Women/≥65/All/All/All/All/All/All/All/All
+CGBD1819W,Percent,Women,18-19,All,All,All,Bachelor's Degree,All,All,All,All,rate,Women/18-19/All/All/All/Bachelor's Degree/All/All/All/All
+CGBDUW1819,Thousands of Persons,Women,18-19,All,All,All,Bachelor's Degree,All,All,All,All,level,Women/18-19/All/All/All/Bachelor's Degree/All/All/All/All
+HSGS1819W,Percent,Women,18-19,All,All,All,"High School Graduates, No College",All,All,All,All,rate,"Women/18-19/All/All/All/High School Graduates, No College/All/All/All/All"
+HSGSUW1819,Thousands of Persons,Women,18-19,All,All,All,"High School Graduates, No College",All,All,All,All,level,"Women/18-19/All/All/All/High School Graduates, No College/All/All/All/All"
+LHSD1819W,Percent,Women,18-19,All,All,All,Less than a High School Diploma,All,All,All,All,rate,Women/18-19/All/All/All/Less than a High School Diploma/All/All/All/All
+LHSDUW1819,Thousands of Persons,Women,18-19,All,All,All,Less than a High School Diploma,All,All,All,All,level,Women/18-19/All/All/All/Less than a High School Diploma/All/All/All/All
+CGMD1819W,Percent,Women,18-19,All,All,All,Master's Degree,All,All,All,All,rate,Women/18-19/All/All/All/Master's Degree/All/All/All/All
+CGMDUW1819,Thousands of Persons,Women,18-19,All,All,All,Master's Degree,All,All,All,All,level,Women/18-19/All/All/All/Master's Degree/All/All/All/All
+CGPD1819W,Percent,Women,18-19,All,All,All,Professional Degree,All,All,All,All,rate,Women/18-19/All/All/All/Professional Degree/All/All/All/All
+CGPDUW1819,Thousands of Persons,Women,18-19,All,All,All,Professional Degree,All,All,All,All,level,Women/18-19/All/All/All/Professional Degree/All/All/All/All
+SCAD1819W,Percent,Women,18-19,All,All,All,Some College or Associate Degree,All,All,All,All,rate,Women/18-19/All/All/All/Some College or Associate Degree/All/All/All/All
+SCADUW1819,Thousands of Persons,Women,18-19,All,All,All,Some College or Associate Degree,All,All,All,All,level,Women/18-19/All/All/All/Some College or Associate Degree/All/All/All/All
+LNU04000086,Percent,All,16-17,All,All,All,All,All,All,All,All,rate,All/16-17/All/All/All/All/All/All/All/All
+LNU04000152,Percent,Men,16-17,All,All,All,All,All,All,All,All,rate,Men/16-17/All/All/All/All/All/All/All/All
+CGBD2024,Percent,All,20-24,All,All,All,Bachelor's Degree,All,All,All,All,rate,All/20-24/All/All/All/Bachelor's Degree/All/All/All/All
+CGBDU2024,Thousands of Persons,All,20-24,All,All,All,Bachelor's Degree,All,All,All,All,level,All/20-24/All/All/All/Bachelor's Degree/All/All/All/All
+CGDD2024,Percent,All,20-24,All,All,All,Doctoral Degree,All,All,All,All,rate,All/20-24/All/All/All/Doctoral Degree/All/All/All/All
+CGDDU2024,Thousands of Persons,All,20-24,All,All,All,Doctoral Degree,All,All,All,All,level,All/20-24/All/All/All/Doctoral Degree/All/All/All/All
+HSGS2024,Percent,All,20-24,All,All,All,"High School Graduates, No College",All,All,All,All,rate,"All/20-24/All/All/All/High School Graduates, No College/All/All/All/All"
+HSGSU2024,Thousands of Persons,All,20-24,All,All,All,"High School Graduates, No College",All,All,All,All,level,"All/20-24/All/All/All/High School Graduates, No College/All/All/All/All"
+LHSD2024,Percent,All,20-24,All,All,All,Less than a High School Diploma,All,All,All,All,rate,All/20-24/All/All/All/Less than a High School Diploma/All/All/All/All
+LHSDU2024,Thousands of Persons,All,20-24,All,All,All,Less than a High School Diploma,All,All,All,All,level,All/20-24/All/All/All/Less than a High School Diploma/All/All/All/All
+CGMD2024,Percent,All,20-24,All,All,All,Master's Degree,All,All,All,All,rate,All/20-24/All/All/All/Master's Degree/All/All/All/All
+CGMDU2024,Thousands of Persons,All,20-24,All,All,All,Master's Degree,All,All,All,All,level,All/20-24/All/All/All/Master's Degree/All/All/All/All
+LNU04000317,Percent,Women,16-17,All,All,All,All,All,All,All,All,rate,Women/16-17/All/All/All/All/All/All/All/All
+CGBD2024M,Percent,Men,20-24,All,All,All,Bachelor's Degree,All,All,All,All,rate,Men/20-24/All/All/All/Bachelor's Degree/All/All/All/All
+CGBDUM2024,Thousands of Persons,Men,20-24,All,All,All,Bachelor's Degree,All,All,All,All,level,Men/20-24/All/All/All/Bachelor's Degree/All/All/All/All
+CGDD2024M,Percent,Men,20-24,All,All,All,Doctoral Degree,All,All,All,All,rate,Men/20-24/All/All/All/Doctoral Degree/All/All/All/All
+CGDDUM2024,Thousands of Persons,Men,20-24,All,All,All,Doctoral Degree,All,All,All,All,level,Men/20-24/All/All/All/Doctoral Degree/All/All/All/All
+HSGS2024M,Percent,Men,20-24,All,All,All,"High School Graduates, No College",All,All,All,All,rate,"Men/20-24/All/All/All/High School Graduates, No College/All/All/All/All"
+HSGSUM2024,Thousands of Persons,Men,20-24,All,All,All,"High School Graduates, No College",All,All,All,All,level,"Men/20-24/All/All/All/High School Graduates, No College/All/All/All/All"
+LHSD2024M,Percent,Men,20-24,All,All,All,Less than a High School Diploma,All,All,All,All,rate,Men/20-24/All/All/All/Less than a High School Diploma/All/All/All/All
+LHSDUM2024,Thousands of Persons,Men,20-24,All,All,All,Less than a High School Diploma,All,All,All,All,level,Men/20-24/All/All/All/Less than a High School Diploma/All/All/All/All
+CGMD2024M,Percent,Men,20-24,All,All,All,Master's Degree,All,All,All,All,rate,Men/20-24/All/All/All/Master's Degree/All/All/All/All
+CGMDUM2024,Thousands of Persons,Men,20-24,All,All,All,Master's Degree,All,All,All,All,level,Men/20-24/All/All/All/Master's Degree/All/All/All/All
+CGPD2024M,Percent,Men,20-24,All,All,All,Professional Degree,All,All,All,All,rate,Men/20-24/All/All/All/Professional Degree/All/All/All/All
+CGPDUM2024,Thousands of Persons,Men,20-24,All,All,All,Professional Degree,All,All,All,All,level,Men/20-24/All/All/All/Professional Degree/All/All/All/All
+SCAD2024M,Percent,Men,20-24,All,All,All,Some College or Associate Degree,All,All,All,All,rate,Men/20-24/All/All/All/Some College or Associate Degree/All/All/All/All
+SCADUM2024,Thousands of Persons,Men,20-24,All,All,All,Some College or Associate Degree,All,All,All,All,level,Men/20-24/All/All/All/Some College or Associate Degree/All/All/All/All
+CGPD2024,Percent,All,20-24,All,All,All,Professional Degree,All,All,All,All,rate,All/20-24/All/All/All/Professional Degree/All/All/All/All
+CGPDU2024,Thousands of Persons,All,20-24,All,All,All,Professional Degree,All,All,All,All,level,All/20-24/All/All/All/Professional Degree/All/All/All/All
+SCAD2024,Percent,All,20-24,All,All,All,Some College or Associate Degree,All,All,All,All,rate,All/20-24/All/All/All/Some College or Associate Degree/All/All/All/All
+SCADU2024,Thousands of Persons,All,20-24,All,All,All,Some College or Associate Degree,All,All,All,All,level,All/20-24/All/All/All/Some College or Associate Degree/All/All/All/All
+LNU04000088,Percent,All,18-19,All,All,All,All,All,All,All,All,rate,All/18-19/All/All/All/All/All/All/All/All
+LNU04000154,Percent,Men,18-19,All,All,All,All,All,All,All,All,rate,Men/18-19/All/All/All/All/All/All/All/All
+CGBD2024W,Percent,Women,20-24,All,All,All,Bachelor's Degree,All,All,All,All,rate,Women/20-24/All/All/All/Bachelor's Degree/All/All/All/All
+CGBDUW2024,Thousands of Persons,Women,20-24,All,All,All,Bachelor's Degree,All,All,All,All,level,Women/20-24/All/All/All/Bachelor's Degree/All/All/All/All
+CGDD2024W,Percent,Women,20-24,All,All,All,Doctoral Degree,All,All,All,All,rate,Women/20-24/All/All/All/Doctoral Degree/All/All/All/All
+CGDDUW2024,Thousands of Persons,Women,20-24,All,All,All,Doctoral Degree,All,All,All,All,level,Women/20-24/All/All/All/Doctoral Degree/All/All/All/All
+HSGS2024W,Percent,Women,20-24,All,All,All,"High School Graduates, No College",All,All,All,All,rate,"Women/20-24/All/All/All/High School Graduates, No College/All/All/All/All"
+HSGSUW2024,Thousands of Persons,Women,20-24,All,All,All,"High School Graduates, No College",All,All,All,All,level,"Women/20-24/All/All/All/High School Graduates, No College/All/All/All/All"
+LHSD2024W,Percent,Women,20-24,All,All,All,Less than a High School Diploma,All,All,All,All,rate,Women/20-24/All/All/All/Less than a High School Diploma/All/All/All/All
+LHSDUW2024,Thousands of Persons,Women,20-24,All,All,All,Less than a High School Diploma,All,All,All,All,level,Women/20-24/All/All/All/Less than a High School Diploma/All/All/All/All
+CGMD2024W,Percent,Women,20-24,All,All,All,Master's Degree,All,All,All,All,rate,Women/20-24/All/All/All/Master's Degree/All/All/All/All
+CGMDUW2024,Thousands of Persons,Women,20-24,All,All,All,Master's Degree,All,All,All,All,level,Women/20-24/All/All/All/Master's Degree/All/All/All/All
+CGPD2024W,Percent,Women,20-24,All,All,All,Professional Degree,All,All,All,All,rate,Women/20-24/All/All/All/Professional Degree/All/All/All/All
+CGPDUW2024,Thousands of Persons,Women,20-24,All,All,All,Professional Degree,All,All,All,All,level,Women/20-24/All/All/All/Professional Degree/All/All/All/All
+SCAD2024W,Percent,Women,20-24,All,All,All,Some College or Associate Degree,All,All,All,All,rate,Women/20-24/All/All/All/Some College or Associate Degree/All/All/All/All
+SCADUW2024,Thousands of Persons,Women,20-24,All,All,All,Some College or Associate Degree,All,All,All,All,level,Women/20-24/All/All/All/Some College or Associate Degree/All/All/All/All
+LNU04000319,Percent,Women,18-19,All,All,All,All,All,All,All,All,rate,Women/18-19/All/All/All/All/All/All/All/All
+CGBD2534,Percent,All,25-34,All,All,All,Bachelor's Degree,All,All,All,All,rate,All/25-34/All/All/All/Bachelor's Degree/All/All/All/All
+CGBDU2534,Thousands of Persons,All,25-34,All,All,All,Bachelor's Degree,All,All,All,All,level,All/25-34/All/All/All/Bachelor's Degree/All/All/All/All
+CGDD2534,Percent,All,25-34,All,All,All,Doctoral Degree,All,All,All,All,rate,All/25-34/All/All/All/Doctoral Degree/All/All/All/All
+CGDDU2534,Thousands of Persons,All,25-34,All,All,All,Doctoral Degree,All,All,All,All,level,All/25-34/All/All/All/Doctoral Degree/All/All/All/All
+HSGS2534,Percent,All,25-34,All,All,All,"High School Graduates, No College",All,All,All,All,rate,"All/25-34/All/All/All/High School Graduates, No College/All/All/All/All"
+HSGSU2534,Thousands of Persons,All,25-34,All,All,All,"High School Graduates, No College",All,All,All,All,level,"All/25-34/All/All/All/High School Graduates, No College/All/All/All/All"
+LHSD2534,Percent,All,25-34,All,All,All,Less than a High School Diploma,All,All,All,All,rate,All/25-34/All/All/All/Less than a High School Diploma/All/All/All/All
+LHSDU2534,Thousands of Persons,All,25-34,All,All,All,Less than a High School Diploma,All,All,All,All,level,All/25-34/All/All/All/Less than a High School Diploma/All/All/All/All
+CGMD2534,Percent,All,25-34,All,All,All,Master's Degree,All,All,All,All,rate,All/25-34/All/All/All/Master's Degree/All/All/All/All
+CGMDU2534,Thousands of Persons,All,25-34,All,All,All,Master's Degree,All,All,All,All,level,All/25-34/All/All/All/Master's Degree/All/All/All/All
+LNU04000036,Percent,All,20-24,All,All,All,All,All,All,All,All,rate,All/20-24/All/All/All/All/All/All/All/All
+CGBD2534M,Percent,Men,25-34,All,All,All,Bachelor's Degree,All,All,All,All,rate,Men/25-34/All/All/All/Bachelor's Degree/All/All/All/All
+CGBDUM2534,Thousands of Persons,Men,25-34,All,All,All,Bachelor's Degree,All,All,All,All,level,Men/25-34/All/All/All/Bachelor's Degree/All/All/All/All
+CGDD2534M,Percent,Men,25-34,All,All,All,Doctoral Degree,All,All,All,All,rate,Men/25-34/All/All/All/Doctoral Degree/All/All/All/All
+CGDDUM2534,Thousands of Persons,Men,25-34,All,All,All,Doctoral Degree,All,All,All,All,level,Men/25-34/All/All/All/Doctoral Degree/All/All/All/All
+HSGS2534M,Percent,Men,25-34,All,All,All,"High School Graduates, No College",All,All,All,All,rate,"Men/25-34/All/All/All/High School Graduates, No College/All/All/All/All"
+HSGSUM2534,Thousands of Persons,Men,25-34,All,All,All,"High School Graduates, No College",All,All,All,All,level,"Men/25-34/All/All/All/High School Graduates, No College/All/All/All/All"
+LHSD2534M,Percent,Men,25-34,All,All,All,Less than a High School Diploma,All,All,All,All,rate,Men/25-34/All/All/All/Less than a High School Diploma/All/All/All/All
+LHSDUM2534,Thousands of Persons,Men,25-34,All,All,All,Less than a High School Diploma,All,All,All,All,level,Men/25-34/All/All/All/Less than a High School Diploma/All/All/All/All
+CGMD2534M,Percent,Men,25-34,All,All,All,Master's Degree,All,All,All,All,rate,Men/25-34/All/All/All/Master's Degree/All/All/All/All
+CGMDUM2534,Thousands of Persons,Men,25-34,All,All,All,Master's Degree,All,All,All,All,level,Men/25-34/All/All/All/Master's Degree/All/All/All/All
+CGPD2534M,Percent,Men,25-34,All,All,All,Professional Degree,All,All,All,All,rate,Men/25-34/All/All/All/Professional Degree/All/All/All/All
+CGPDUM2534,Thousands of Persons,Men,25-34,All,All,All,Professional Degree,All,All,All,All,level,Men/25-34/All/All/All/Professional Degree/All/All/All/All
+SCAD2534M,Percent,Men,25-34,All,All,All,Some College or Associate Degree,All,All,All,All,rate,Men/25-34/All/All/All/Some College or Associate Degree/All/All/All/All
+SCADUM2534,Thousands of Persons,Men,25-34,All,All,All,Some College or Associate Degree,All,All,All,All,level,Men/25-34/All/All/All/Some College or Associate Degree/All/All/All/All
+CGPD2534,Percent,All,25-34,All,All,All,Professional Degree,All,All,All,All,rate,All/25-34/All/All/All/Professional Degree/All/All/All/All
+CGPDU2534,Thousands of Persons,All,25-34,All,All,All,Professional Degree,All,All,All,All,level,All/25-34/All/All/All/Professional Degree/All/All/All/All
+SCAD2534,Percent,All,25-34,All,All,All,Some College or Associate Degree,All,All,All,All,rate,All/25-34/All/All/All/Some College or Associate Degree/All/All/All/All
+SCADU2534,Thousands of Persons,All,25-34,All,All,All,Some College or Associate Degree,All,All,All,All,level,All/25-34/All/All/All/Some College or Associate Degree/All/All/All/All
+LNU04000037,Percent,Men,20-24,All,All,All,All,All,All,All,All,rate,Men/20-24/All/All/All/All/All/All/All/All
+LNU04000038,Percent,Women,20-24,All,All,All,All,All,All,All,All,rate,Women/20-24/All/All/All/All/All/All/All/All
+CGBD2534W,Percent,Women,25-34,All,All,All,Bachelor's Degree,All,All,All,All,rate,Women/25-34/All/All/All/Bachelor's Degree/All/All/All/All
+CGBDUW2534,Thousands of Persons,Women,25-34,All,All,All,Bachelor's Degree,All,All,All,All,level,Women/25-34/All/All/All/Bachelor's Degree/All/All/All/All
+CGDD2534W,Percent,Women,25-34,All,All,All,Doctoral Degree,All,All,All,All,rate,Women/25-34/All/All/All/Doctoral Degree/All/All/All/All
+CGDDUW2534,Thousands of Persons,Women,25-34,All,All,All,Doctoral Degree,All,All,All,All,level,Women/25-34/All/All/All/Doctoral Degree/All/All/All/All
+HSGS2534W,Percent,Women,25-34,All,All,All,"High School Graduates, No College",All,All,All,All,rate,"Women/25-34/All/All/All/High School Graduates, No College/All/All/All/All"
+HSGSUW2534,Thousands of Persons,Women,25-34,All,All,All,"High School Graduates, No College",All,All,All,All,level,"Women/25-34/All/All/All/High School Graduates, No College/All/All/All/All"
+LHSD2534W,Percent,Women,25-34,All,All,All,Less than a High School Diploma,All,All,All,All,rate,Women/25-34/All/All/All/Less than a High School Diploma/All/All/All/All
+LHSDUW2534,Thousands of Persons,Women,25-34,All,All,All,Less than a High School Diploma,All,All,All,All,level,Women/25-34/All/All/All/Less than a High School Diploma/All/All/All/All
+CGMD2534W,Percent,Women,25-34,All,All,All,Master's Degree,All,All,All,All,rate,Women/25-34/All/All/All/Master's Degree/All/All/All/All
+CGMDUW2534,Thousands of Persons,Women,25-34,All,All,All,Master's Degree,All,All,All,All,level,Women/25-34/All/All/All/Master's Degree/All/All/All/All
+CGPD2534W,Percent,Women,25-34,All,All,All,Professional Degree,All,All,All,All,rate,Women/25-34/All/All/All/Professional Degree/All/All/All/All
+CGPDUW2534,Thousands of Persons,Women,25-34,All,All,All,Professional Degree,All,All,All,All,level,Women/25-34/All/All/All/Professional Degree/All/All/All/All
+SCAD2534W,Percent,Women,25-34,All,All,All,Some College or Associate Degree,All,All,All,All,rate,Women/25-34/All/All/All/Some College or Associate Degree/All/All/All/All
+SCADUW2534,Thousands of Persons,Women,25-34,All,All,All,Some College or Associate Degree,All,All,All,All,level,Women/25-34/All/All/All/Some College or Associate Degree/All/All/All/All
+CGBD3544,Percent,All,35-44,All,All,All,Bachelor's Degree,All,All,All,All,rate,All/35-44/All/All/All/Bachelor's Degree/All/All/All/All
+CGBDU3544,Thousands of Persons,All,35-44,All,All,All,Bachelor's Degree,All,All,All,All,level,All/35-44/All/All/All/Bachelor's Degree/All/All/All/All
+CGDD3544,Percent,All,35-44,All,All,All,Doctoral Degree,All,All,All,All,rate,All/35-44/All/All/All/Doctoral Degree/All/All/All/All
+CGDDU3544,Thousands of Persons,All,35-44,All,All,All,Doctoral Degree,All,All,All,All,level,All/35-44/All/All/All/Doctoral Degree/All/All/All/All
+HSGS3544,Percent,All,35-44,All,All,All,"High School Graduates, No College",All,All,All,All,rate,"All/35-44/All/All/All/High School Graduates, No College/All/All/All/All"
+HSGSU3544,Thousands of Persons,All,35-44,All,All,All,"High School Graduates, No College",All,All,All,All,level,"All/35-44/All/All/All/High School Graduates, No College/All/All/All/All"
+LHSD3544,Percent,All,35-44,All,All,All,Less than a High School Diploma,All,All,All,All,rate,All/35-44/All/All/All/Less than a High School Diploma/All/All/All/All
+LHSDU3544,Thousands of Persons,All,35-44,All,All,All,Less than a High School Diploma,All,All,All,All,level,All/35-44/All/All/All/Less than a High School Diploma/All/All/All/All
+CGMD3544,Percent,All,35-44,All,All,All,Master's Degree,All,All,All,All,rate,All/35-44/All/All/All/Master's Degree/All/All/All/All
+CGMDU3544,Thousands of Persons,All,35-44,All,All,All,Master's Degree,All,All,All,All,level,All/35-44/All/All/All/Master's Degree/All/All/All/All
+LNU04000089,Percent,All,25-34,All,All,All,All,All,All,All,All,rate,All/25-34/All/All/All/All/All/All/All/All
+CGBD3544M,Percent,Men,35-44,All,All,All,Bachelor's Degree,All,All,All,All,rate,Men/35-44/All/All/All/Bachelor's Degree/All/All/All/All
+CGBDUM3544,Thousands of Persons,Men,35-44,All,All,All,Bachelor's Degree,All,All,All,All,level,Men/35-44/All/All/All/Bachelor's Degree/All/All/All/All
+CGDD3544M,Percent,Men,35-44,All,All,All,Doctoral Degree,All,All,All,All,rate,Men/35-44/All/All/All/Doctoral Degree/All/All/All/All
+CGDDUM3544,Thousands of Persons,Men,35-44,All,All,All,Doctoral Degree,All,All,All,All,level,Men/35-44/All/All/All/Doctoral Degree/All/All/All/All
+HSGS3544M,Percent,Men,35-44,All,All,All,"High School Graduates, No College",All,All,All,All,rate,"Men/35-44/All/All/All/High School Graduates, No College/All/All/All/All"
+HSGSUM3544,Thousands of Persons,Men,35-44,All,All,All,"High School Graduates, No College",All,All,All,All,level,"Men/35-44/All/All/All/High School Graduates, No College/All/All/All/All"
+LHSD3544M,Percent,Men,35-44,All,All,All,Less than a High School Diploma,All,All,All,All,rate,Men/35-44/All/All/All/Less than a High School Diploma/All/All/All/All
+LHSDUM3544,Thousands of Persons,Men,35-44,All,All,All,Less than a High School Diploma,All,All,All,All,level,Men/35-44/All/All/All/Less than a High School Diploma/All/All/All/All
+CGMD3544M,Percent,Men,35-44,All,All,All,Master's Degree,All,All,All,All,rate,Men/35-44/All/All/All/Master's Degree/All/All/All/All
+CGMDUM3544,Thousands of Persons,Men,35-44,All,All,All,Master's Degree,All,All,All,All,level,Men/35-44/All/All/All/Master's Degree/All/All/All/All
+CGPD3544M,Percent,Men,35-44,All,All,All,Professional Degree,All,All,All,All,rate,Men/35-44/All/All/All/Professional Degree/All/All/All/All
+CGPDUM3544,Thousands of Persons,Men,35-44,All,All,All,Professional Degree,All,All,All,All,level,Men/35-44/All/All/All/Professional Degree/All/All/All/All
+SCAD3544M,Percent,Men,35-44,All,All,All,Some College or Associate Degree,All,All,All,All,rate,Men/35-44/All/All/All/Some College or Associate Degree/All/All/All/All
+SCADUM3544,Thousands of Persons,Men,35-44,All,All,All,Some College or Associate Degree,All,All,All,All,level,Men/35-44/All/All/All/Some College or Associate Degree/All/All/All/All
+CGPD3544,Percent,All,35-44,All,All,All,Professional Degree,All,All,All,All,rate,All/35-44/All/All/All/Professional Degree/All/All/All/All
+CGPDU3544,Thousands of Persons,All,35-44,All,All,All,Professional Degree,All,All,All,All,level,All/35-44/All/All/All/Professional Degree/All/All/All/All
+SCAD3544,Percent,All,35-44,All,All,All,Some College or Associate Degree,All,All,All,All,rate,All/35-44/All/All/All/Some College or Associate Degree/All/All/All/All
+SCADU3544,Thousands of Persons,All,35-44,All,All,All,Some College or Associate Degree,All,All,All,All,level,All/35-44/All/All/All/Some College or Associate Degree/All/All/All/All
+LNU04000164,Percent,Men,25-34,All,All,All,All,All,All,All,All,rate,Men/25-34/All/All/All/All/All/All/All/All
+LNU04000327,Percent,Women,25-34,All,All,All,All,All,All,All,All,rate,Women/25-34/All/All/All/All/All/All/All/All
+CGBD3544W,Percent,Women,35-44,All,All,All,Bachelor's Degree,All,All,All,All,rate,Women/35-44/All/All/All/Bachelor's Degree/All/All/All/All
+CGBDUW3544,Thousands of Persons,Women,35-44,All,All,All,Bachelor's Degree,All,All,All,All,level,Women/35-44/All/All/All/Bachelor's Degree/All/All/All/All
+CGDD3544W,Percent,Women,35-44,All,All,All,Doctoral Degree,All,All,All,All,rate,Women/35-44/All/All/All/Doctoral Degree/All/All/All/All
+CGDDUW3544,Thousands of Persons,Women,35-44,All,All,All,Doctoral Degree,All,All,All,All,level,Women/35-44/All/All/All/Doctoral Degree/All/All/All/All
+HSGS3544W,Percent,Women,35-44,All,All,All,"High School Graduates, No College",All,All,All,All,rate,"Women/35-44/All/All/All/High School Graduates, No College/All/All/All/All"
+HSGSUW3544,Thousands of Persons,Women,35-44,All,All,All,"High School Graduates, No College",All,All,All,All,level,"Women/35-44/All/All/All/High School Graduates, No College/All/All/All/All"
+LHSD3544W,Percent,Women,35-44,All,All,All,Less than a High School Diploma,All,All,All,All,rate,Women/35-44/All/All/All/Less than a High School Diploma/All/All/All/All
+LHSDUW3544,Thousands of Persons,Women,35-44,All,All,All,Less than a High School Diploma,All,All,All,All,level,Women/35-44/All/All/All/Less than a High School Diploma/All/All/All/All
+CGMD3544W,Percent,Women,35-44,All,All,All,Master's Degree,All,All,All,All,rate,Women/35-44/All/All/All/Master's Degree/All/All/All/All
+CGMDUW3544,Thousands of Persons,Women,35-44,All,All,All,Master's Degree,All,All,All,All,level,Women/35-44/All/All/All/Master's Degree/All/All/All/All
+CGPD3544W,Percent,Women,35-44,All,All,All,Professional Degree,All,All,All,All,rate,Women/35-44/All/All/All/Professional Degree/All/All/All/All
+CGPDUW3544,Thousands of Persons,Women,35-44,All,All,All,Professional Degree,All,All,All,All,level,Women/35-44/All/All/All/Professional Degree/All/All/All/All
+SCAD3544W,Percent,Women,35-44,All,All,All,Some College or Associate Degree,All,All,All,All,rate,Women/35-44/All/All/All/Some College or Associate Degree/All/All/All/All
+SCADUW3544,Thousands of Persons,Women,35-44,All,All,All,Some College or Associate Degree,All,All,All,All,level,Women/35-44/All/All/All/Some College or Associate Degree/All/All/All/All
+LNU04000091,Percent,All,35-44,All,All,All,All,All,All,All,All,rate,All/35-44/All/All/All/All/All/All/All/All
+LNU04000173,Percent,Men,35-44,All,All,All,All,All,All,All,All,rate,Men/35-44/All/All/All/All/All/All/All/All
+CGBD4554,Percent,All,45-54,All,All,All,Bachelor's Degree,All,All,All,All,rate,All/45-54/All/All/All/Bachelor's Degree/All/All/All/All
+CGBDU4554,Thousands of Persons,All,45-54,All,All,All,Bachelor's Degree,All,All,All,All,level,All/45-54/All/All/All/Bachelor's Degree/All/All/All/All
+CGDD4554,Percent,All,45-54,All,All,All,Doctoral Degree,All,All,All,All,rate,All/45-54/All/All/All/Doctoral Degree/All/All/All/All
+CGDDU4554,Thousands of Persons,All,45-54,All,All,All,Doctoral Degree,All,All,All,All,level,All/45-54/All/All/All/Doctoral Degree/All/All/All/All
+HSGS4554,Percent,All,45-54,All,All,All,"High School Graduates, No College",All,All,All,All,rate,"All/45-54/All/All/All/High School Graduates, No College/All/All/All/All"
+HSGSU4554,Thousands of Persons,All,45-54,All,All,All,"High School Graduates, No College",All,All,All,All,level,"All/45-54/All/All/All/High School Graduates, No College/All/All/All/All"
+LHSD4554,Percent,All,45-54,All,All,All,Less than a High School Diploma,All,All,All,All,rate,All/45-54/All/All/All/Less than a High School Diploma/All/All/All/All
+LHSDU4554,Thousands of Persons,All,45-54,All,All,All,Less than a High School Diploma,All,All,All,All,level,All/45-54/All/All/All/Less than a High School Diploma/All/All/All/All
+CGMD4554,Percent,All,45-54,All,All,All,Master's Degree,All,All,All,All,rate,All/45-54/All/All/All/Master's Degree/All/All/All/All
+CGMDU4554,Thousands of Persons,All,45-54,All,All,All,Master's Degree,All,All,All,All,level,All/45-54/All/All/All/Master's Degree/All/All/All/All
+LNU04000334,Percent,Women,35-44,All,All,All,All,All,All,All,All,rate,Women/35-44/All/All/All/All/All/All/All/All
+LNU04000093,Percent,All,45-54,All,All,All,All,All,All,All,All,rate,All/45-54/All/All/All/All/All/All/All/All
+CGBD4554M,Percent,Men,45-54,All,All,All,Bachelor's Degree,All,All,All,All,rate,Men/45-54/All/All/All/Bachelor's Degree/All/All/All/All
+CGBDUM4554,Thousands of Persons,Men,45-54,All,All,All,Bachelor's Degree,All,All,All,All,level,Men/45-54/All/All/All/Bachelor's Degree/All/All/All/All
+CGDD4554M,Percent,Men,45-54,All,All,All,Doctoral Degree,All,All,All,All,rate,Men/45-54/All/All/All/Doctoral Degree/All/All/All/All
+CGDDUM4554,Thousands of Persons,Men,45-54,All,All,All,Doctoral Degree,All,All,All,All,level,Men/45-54/All/All/All/Doctoral Degree/All/All/All/All
+HSGS4554M,Percent,Men,45-54,All,All,All,"High School Graduates, No College",All,All,All,All,rate,"Men/45-54/All/All/All/High School Graduates, No College/All/All/All/All"
+HSGSUM4554,Thousands of Persons,Men,45-54,All,All,All,"High School Graduates, No College",All,All,All,All,level,"Men/45-54/All/All/All/High School Graduates, No College/All/All/All/All"
+LHSD4554M,Percent,Men,45-54,All,All,All,Less than a High School Diploma,All,All,All,All,rate,Men/45-54/All/All/All/Less than a High School Diploma/All/All/All/All
+LHSDUM4554,Thousands of Persons,Men,45-54,All,All,All,Less than a High School Diploma,All,All,All,All,level,Men/45-54/All/All/All/Less than a High School Diploma/All/All/All/All
+CGMD4554M,Percent,Men,45-54,All,All,All,Master's Degree,All,All,All,All,rate,Men/45-54/All/All/All/Master's Degree/All/All/All/All
+CGMDUM4554,Thousands of Persons,Men,45-54,All,All,All,Master's Degree,All,All,All,All,level,Men/45-54/All/All/All/Master's Degree/All/All/All/All
+CGPD4554M,Percent,Men,45-54,All,All,All,Professional Degree,All,All,All,All,rate,Men/45-54/All/All/All/Professional Degree/All/All/All/All
+CGPDUM4554,Thousands of Persons,Men,45-54,All,All,All,Professional Degree,All,All,All,All,level,Men/45-54/All/All/All/Professional Degree/All/All/All/All
+SCAD4554M,Percent,Men,45-54,All,All,All,Some College or Associate Degree,All,All,All,All,rate,Men/45-54/All/All/All/Some College or Associate Degree/All/All/All/All
+SCADUM4554,Thousands of Persons,Men,45-54,All,All,All,Some College or Associate Degree,All,All,All,All,level,Men/45-54/All/All/All/Some College or Associate Degree/All/All/All/All
+CGPD4554,Percent,All,45-54,All,All,All,Professional Degree,All,All,All,All,rate,All/45-54/All/All/All/Professional Degree/All/All/All/All
+CGPDU4554,Thousands of Persons,All,45-54,All,All,All,Professional Degree,All,All,All,All,level,All/45-54/All/All/All/Professional Degree/All/All/All/All
+SCAD4554,Percent,All,45-54,All,All,All,Some College or Associate Degree,All,All,All,All,rate,All/45-54/All/All/All/Some College or Associate Degree/All/All/All/All
+SCADU4554,Thousands of Persons,All,45-54,All,All,All,Some College or Associate Degree,All,All,All,All,level,All/45-54/All/All/All/Some College or Associate Degree/All/All/All/All
+LNU04000182,Percent,Men,45-54,All,All,All,All,All,All,All,All,rate,Men/45-54/All/All/All/All/All/All/All/All
+LNU04000341,Percent,Women,45-54,All,All,All,All,All,All,All,All,rate,Women/45-54/All/All/All/All/All/All/All/All
+CGBD4554W,Percent,Women,45-54,All,All,All,Bachelor's Degree,All,All,All,All,rate,Women/45-54/All/All/All/Bachelor's Degree/All/All/All/All
+CGBDUW4554,Thousands of Persons,Women,45-54,All,All,All,Bachelor's Degree,All,All,All,All,level,Women/45-54/All/All/All/Bachelor's Degree/All/All/All/All
+CGDD4554W,Percent,Women,45-54,All,All,All,Doctoral Degree,All,All,All,All,rate,Women/45-54/All/All/All/Doctoral Degree/All/All/All/All
+CGDDUW4554,Thousands of Persons,Women,45-54,All,All,All,Doctoral Degree,All,All,All,All,level,Women/45-54/All/All/All/Doctoral Degree/All/All/All/All
+HSGS4554W,Percent,Women,45-54,All,All,All,"High School Graduates, No College",All,All,All,All,rate,"Women/45-54/All/All/All/High School Graduates, No College/All/All/All/All"
+HSGSUW4554,Thousands of Persons,Women,45-54,All,All,All,"High School Graduates, No College",All,All,All,All,level,"Women/45-54/All/All/All/High School Graduates, No College/All/All/All/All"
+LHSD4554W,Percent,Women,45-54,All,All,All,Less than a High School Diploma,All,All,All,All,rate,Women/45-54/All/All/All/Less than a High School Diploma/All/All/All/All
+LHSDUW4554,Thousands of Persons,Women,45-54,All,All,All,Less than a High School Diploma,All,All,All,All,level,Women/45-54/All/All/All/Less than a High School Diploma/All/All/All/All
+CGMD4554W,Percent,Women,45-54,All,All,All,Master's Degree,All,All,All,All,rate,Women/45-54/All/All/All/Master's Degree/All/All/All/All
+CGMDUW4554,Thousands of Persons,Women,45-54,All,All,All,Master's Degree,All,All,All,All,level,Women/45-54/All/All/All/Master's Degree/All/All/All/All
+CGPD4554W,Percent,Women,45-54,All,All,All,Professional Degree,All,All,All,All,rate,Women/45-54/All/All/All/Professional Degree/All/All/All/All
+CGPDUW4554,Thousands of Persons,Women,45-54,All,All,All,Professional Degree,All,All,All,All,level,Women/45-54/All/All/All/Professional Degree/All/All/All/All
+SCAD4554W,Percent,Women,45-54,All,All,All,Some College or Associate Degree,All,All,All,All,rate,Women/45-54/All/All/All/Some College or Associate Degree/All/All/All/All
+SCADUW4554,Thousands of Persons,Women,45-54,All,All,All,Some College or Associate Degree,All,All,All,All,level,Women/45-54/All/All/All/Some College or Associate Degree/All/All/All/All
+LNU04000095,Percent,All,55-64,All,All,All,All,All,All,All,All,rate,All/55-64/All/All/All/All/All/All/All/All
+LNU04000190,Percent,Men,55-64,All,All,All,All,All,All,All,All,rate,Men/55-64/All/All/All/All/All/All/All/All
+CGBD5564,Percent,All,55-64,All,All,All,Bachelor's Degree,All,All,All,All,rate,All/55-64/All/All/All/Bachelor's Degree/All/All/All/All
+CGBDU5564,Thousands of Persons,All,55-64,All,All,All,Bachelor's Degree,All,All,All,All,level,All/55-64/All/All/All/Bachelor's Degree/All/All/All/All
+CGDD5564,Percent,All,55-64,All,All,All,Doctoral Degree,All,All,All,All,rate,All/55-64/All/All/All/Doctoral Degree/All/All/All/All
+CGDDU5564,Thousands of Persons,All,55-64,All,All,All,Doctoral Degree,All,All,All,All,level,All/55-64/All/All/All/Doctoral Degree/All/All/All/All
+HSGS5564,Percent,All,55-64,All,All,All,"High School Graduates, No College",All,All,All,All,rate,"All/55-64/All/All/All/High School Graduates, No College/All/All/All/All"
+HSGSU5564,Thousands of Persons,All,55-64,All,All,All,"High School Graduates, No College",All,All,All,All,level,"All/55-64/All/All/All/High School Graduates, No College/All/All/All/All"
+LHSD5564,Percent,All,55-64,All,All,All,Less than a High School Diploma,All,All,All,All,rate,All/55-64/All/All/All/Less than a High School Diploma/All/All/All/All
+LHSDU5564,Thousands of Persons,All,55-64,All,All,All,Less than a High School Diploma,All,All,All,All,level,All/55-64/All/All/All/Less than a High School Diploma/All/All/All/All
+CGMD5564,Percent,All,55-64,All,All,All,Master's Degree,All,All,All,All,rate,All/55-64/All/All/All/Master's Degree/All/All/All/All
+CGMDU5564,Thousands of Persons,All,55-64,All,All,All,Master's Degree,All,All,All,All,level,All/55-64/All/All/All/Master's Degree/All/All/All/All
+LNU04000347,Percent,Women,55-64,All,All,All,All,All,All,All,All,rate,Women/55-64/All/All/All/All/All/All/All/All
+LNU04000097,Percent,All,≥65,All,All,All,All,All,All,All,All,rate,All/≥65/All/All/All/All/All/All/All/All
+CGBD5564M,Percent,Men,55-64,All,All,All,Bachelor's Degree,All,All,All,All,rate,Men/55-64/All/All/All/Bachelor's Degree/All/All/All/All
+CGBDUM5564,Thousands of Persons,Men,55-64,All,All,All,Bachelor's Degree,All,All,All,All,level,Men/55-64/All/All/All/Bachelor's Degree/All/All/All/All
+CGDD5564M,Percent,Men,55-64,All,All,All,Doctoral Degree,All,All,All,All,rate,Men/55-64/All/All/All/Doctoral Degree/All/All/All/All
+CGDDUM5564,Thousands of Persons,Men,55-64,All,All,All,Doctoral Degree,All,All,All,All,level,Men/55-64/All/All/All/Doctoral Degree/All/All/All/All
+HSGS5564M,Percent,Men,55-64,All,All,All,"High School Graduates, No College",All,All,All,All,rate,"Men/55-64/All/All/All/High School Graduates, No College/All/All/All/All"
+HSGSUM5564,Thousands of Persons,Men,55-64,All,All,All,"High School Graduates, No College",All,All,All,All,level,"Men/55-64/All/All/All/High School Graduates, No College/All/All/All/All"
+LHSD5564M,Percent,Men,55-64,All,All,All,Less than a High School Diploma,All,All,All,All,rate,Men/55-64/All/All/All/Less than a High School Diploma/All/All/All/All
+LHSDUM5564,Thousands of Persons,Men,55-64,All,All,All,Less than a High School Diploma,All,All,All,All,level,Men/55-64/All/All/All/Less than a High School Diploma/All/All/All/All
+CGMD5564M,Percent,Men,55-64,All,All,All,Master's Degree,All,All,All,All,rate,Men/55-64/All/All/All/Master's Degree/All/All/All/All
+CGMDUM5564,Thousands of Persons,Men,55-64,All,All,All,Master's Degree,All,All,All,All,level,Men/55-64/All/All/All/Master's Degree/All/All/All/All
+CGPD5564M,Percent,Men,55-64,All,All,All,Professional Degree,All,All,All,All,rate,Men/55-64/All/All/All/Professional Degree/All/All/All/All
+CGPDUM5564,Thousands of Persons,Men,55-64,All,All,All,Professional Degree,All,All,All,All,level,Men/55-64/All/All/All/Professional Degree/All/All/All/All
+SCAD5564M,Percent,Men,55-64,All,All,All,Some College or Associate Degree,All,All,All,All,rate,Men/55-64/All/All/All/Some College or Associate Degree/All/All/All/All
+SCADUM5564,Thousands of Persons,Men,55-64,All,All,All,Some College or Associate Degree,All,All,All,All,level,Men/55-64/All/All/All/Some College or Associate Degree/All/All/All/All
+CGPD5564,Percent,All,55-64,All,All,All,Professional Degree,All,All,All,All,rate,All/55-64/All/All/All/Professional Degree/All/All/All/All
+CGPDU5564,Thousands of Persons,All,55-64,All,All,All,Professional Degree,All,All,All,All,level,All/55-64/All/All/All/Professional Degree/All/All/All/All
+SCAD5564,Percent,All,55-64,All,All,All,Some College or Associate Degree,All,All,All,All,rate,All/55-64/All/All/All/Some College or Associate Degree/All/All/All/All
+SCADU5564,Thousands of Persons,All,55-64,All,All,All,Some College or Associate Degree,All,All,All,All,level,All/55-64/All/All/All/Some College or Associate Degree/All/All/All/All
+LNU04000199,Percent,Men,≥65,All,All,All,All,All,All,All,All,rate,Men/≥65/All/All/All/All/All/All/All/All
+LNU04000354,Percent,Women,≥65,All,All,All,All,All,All,All,All,rate,Women/≥65/All/All/All/All/All/All/All/All
+CGBD5564W,Percent,Women,55-64,All,All,All,Bachelor's Degree,All,All,All,All,rate,Women/55-64/All/All/All/Bachelor's Degree/All/All/All/All
+CGBDUW5564,Thousands of Persons,Women,55-64,All,All,All,Bachelor's Degree,All,All,All,All,level,Women/55-64/All/All/All/Bachelor's Degree/All/All/All/All
+CGDD5564W,Percent,Women,55-64,All,All,All,Doctoral Degree,All,All,All,All,rate,Women/55-64/All/All/All/Doctoral Degree/All/All/All/All
+CGDDUW5564,Thousands of Persons,Women,55-64,All,All,All,Doctoral Degree,All,All,All,All,level,Women/55-64/All/All/All/Doctoral Degree/All/All/All/All
+HSGS5564W,Percent,Women,55-64,All,All,All,"High School Graduates, No College",All,All,All,All,rate,"Women/55-64/All/All/All/High School Graduates, No College/All/All/All/All"
+HSGSUW5564,Thousands of Persons,Women,55-64,All,All,All,"High School Graduates, No College",All,All,All,All,level,"Women/55-64/All/All/All/High School Graduates, No College/All/All/All/All"
+LHSD5564W,Percent,Women,55-64,All,All,All,Less than a High School Diploma,All,All,All,All,rate,Women/55-64/All/All/All/Less than a High School Diploma/All/All/All/All
+LHSDUW5564,Thousands of Persons,Women,55-64,All,All,All,Less than a High School Diploma,All,All,All,All,level,Women/55-64/All/All/All/Less than a High School Diploma/All/All/All/All
+CGMD5564W,Percent,Women,55-64,All,All,All,Master's Degree,All,All,All,All,rate,Women/55-64/All/All/All/Master's Degree/All/All/All/All
+CGMDUW5564,Thousands of Persons,Women,55-64,All,All,All,Master's Degree,All,All,All,All,level,Women/55-64/All/All/All/Master's Degree/All/All/All/All
+CGPD5564W,Percent,Women,55-64,All,All,All,Professional Degree,All,All,All,All,rate,Women/55-64/All/All/All/Professional Degree/All/All/All/All
+CGPDUW5564,Thousands of Persons,Women,55-64,All,All,All,Professional Degree,All,All,All,All,level,Women/55-64/All/All/All/Professional Degree/All/All/All/All
+SCAD5564W,Percent,Women,55-64,All,All,All,Some College or Associate Degree,All,All,All,All,rate,Women/55-64/All/All/All/Some College or Associate Degree/All/All/All/All
+SCADUW5564,Thousands of Persons,Women,55-64,All,All,All,Some College or Associate Degree,All,All,All,All,level,Women/55-64/All/All/All/Some College or Associate Degree/All/All/All/All
+LNU03035109,Thousands of Persons,All,All,All,All,Agricultural and Related Private Wage and Salary Workers,All,All,All,All,All,level,All/All/All/All/Agricultural and Related Private Wage and Salary Workers/All/All/All/All/All
+LNU04035109,Percent,All,All,All,All,Agricultural and Related Private Wage and Salary Workers,All,All,All,All,All,rate,All/All/All/All/Agricultural and Related Private Wage and Salary Workers/All/All/All/All/All
+LNU03028615,Thousands of Persons,All,All,All,All,All Industries Government Wage & Salary Workers,All,All,All,All,All,level,All/All/All/All/All Industries Government Wage & Salary Workers/All/All/All/All/All
+LNU04028615,Percent,All,All,All,All,All Industries Government Wage & Salary Workers,All,All,All,All,All,rate,All/All/All/All/All Industries Government Wage & Salary Workers/All/All/All/All/All
+LNU03035181,Thousands of Persons,All,All,All,All,"All Industries, Self-Employed, Unincorporated, and Unpaid Family Workers",All,All,All,All,All,level,"All/All/All/All/All Industries, Self-Employed, Unincorporated, and Unpaid Family Workers/All/All/All/All/All"
+LNU04035181,Percent,All,All,All,All,"All Industries, Self-Employed, Unincorporated, and Unpaid Family Workers",All,All,All,All,All,rate,"All/All/All/All/All Industries, Self-Employed, Unincorporated, and Unpaid Family Workers/All/All/All/All/All"
+LNU03032183,Thousands of Persons,All,All,All,Asian,All,All,All,All,All,All,level,All/All/All/Asian/All/All/All/All/All/All
+LNU04032183,Percent,All,All,All,Asian,All,All,All,All,All,All,rate,All/All/All/Asian/All/All/All/All/All/All
+LNU03000006,Thousands of Persons,All,All,All,Black or African American,All,All,All,All,All,All,level,All/All/All/Black or African American/All/All/All/All/All/All
+LNU04000006,Percent,All,All,All,Black or African American,All,All,All,All,All,All,rate,All/All/All/Black or African American/All/All/All/All/All/All
+LNU03073395,Thousands of Persons,All,All,All,All,All,All,All,All,All,Foreign Born,level,All/All/All/All/All/All/All/All/All/Foreign Born
+LNU04073395,Percent,All,All,All,All,All,All,All,All,All,Foreign Born,rate,All/All/All/All/All/All/All/All/All/Foreign Born
+LNU03000009,Thousands of Persons,All,All,All,Hispanic or Latino,All,All,All,All,All,All,level,All/All/All/Hispanic or Latino/All/All/All/All/All/All
+LNU04000009,Percent,All,All,All,Hispanic or Latino,All,All,All,All,All,All,rate,All/All/All/Hispanic or Latino/All/All/All/All/All/All
+LNU03032215,Thousands of Persons,All,All,All,All,All,All,"Management, Professional, and Related Occupations",All,All,All,level,"All/All/All/All/All/All/Management, Professional, and Related Occupations/All/All/All"
+LNU04032215,Percent,All,All,All,All,All,All,"Management, Professional, and Related Occupations",All,All,All,rate,"All/All/All/All/All/All/Management, Professional, and Related Occupations/All/All/All"
+LNU03000001,Thousands of Persons,Men,All,All,All,All,All,All,All,All,All,level,Men/All/All/All/All/All/All/All/All/All
+LNU04000001,Percent,Men,All,All,All,All,All,All,All,All,All,rate,Men/All/All/All/All/All/All/All/All/All
+LNU03073396,Thousands of Persons,Men,All,All,All,All,All,All,All,All,Foreign Born,level,Men/All/All/All/All/All/All/All/All/Foreign Born
+LNU04073396,Percent,Men,All,All,All,All,All,All,All,All,Foreign Born,rate,Men/All/All/All/All/All/All/All/All/Foreign Born
+LNU03073414,Thousands of Persons,Men,All,All,All,All,All,All,All,All,Native Born,level,Men/All/All/All/All/All/All/All/All/Native Born
+LNU04073414,Percent,Men,All,All,All,All,All,All,All,All,Native Born,rate,Men/All/All/All/All/All/All/All/All/Native Born
+LNU03073413,Thousands of Persons,All,All,All,All,All,All,All,All,All,Native Born,level,All/All/All/All/All/All/All/All/All/Native Born
+LNU04073413,Percent,All,All,All,All,All,All,All,All,All,Native Born,rate,All/All/All/All/All/All/All/All/All/Native Born
+LNU03032222,Thousands of Persons,All,All,All,All,All,All,"Natural Resources, Construction, and Maintenance Occupations",All,All,All,level,"All/All/All/All/All/All/Natural Resources, Construction, and Maintenance Occupations/All/All/All"
+LNU04032222,Percent,All,All,All,All,All,All,"Natural Resources, Construction, and Maintenance Occupations",All,All,All,rate,"All/All/All/All/All/All/Natural Resources, Construction, and Maintenance Occupations/All/All/All"
+LNU03032229,Thousands of Persons,All,All,All,All,"Nonagriculture, Private Wage and Salary Workers",All,All,All,All,All,level,"All/All/All/All/Nonagriculture, Private Wage and Salary Workers/All/All/All/All/All"
+LNU04032229,Percent,All,All,All,All,"Nonagriculture, Private Wage and Salary Workers",All,All,All,All,All,rate,"All/All/All/All/Nonagriculture, Private Wage and Salary Workers/All/All/All/All/All"
+LNU03032226,Thousands of Persons,All,All,All,All,All,All,"Production, Transportation and Material Moving Occupations",All,All,All,level,"All/All/All/All/All/All/Production, Transportation and Material Moving Occupations/All/All/All"
+LNU04032226,Percent,All,All,All,All,All,All,"Production, Transportation and Material Moving Occupations",All,All,All,rate,"All/All/All/All/All/All/Production, Transportation and Material Moving Occupations/All/All/All"
+LNU03032219,Thousands of Persons,All,All,All,All,All,All,Sales and Office Occupations,All,All,All,level,All/All/All/All/All/All/Sales and Office Occupations/All/All/All
+LNU04032219,Percent,All,All,All,All,All,All,Sales and Office Occupations,All,All,All,rate,All/All/All/All/All/All/Sales and Office Occupations/All/All/All
+LNU03032218,Thousands of Persons,All,All,All,All,All,All,Service Occupations,All,All,All,level,All/All/All/All/All/All/Service Occupations/All/All/All
+LNU04032218,Percent,All,All,All,All,All,All,Service Occupations,All,All,All,rate,All/All/All/All/All/All/Service Occupations/All/All/All
+LNU03000003,Thousands of Persons,All,All,All,White,All,All,All,All,All,All,level,All/All/All/White/All/All/All/All/All/All
+LNU04000003,Percent,All,All,All,White,All,All,All,All,All,All,rate,All/All/All/White/All/All/All/All/All/All
+LNU03000002,Thousands of Persons,Women,All,All,All,All,All,All,All,All,All,level,Women/All/All/All/All/All/All/All/All/All
+LNU04000002,Percent,Women,All,All,All,All,All,All,All,All,All,rate,Women/All/All/All/All/All/All/All/All/All
+LNU03073397,Thousands of Persons,Women,All,All,All,All,All,All,All,All,Foreign Born,level,Women/All/All/All/All/All/All/All/All/Foreign Born
+LNU04073397,Percent,Women,All,All,All,All,All,All,All,All,Foreign Born,rate,Women/All/All/All/All/All/All/All/All/Foreign Born
+LNU03073415,Thousands of Persons,Women,All,All,All,All,All,All,All,All,Native Born,level,Women/All/All/All/All/All/All/All/All/Native Born
+LNU04073415,Percent,Women,All,All,All,All,All,All,All,All,Native Born,rate,Women/All/All/All/All/All/All/All/All/Native Born

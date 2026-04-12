@@ -1,128 +1,178 @@
-let globalData = [];
-// Map caching dimensions: category -> Set of Genders
-let categoryGenderMap = {};
-// Map caching Subsets: category -> Set of Subsets
-let categorySubsetMap = {};
+import { CATEGORIES, AGE_COMPARISON_SUBSETS } from './constants.js';
 
-fetch('/unemployment_data.json')
-  .then(res => res.json())
-  .then(data => {
-    globalData = data;
-    
-    // Build metadata dictionary
-    data.forEach(row => {
-      const { Category, Subset, Gender, Rate_Pct } = row;
-      // We accept Rate_Pct or Rate_% based on pandas serialization
-      const rateKey = 'Rate_%' in row ? 'Rate_%' : 'Rate_Pct';
-      
-      if (!categoryGenderMap[Category]) categoryGenderMap[Category] = new Set();
-      if (!categorySubsetMap[Category]) categorySubsetMap[Category] = new Set();
-      
-      categoryGenderMap[Category].add(Gender);
-      categorySubsetMap[Category].add(Subset);
-    });
-    
-    postMessage({ type: 'DATA_LOADED', recordCount: data.length });
+let globalData = [];
+
+// Initialize data loading
+fetch('unemployment_data.json')
+  .then(res => res.text())
+  .then(text => {
+    // Economic data from FRED often contains NaN for missing values in JSON-like formats.
+    // JSON standard doesn't support NaN. Replace with null to allow parsing.
+    const cleaned = text.replace(/:\s*NaN/g, ':null');
+    try {
+      globalData = JSON.parse(cleaned);
+      console.log('Worker: Data loaded, count:', globalData.length);
+      postMessage({ type: 'DATA_LOADED', recordCount: globalData.length });
+    } catch (e) {
+      console.error('Worker: JSON parse error after cleaning:', e.message);
+      // Backup cleaning if first one failed
+      const saferCleaned = text.replace(/NaN/g, 'null');
+      globalData = JSON.parse(saferCleaned);
+      postMessage({ type: 'DATA_LOADED', recordCount: globalData.length });
+    }
   })
   .catch(err => {
     console.error('Worker failed to load dataset:', err);
-    postMessage({ type: 'ERROR', message: 'Failed to fetch unemployment_data.json' });
+    postMessage({ type: 'ERROR', message: 'Failed to fetch or parse unemployment_data.json' });
   });
 
 onmessage = function(e) {
   const msg = e.data;
   
-  if (msg.type === 'GET_METADATA') {
-    // Convert Sets to arrays for serialization
-    const payload = { categoryGenderMap: {}, categorySubsetMap: {} };
-    for (let cat in categoryGenderMap) payload.categoryGenderMap[cat] = Array.from(categoryGenderMap[cat]);
-    for (let cat in categorySubsetMap) payload.categorySubsetMap[cat] = Array.from(categorySubsetMap[cat]);
-    
-    postMessage({ type: 'METADATA', payload });
-  } 
-  
-  else if (msg.type === 'CALCULATE_YEARS') {
-    const { category, genders } = msg; // genders is an array of checked UI values
-    const subsets = Array.from(categorySubsetMap[category] || []);
-    
-    if (subsets.length === 0 || genders.length === 0) {
-      postMessage({ type: 'YEAR_INTERSECTION', years: [] });
-      return;
-    }
+  if (msg.type === 'CALCULATE_YEARS') {
+    const { category, filters } = msg;
+    console.log('Worker: CALCULATE_YEARS for cat:', category, 'filters:', filters);
 
-    // We must find years where EVERY required line has valid Rate_% data.
-    // Required lines = EVERY Subset x EVERY checked Gender
-    // Filter dataset to just this category and active genders
-    const relevantData = globalData.filter(d => 
-       d.Category === category && genders.includes(d.Gender)
-    );
+    const matchingRows = globalData.filter(d => {
+      if (!d[category] || d[category].toString().toLowerCase() === "all") return false;
+      if (category === 'age' && !AGE_COMPARISON_SUBSETS.includes(d[category])) return false;
+      if (category === 'veteran_status' && d[category] === 'Veterans') return false;
 
-    // Build a map of Year -> Set of "Subset_Gender" combinations it has valid data for
-    let yearComboCounts = {};
-    const rateKey = (globalData && globalData.length > 0 && 'Rate_%' in globalData[0]) ? 'Rate_%' : 'Rate_Pct';
+      for (const catId in filters) {
+        if (catId === category) continue;
+        const targetVal = filters[catId];
+        const rowVal = d[catId];
+        
+        if (targetVal === undefined) continue;
+        if (!rowVal) return false; 
 
-    // How many distinct combinations do we expect per year?
-    const targetCombinations = subsets.length * genders.length;
-
-    relevantData.forEach(d => {
-      if (d[rateKey] !== null && d[rateKey] !== undefined) {
-         if (!yearComboCounts[d.Year]) yearComboCounts[d.Year] = new Set();
-         yearComboCounts[d.Year].add(`${d.Subset}_${d.Gender}`);
+        if (rowVal.toString().toLowerCase() !== targetVal.toString().toLowerCase()) return false;
       }
+      return true;
     });
 
-    // Valid years are those where the Set size === targetCombinations
-    let validYears = [];
-    for (let year in yearComboCounts) {
-      if (yearComboCounts[year].size > 0) { // Tolerate missing/untracked demographics for specific years
-        validYears.push(parseInt(year));
-      }
+    console.log('Worker: Matching rows found:', matchingRows.length);
+    if (matchingRows.length === 0) {
+        // Log one example row and why it failed for debugging
+        const sample = globalData[0];
+        console.log('Worker Debug: Sample row fails filter because...', {
+            row: sample,
+            filters: filters,
+            cat: category
+        });
     }
 
-    postMessage({ type: 'YEAR_INTERSECTION', years: validYears });
+    const counts = {}; 
+    let isUnique = true;
+    
+    matchingRows.forEach(d => {
+      const key = `${d.year}_${d[category]}`;
+      counts[key] = (counts[key] || 0) + 1;
+      if (counts[key] > 1) isUnique = false;
+    });
+
+    const years = [...new Set(matchingRows.map(d => d.year))].sort((a,b) => a-b);
+    postMessage({ type: 'YEAR_INTERSECTION', years, isUnique });
   }
   
   else if (msg.type === 'GET_TREND_DATA') {
-    const { startYear, endYear, category, genders } = msg;
+    const { startYear, endYear, category, filters } = msg;
 
-    // Filter relevant dataset lines
     const lineData = globalData.filter(d => 
-      d.Year >= startYear && d.Year <= endYear &&
-      d.Category === category && 
-      genders.includes(d.Gender)
-    );
+      d.year >= startYear && d.year <= endYear &&
+      d[category] && d[category].toLowerCase() !== "all" &&
+      (!filters || Object.keys(filters).every(catId => {
+          if (catId === category) return true;
+          if (!d[catId]) return false;
+          return d[catId].toString().toLowerCase() === filters[catId].toString().toLowerCase();
+      }))
+    ).filter(d => {
+       if (category === 'age' && !AGE_COMPARISON_SUBSETS.includes(d[category])) return false;
+       if (category === 'veteran_status' && d[category] === 'Veterans') return false;
+       return true;
+    });
 
-    // Always fetch general data for the toggle
+    // Baseline: everything is "All" (high level aggregate)
     const generalData = globalData.filter(d => 
-      d.Year >= startYear && d.Year <= endYear &&
-      d.Category === 'General' &&
-      d.Subset === 'Total 16+' &&
-      d.Gender === 'Combined'
+      d.year >= startYear && d.year <= endYear &&
+      CATEGORIES.every(cat => d[cat.id] && d[cat.id].toLowerCase() === "all")
     );
 
-    postMessage({ type: 'TREND_DATA', payload: { lineData, generalData }});
+    // Compute which years have full level data for all subsets (pie chart requires level > 0)
+    const subsets = [...new Set(lineData.map(d => d[category]).filter(Boolean))];
+    const yearLevelMap = {};
+    lineData.forEach(d => {
+      if (!yearLevelMap[d.year]) yearLevelMap[d.year] = {};
+      yearLevelMap[d.year][d[category]] = d.level;
+    });
+    const pieYears = Object.keys(yearLevelMap)
+      .map(Number)
+      .filter(yr => subsets.every(s => yearLevelMap[yr][s] !== null && yearLevelMap[yr][s] !== undefined && yearLevelMap[yr][s] > 0));
+
+    postMessage({ type: 'TREND_DATA', payload: { lineData, generalData, pieYears }});
   }
 
   else if (msg.type === 'FILTER_BY_YEAR') {
-    const { year, category, genders } = msg;
+    const { year, category, filters } = msg;
 
     const snapshotData = globalData.filter(d => 
-      d.Year === year && 
-      d.Category === category && 
-      genders.includes(d.Gender)
-    );
+      d.year === year && 
+      d[category] && d[category].toLowerCase() !== "all" &&
+      (!filters || Object.keys(filters).every(catId => {
+          if (catId === category) return true;
+          if (!d[catId]) return false;
+          return d[catId].toString().toLowerCase() === filters[catId].toString().toLowerCase();
+      }))
+    ).filter(d => {
+       if (category === 'age' && !AGE_COMPARISON_SUBSETS.includes(d[category])) return false;
+       if (category === 'veteran_status' && d[category] === 'Veterans') return false;
+       return true;
+    });
 
-    const rateKey = (globalData && globalData.length > 0 && 'Rate_%' in globalData[0]) ? 'Rate_%' : 'Rate_Pct';
+    const totalLevel = snapshotData.reduce((acc, d) => acc + (Number(d.level) || 0), 0);
+    
     const processedSnapshot = snapshotData.map(point => {
-      const rawRate = point[rateKey];
+      const level = Number(point.level) || 0;
+      const pct = totalLevel > 0 ? (level / totalLevel) * 100 : 0;
       return {
         ...point,
-        Rate: (rawRate !== null && rawRate !== undefined) ? Number(rawRate) : null,
-        UnemployedLevel: point['Unemployed_Level'] !== null ? Number(point['Unemployed_Level']) : null,
-        PercentOfCategory: point['Unemployed_Percent_Of_Category'] !== null ? Number(point['Unemployed_Percent_Of_Category']) : null
+        Subset: point[category],
+        Rate: point.rate,
+        UnemployedLevel: level,
+        PercentOfCategory: pct,
+        percent_of_group: pct
       };
     });
     
     postMessage({ type: 'FILTERED_DATA', year: year, payload: processedSnapshot });
+  }
+
+  else if (msg.type === 'VALIDATE_SUBFILTERS') {
+    const { filters, nextCategoryId, comparisonCategory } = msg;
+    
+    const validSubsets = new Set();
+    
+    globalData.forEach(d => {
+      // 1. Check if matches all filters in the chain so far
+      for (const catId in filters) {
+        if (!d[catId]) return;
+        if (d[catId].toString().toLowerCase() !== filters[catId].toString().toLowerCase()) return;
+      }
+
+      // 2. Must also have a valid (non-All) value for the comparison parameter
+      if (comparisonCategory) {
+        const compVal = d[comparisonCategory];
+        if (!compVal || compVal.toLowerCase() === 'all') return;
+        if (comparisonCategory === 'age' && !AGE_COMPARISON_SUBSETS.includes(compVal)) return;
+        if (comparisonCategory === 'veteran_status' && compVal === 'Veterans') return;
+      }
+      
+      // 3. If it passes, the value at nextCategoryId is a valid option
+      if (d[nextCategoryId]) {
+        validSubsets.add(d[nextCategoryId]);
+      }
+    });
+    
+    postMessage({ type: 'VALID_SUBFILTERS', categoryId: nextCategoryId, validSubsets: Array.from(validSubsets) });
   }
 };

@@ -1,6 +1,7 @@
 import './index.css';
 import Chart from 'chart.js/auto';
 import { pack, hierarchy } from 'd3-hierarchy';
+import { CATEGORIES, AGE_COMPARISON_SUBSETS } from './constants.js';
 
 console.log('Main thread initializing.');
 
@@ -12,7 +13,6 @@ const subjectSelect = document.getElementById('subjectSelect');
 const parameterSelect = document.getElementById('parameterSelect');
 const filtersArea = document.getElementById('filtersArea');
 const dynamicFiltersContainer = document.getElementById('dynamicFiltersContainer');
-const filterActionBtns = document.getElementById('filterActionBtns');
 const confirmChoicesBtn = document.getElementById('confirmChoicesBtn');
 const dateSelectionArea = document.getElementById('dateSelectionArea');
 const startYearSelect = document.getElementById('startYearSelect');
@@ -40,31 +40,22 @@ let currentValidYears = [];
 let currentStartYear = 1948;
 let currentEndYear = 2026;
 
-// Helper logic for single gender fetching based on Filter State checks
-function getActiveGenderString() {
-  const activeGenders = Array.from(document.querySelectorAll('.filter-checkbox:checked')).map(cb => cb.value);
-  if (activeGenders.includes('Combined')) return 'Combined';
-  if (activeGenders.includes('Male')) return 'Male';
-  if (activeGenders.includes('Female')) return 'Female';
-  return 'Combined'; // Fallback
-}
+// New state for multi-dimensional filtering
+let activeFilters = {}; // { categoryId: selectedSubfilter }
 
 // Custom plugin for drawing the vertical scrubber line on the trend chart
 const verticalLinePlugin = {
   id: 'verticalLine',
   afterDraw: (chart) => {
-    // Only draw for charts that have a linear x/y scale (line/bar/bubble)
     if (!chart.scales || !chart.scales.x || !chart.scales.y) return;
     
     const activeYearStr = currentYearDisplay.textContent;
     if (!activeYearStr || isNaN(parseInt(activeYearStr))) return;
     
-    // Find X coordinate of the active year
     const xAxis = chart.scales.x;
     const yAxis = chart.scales.y;
     const xVal = parseInt(activeYearStr);
     
-    // Safety check if the year exists on axis
     if (xVal >= xAxis.min && xVal <= xAxis.max) {
       const xPixel = xAxis.getPixelForValue(xVal);
       const ctx = chart.ctx;
@@ -85,21 +76,30 @@ Chart.register(verticalLinePlugin);
 worker.onmessage = (e) => {
   const data = e.data;
   if (data.type === 'DATA_LOADED') {
-    worker.postMessage({ type: 'GET_METADATA' });
-  } else if (data.type === 'METADATA') {
-    globalMetadata = data.payload;
+    // Already populated immediately
   } else if (data.type === 'YEAR_INTERSECTION') {
     currentValidYears = data.years;
-    populateYearDropdowns(currentValidYears);
+    populateYearDropdowns(currentValidYears, data.isUnique);
   } else if (data.type === 'TREND_DATA') {
     currentTrendData = data.payload.lineData;
     currentGeneralData = data.payload.generalData;
     renderTrendChart();
+    renderSliderMarkers(data.payload.pieYears || []);
   } else if (data.type === 'FILTERED_DATA') {
     currentSnapshotData = data.payload;
     renderSnapshotChart();
+  } else if (data.type === 'VALID_SUBFILTERS') {
+    handleValidSubfilters(data.categoryId, data.validSubsets);
   }
 };
+
+function populateParameterSelect() {
+  parameterSelect.innerHTML = '<option value="" disabled selected>Select parameter...</option>';
+  CATEGORIES.forEach(cat => {
+    const opt = new Option(cat.label, cat.id);
+    parameterSelect.add(opt);
+  });
+}
 
 /* --- Wizard Setup --- */
 subjectSelect.addEventListener('change', () => { parameterSelect.disabled = false; });
@@ -109,95 +109,151 @@ parameterSelect.addEventListener('change', (e) => {
   buildFilters(category);
 });
 
-function buildFilters(category) {
+// Populate immediately as CATEGORIES is available via import
+populateParameterSelect();
+
+function buildFilters(selectedCategory) {
   dynamicFiltersContainer.innerHTML = '';
   filtersArea.classList.remove('hidden');
-  filterActionBtns.classList.remove('hidden');
   
-  const availableGenders = globalMetadata.categoryGenderMap[category] || [];
+  activeFilters = {};
   
-  if (availableGenders.length > 0) {
+  // Create a filter group for each category except the comparison parameter
+  CATEGORIES.filter(cat => cat.id !== selectedCategory).forEach(cat => {
     const groupEl = document.createElement('div');
     groupEl.className = 'filter-group';
-    groupEl.innerHTML = `<div class="filter-group-title">Gender</div><div class="chips-list" id="genderChips"></div>`;
+    groupEl.id = `group-${cat.id}`;
+    groupEl.innerHTML = `<div class="filter-group-title">${cat.label}</div><div class="chips-list" id="chips-${cat.id}"></div>`;
     dynamicFiltersContainer.appendChild(groupEl);
     
     const chipsContainer = groupEl.querySelector('.chips-list');
     
-    const customSort = (a, b) => {
-        const order = { 'Male': 1, 'Female': 2, 'Combined': 3 };
-        return (order[a] || 4) - (order[b] || 4);
-    };
-    const sorted = [...availableGenders].sort(customSort);
-    
-    sorted.forEach(gender => {
+    cat.subsets.forEach(subset => {
       const label = document.createElement('label');
       label.className = 'chip-label';
       label.innerHTML = `
-        <input type="checkbox" class="chip-checkbox filter-checkbox" data-type="Gender" value="${gender}" checked>
-        <span>${gender}</span>
+        <input type="radio" name="filter-${cat.id}" class="chip-radio filter-radio" value="${subset}">
+        <span>${subset}</span>
       `;
       chipsContainer.appendChild(label);
+      
+      const input = label.querySelector('input');
+      input.addEventListener('change', () => handleFilterChange(cat.id, subset));
     });
+
+    // Default to the rightmost option ("All")
+    const radios = chipsContainer.querySelectorAll('input');
+    const defaultRadio = radios[radios.length - 1];
+    defaultRadio.checked = true;
+    activeFilters[cat.id] = defaultRadio.value;
+  });
+
+  validateConfirmButton();
+  // Trigger initial validation for the first filter in sequence
+  const remainingCats = CATEGORIES.filter(cat => cat.id !== selectedCategory);
+  if (remainingCats.length > 0) {
+    updateSequentialValidation(0);
+  }
+}
+
+function handleFilterChange(categoryId, value) {
+  activeFilters[categoryId] = value;
+  
+  // Trigger sequential validation for all filters BELOW this one
+  const selectedCategory = parameterSelect.value;
+  const remainingCats = CATEGORIES.filter(cat => cat.id !== selectedCategory);
+  const index = remainingCats.findIndex(cat => cat.id === categoryId);
+  
+  if (index !== -1) {
+    updateSequentialValidation(index + 1);
+  }
+  
+  validateConfirmButton();
+}
+
+function updateSequentialValidation(startIndex) {
+  const selectedCategory = parameterSelect.value;
+  const remainingCats = CATEGORIES.filter(cat => cat.id !== selectedCategory);
+  
+  if (startIndex >= remainingCats.length) return;
+  
+  const nextCat = remainingCats[startIndex];
+  
+  // We need to check which subsets of nextCat are valid GIVEN current selections for 0..startIndex-1
+  const currentSelections = {};
+  for (let i = 0; i < startIndex; i++) {
+    const catId = remainingCats[i].id;
+    currentSelections[catId] = activeFilters[catId];
+  }
+  
+  worker.postMessage({
+    type: 'VALIDATE_SUBFILTERS',
+    filters: currentSelections,
+    nextCategoryId: nextCat.id,
+    comparisonCategory: selectedCategory
+  });
+}
+
+function handleValidSubfilters(categoryId, validSubsets) {
+  const container = document.getElementById(`chips-${categoryId}`);
+  if (!container) return;
+  
+  const labels = container.querySelectorAll('.chip-label');
+  labels.forEach(label => {
+    const radio = label.querySelector('input');
+    const value = radio.value;
     
-    bindCombinedLogic(chipsContainer);
-    validateConfirmButton();
-  } else {
-    dynamicFiltersContainer.innerHTML = '<div class="chart-empty-state">No filters available for this parameter.</div>';
-    confirmChoicesBtn.classList.remove('disabled');
-    confirmChoicesBtn.disabled = false;
+    if (validSubsets.some(s => s.toLowerCase() === value.toLowerCase())) {
+      label.classList.remove('disabled');
+      radio.disabled = false;
+    } else {
+      label.classList.add('disabled');
+      radio.disabled = true;
+    }
+  });
+  
+  // If the currently selected radio for this group is now disabled,
+  // select the last valid (enabled) radio in the group.
+  const currentSelected = container.querySelector('input:checked');
+  if (currentSelected && currentSelected.disabled) {
+    const allRadios = Array.from(container.querySelectorAll('input:not(:disabled)'));
+    if (allRadios.length > 0) {
+      const lastValid = allRadios[allRadios.length - 1];
+      lastValid.checked = true;
+      activeFilters[categoryId] = lastValid.value;
+    }
+  }
+  
+  // After validating this one, move to the next in sequence
+  const selectedCategory = parameterSelect.value;
+  const remainingCats = CATEGORIES.filter(cat => cat.id !== selectedCategory);
+  const currentIndex = remainingCats.findIndex(cat => cat.id === categoryId);
+  if (currentIndex !== -1 && currentIndex < remainingCats.length - 1) {
+    updateSequentialValidation(currentIndex + 1);
   }
 }
 
-function bindCombinedLogic(container) {
-  const checkboxes = container.querySelectorAll('.chip-checkbox');
-  const combinedBox = Array.from(checkboxes).find(cb => cb.value.toLowerCase() === 'combined');
-  const otherBoxes = Array.from(checkboxes).filter(cb => cb !== combinedBox);
-
-  checkboxes.forEach(cb => { cb.addEventListener('change', validateConfirmButton); });
-
-  if (combinedBox) {
-    combinedBox.addEventListener('change', (e) => {
-      if (e.target.checked) otherBoxes.forEach(cb => cb.checked = true);
-      validateConfirmButton();
-    });
-
-    otherBoxes.forEach(cb => {
-      cb.addEventListener('change', () => {
-        if (!cb.checked && combinedBox.checked) combinedBox.checked = false;
-        const allOthersChecked = otherBoxes.every(box => box.checked);
-        if (allOthersChecked && !combinedBox.checked) combinedBox.checked = true;
-        validateConfirmButton();
-      });
-    });
-  }
-}
 
 function validateConfirmButton() {
-    const activeFilters = document.querySelectorAll('.filter-checkbox:checked');
-    if (activeFilters.length > 0) {
+    // Confirm button is enabled if a parameter is selected and all active filters have a choice (they do because of defaults)
+    if (parameterSelect.value) {
         confirmChoicesBtn.classList.remove('disabled');
         confirmChoicesBtn.disabled = false;
+        confirmChoicesBtn.style.opacity = '1';
+        confirmChoicesBtn.style.pointerEvents = 'auto';
     } else {
         confirmChoicesBtn.classList.add('disabled');
         confirmChoicesBtn.disabled = true;
     }
 }
 
-document.getElementById('checkAllFiltersBtn').addEventListener('click', () => {
-  document.querySelectorAll('.filter-checkbox').forEach(cb => cb.checked = true);
-  validateConfirmButton();
-});
-document.getElementById('uncheckAllFiltersBtn').addEventListener('click', () => {
-  document.querySelectorAll('.filter-checkbox').forEach(cb => cb.checked = false);
-  validateConfirmButton();
-});
 
 /* --- Transitions --- */
 confirmChoicesBtn.addEventListener('click', () => {
   if (confirmChoicesBtn.textContent === 'Edit Choices') {
     flowContainer.className = 'flow-container state-setup';
     dateSelectionArea.classList.add('hidden');
+    blockVisuals.classList.add('hidden');
     confirmChoicesBtn.textContent = 'Confirm Choices';
     window.scrollTo({ top: 0, behavior: 'smooth' });
     return;
@@ -206,37 +262,34 @@ confirmChoicesBtn.addEventListener('click', () => {
   flowContainer.className = 'flow-container state-confirmed';
   
   const selectedCategory = parameterSelect.value;
-  // Based on user comments, gender choice doesn't spawn more lines.
-  // We resolve the UI checkboxes into the exact single Gender string requested.
-  const resolvedGender = getActiveGenderString();
-
   confirmChoicesBtn.textContent = 'Edit Choices';
   dateSelectionArea.classList.remove('hidden');
 
-  // Request the year bounds
   worker.postMessage({
     type: 'CALCULATE_YEARS',
     category: selectedCategory,
-    genders: [resolvedGender] 
+    filters: activeFilters
   });
 
   window.scrollTo({ top: 0, behavior: 'smooth' });
 });
 
-function populateYearDropdowns(years) {
+function populateYearDropdowns(years, isUnique = true) {
   startYearSelect.innerHTML = '';
   endYearSelect.innerHTML = '';
   
-  if (years.length === 0) {
-    startYearSelect.innerHTML = '<option disabled>No valid data</option>';
-    endYearSelect.innerHTML = '<option disabled>No valid data</option>';
-    generateVizBtn.classList.add('disabled');
+  if (years.length === 0 || !isUnique) {
+    startYearSelect.innerHTML = '<option disabled>No unique data series found...</option>';
+    endYearSelect.innerHTML = '<option disabled>Please check filters...</option>';
     generateVizBtn.disabled = true;
+    generateVizBtn.classList.add('disabled');
+    generateVizBtn.innerText = isUnique ? "No Data for Range" : "Multiple Series Detected";
     return;
   }
   
   generateVizBtn.classList.remove('disabled');
   generateVizBtn.disabled = false;
+  generateVizBtn.innerText = "Generate Visualization";
 
   years.sort((a,b) => a-b);
   years.forEach(y => {
@@ -266,18 +319,20 @@ generateVizBtn.addEventListener('click', () => {
   yearSlider.value = currentStartYear;
   currentYearDisplay.textContent = currentStartYear;
   
-  // Kick off fetching the full matrix for the Line Chart
   const selectedCategory = parameterSelect.value;
   worker.postMessage({
     type: 'GET_TREND_DATA',
     startYear: currentStartYear,
     endYear: currentEndYear,
     category: selectedCategory,
-    genders: [getActiveGenderString()]
+    filters: activeFilters
   });
 
-  // Kick off fetching the target year snapshot
   requestDataForYear(currentStartYear);
+
+  generateVizBtn.disabled = true;
+  startYearSelect.disabled = true;
+  endYearSelect.disabled = true;
 
   window.scrollTo({ top: 0, behavior: 'smooth' });
 });
@@ -288,7 +343,6 @@ resetSelectionsBtn.addEventListener('click', () => { location.reload(); });
 yearSlider.addEventListener('input', (e) => {
   currentYearDisplay.textContent = e.target.value;
   requestDataForYear(parseInt(e.target.value));
-  // Redraw trend chart to update scrubber
   if (trendChart) trendChart.draw(); 
 });
 
@@ -328,35 +382,93 @@ function requestDataForYear(year) {
     type: 'FILTER_BY_YEAR',
     year: year,
     category: parameterSelect.value,
-    genders: [getActiveGenderString()]
+    filters: activeFilters
   });
 }
 
 /* --- Color Palettes --- */
-function getPaletteColors() {
-  return ['#6366f1', '#eab308', '#06b6d4', '#f97316', '#8b5cf6', '#a855f7', '#64748b', '#38bdf8', '#fbbf24'];
+
+function hexToRgba(hex, alpha) {
+  const r = parseInt(hex.slice(1, 3), 16);
+  const g = parseInt(hex.slice(3, 5), 16);
+  const b = parseInt(hex.slice(5, 7), 16);
+  return `rgba(${r}, ${g}, ${b}, ${alpha})`;
 }
 
-function buildColorMap(subsets) {
+// Reserved colors for special use cases:
+// - green_hue: Used for "General Trend" line and reserved for future alert/warning features
+// - red_hue: Reserved for future highlight/danger/error features (e.g., highlighting data points above threshold)
+// - blue_hue: Reserved for "Men" when "Gender" category is selected
+// - pink_hue: Reserved for "Women" when "Gender" category is selected
+const RESERVED_COLORS = {
+  green_hue: '#228833',  // green - General Trend
+  red_hue: '#ee6677',    // red - future: danger/warning highlights
+  blue_hue: '#4477aa',   // blue - Men (Gender category)
+  pink_hue: '#cf7acf'    // pink - Women (Gender category)
+};
+
+function getPaletteColors() {
+  // Paul Tol's qualitative palette optimized for max 8 subsets
+  // First 8 colors prioritized by distinguishability (excluding reserved colors)
+  // Reserved: green_hue (#228833), red_hue (#ee6677), blue_hue (#4477aa), pink_hue (#cf7acf)
+  return [
+    '#ccbb44', // yellow - most distinct
+    '#66ccee', // cyan - high contrast
+    '#aa3377', // purple - high contrast
+    '#332288', // dark blue - distinct
+    '#ffffff', // white - for maximum contrast
+    '#b86e6e', // muted red
+    '#88ffaa', // light mint green - replaced mint green for lighter shade
+    '#c47ac4', // violet
+    // Remaining colors for overflow
+    '#bbbbbb', // grey
+    '#4b86b4', // medium blue
+    '#888888', // medium grey
+    '#6eb563', // muted green
+    '#7fb4ca', // steel blue
+    '#9e6d5c', // brown
+    '#7c7c7c', // dark grey
+    '#d4a76a', // tan
+    '#5a9fd4', // cornflower
+    '#d46a6a', // salmon
+    '#7ac47a', // sage
+    '#d4d46a', // olive
+    '#5ac4c4', // teal
+    '#a45ac4', // lavender
+    '#c4a46a', // gold
+    '#8bc4d4', // powder blue
+  ];
+}
+
+function buildColorMap(subsets, selectedCategory) {
   activeColorMap = {};
   const palette = getPaletteColors();
   let colorIdx = 0;
   
   subsets.forEach(sub => {
-    if (sub === 'Male') activeColorMap[sub] = '#3b82f6';
-    else if (sub === 'Female') activeColorMap[sub] = '#ec4899'; // Pink
-    else if (sub === 'General' || sub === 'Total 16+') activeColorMap[sub] = '#22c55e'; // Shared Green for Baseline
-    else {
-      activeColorMap[sub] = palette[colorIdx % palette.length];
+    let color;
+    if (selectedCategory === 'gender') {
+      if (sub === 'Men') {
+        color = RESERVED_COLORS.blue_hue;
+      } else if (sub === 'Women') {
+        color = RESERVED_COLORS.pink_hue;
+      } else {
+        color = palette[colorIdx % palette.length];
+        colorIdx++;
+      }
+    } else {
+      color = palette[colorIdx % palette.length];
       colorIdx++;
     }
+    
+    activeColorMap[sub] = color;
+    activeColorMap[sub.toLowerCase()] = color;
   });
 }
 
 /* --- Rendering Engines --- */
 const getRate = (p) => {
-  const v = p.Value_Percentage ?? p.Rate ?? p.Rate_Pct ?? p['Rate_%'];
-  return (v !== undefined && v !== null) ? Number(v) : null;
+  return (p.rate !== undefined && p.rate !== null) ? Number(p.rate) : null;
 };
 
 function renderTrendChart() {
@@ -364,19 +476,20 @@ function renderTrendChart() {
   if (!ctx) return;
   if (trendChart) trendChart.destroy();
 
-  // Create datasets based on active lines.
-  const subsets = [...new Set(currentTrendData.map(d => d.Subset))];
-  
-  // Rebuild color map whenever we draw lines (base of truth)
-  buildColorMap(subsets);
+  const selectedCategory = parameterSelect.value;
+  const categoryConfig = CATEGORIES.find(c => c.id === selectedCategory);
+  const subsetOrder = categoryConfig ? categoryConfig.subsets : [];
+  const subsets = subsetOrder.filter(sub => 
+    currentTrendData.some(d => d[selectedCategory] === sub)
+  );
+  buildColorMap(subsets, selectedCategory);
 
-  const datasets = subsets.map((sub, idx) => {
-    // Filter data for this line
-    const linePoints = currentTrendData.filter(d => d.Subset === sub).sort((a,b) => a.Year - b.Year);
+  const datasets = subsets.map((sub) => {
+    const linePoints = currentTrendData.filter(d => d[selectedCategory] === sub).sort((a,b) => a.year - b.year);
     const color = activeColorMap[sub];
     return {
       label: sub,
-      data: linePoints.map(p => ({ x: p.Year, y: getRate(p) })),
+      data: linePoints.map(p => ({ x: p.year, y: getRate(p) })),
       borderColor: color,
       backgroundColor: color,
       borderWidth: 2,
@@ -386,14 +499,13 @@ function renderTrendChart() {
     };
   });
 
-  // Check general overlay
   if (generalTrendToggle.checked) {
-    const generalPoints = currentGeneralData.sort((a,b) => a.Year - b.Year);
+    const generalPoints = currentGeneralData.sort((a,b) => a.year - b.year);
     datasets.push({
-      label: 'General Trend (16+ Combined)',
-      data: generalPoints.map(p => ({ x: p.Year, y: getRate(p) })),
-      borderColor: '#22c55e', // Green for baseline
-      backgroundColor: '#22c55e',
+      label: 'General Trend',
+      data: generalPoints.map(p => ({ x: p.year, y: getRate(p) })),
+      borderColor: RESERVED_COLORS.green_hue,
+      backgroundColor: RESERVED_COLORS.green_hue,
       borderWidth: 2,
       tension: 0.3,
       pointRadius: 0,
@@ -401,36 +513,313 @@ function renderTrendChart() {
     });
   }
 
+  // Calculate initial Y bounds from ALL data (including hidden datasets)
+  const allValues = datasets.flatMap(ds => ds.data.map(p => p.y)).filter(v => v !== null && v !== undefined);
+  const initialYMin = Math.floor(Math.min(...allValues) * 0.9);
+  const initialYMax = Math.ceil(Math.max(...allValues) * 1.1);
+
   trendChart = new Chart(ctx, {
     type: 'line',
     data: { datasets },
     options: {
       responsive: true,
       maintainAspectRatio: false,
-      layout: { padding: { top: 70 } },
       plugins: {
-        legend: { labels: { color: '#a0a6b1' } },
-        tooltip: { mode: 'index', intersect: false }
+        legend: { display: false },
+        tooltip: { enabled: false }
       },
       scales: {
         x: { 
           type: 'linear', 
           min: currentStartYear, 
-          max: currentEndYear, 
+          max: Math.ceil(currentEndYear / 10) * 10, 
           grid: { color: 'rgba(255,255,255,0.05)' },
-          ticks: { color: '#a0a6b1', callback: val => val }
+          ticks: {
+            color: '#a0a6b1',
+            source: 'array',
+            values: (() => {
+              const maxYear = Math.ceil(currentEndYear / 10) * 10;
+              const ticks = [];
+              for (let y = currentStartYear; y <= maxYear; y += 10) {
+                ticks.push(y);
+              }
+              return ticks;
+            })(),
+            callback: val => val
+          }
         },
         y: {
           title: { display: true, text: 'Unemployment Rate (%)', color: '#a0a6b1' },
           grid: { color: 'rgba(255,255,255,0.05)' },
-          ticks: { color: '#a0a6b1' }
+          ticks: { 
+            color: '#a0a6b1', 
+            count: (() => {
+              const maxYear = Math.ceil(currentEndYear / 10) * 10;
+              return Math.floor((maxYear - currentStartYear) / 10) + 1;
+            })(), 
+            callback: val => val.toFixed(1) 
+          },
+          min: 0,
+          max: Math.ceil(initialYMax * 1.1)
         }
       }
     }
   });
+
+  // Store initial bounds for preventing auto-scale on legend toggle
+  trendChart._initialYMin = initialYMin;
+  trendChart._initialYMax = initialYMax;
+
+  const optimalPosition = calculateOptimalLegendPosition(trendChart);
+  renderLineLegend(trendChart, optimalPosition);
+  
+  // After rendering, measure legend and optimize position considering legend dimensions
+  const legendContainer = document.getElementById('lineChartLegend');
+  if (legendContainer) {
+    const legendRect = legendContainer.getBoundingClientRect();
+    const canvasRect = trendChart.canvas.getBoundingClientRect();
+    const optimalPositionWithSize = calculateOptimalLegendPosition(trendChart, legendRect.width, legendRect.height);
+    if (optimalPositionWithSize !== optimalPosition) {
+      legendContainer.className = 'line-chart-legend legend-' + optimalPositionWithSize;
+    }
+  }
 }
 
-let userPreferredChartType = 'bar'; // Default to Bar as per latest request
+function calculateOptimalLegendPosition(chart, legendWidth = 200, legendHeight = 150, isHovered = false) {
+  // When hovering, skip re-optimization and return current position
+  if (isHovered) {
+    const legendContainer = document.getElementById('lineChartLegend');
+    if (legendContainer) {
+      const classes = legendContainer.className.split(' ');
+      for (const cls of classes) {
+        if (cls.startsWith('legend-')) {
+          return cls.replace('legend-', '');
+        }
+      }
+    }
+    return 'top-right';
+  }
+
+  const chartArea = chart.chartArea;
+  const centerX = (chartArea.left + chartArea.right) / 2;
+  const centerY = (chartArea.top + chartArea.bottom) / 2;
+  
+  const chartWidth = chartArea.right - chartArea.left;
+  const chartHeight = chartArea.bottom - chartArea.top;
+
+  const quadrantCounts = { 'top-left': 0, 'top-right': 0, 'bottom-left': 0, 'bottom-right': 0 };
+
+  chart.data.datasets.forEach(ds => {
+    if (ds.hidden) return;
+    ds.data.forEach(point => {
+      if (point.x === null || point.y === null) return;
+      const chartX = chart.scales.x.getPixelForValue(point.x);
+      const chartY = chart.scales.y.getPixelForValue(point.y);
+      
+      const isLeft = chartX < centerX;
+      const isTop = chartY < centerY;
+      
+      if (isTop && isLeft) quadrantCounts['top-left']++;
+      else if (isTop && !isLeft) quadrantCounts['top-right']++;
+      else if (!isTop && isLeft) quadrantCounts['bottom-left']++;
+      else if (!isTop && !isLeft) quadrantCounts['bottom-right']++;
+    });
+  });
+
+  // Adjust quadrant counts for legend dimensions
+  // If legend is on the left, it takes up space from left quadrants
+  // If legend is on the right, it takes up space from right quadrants
+  const positions = Object.keys(quadrantCounts);
+  
+  // Find the best position considering both data density and legend size
+  let bestPosition = 'top-right';
+  let minScore = Infinity;
+  
+  const threshold = 0.3; // Legend occupies 30% of quadrant space to be considered "blocked"
+  
+  positions.forEach(position => {
+    let adjustedCount = quadrantCounts[position];
+    
+    // Check if legend would extend into this quadrant's space
+    const isTop = position.includes('top');
+    const isLeft = position.includes('left');
+    
+    // Legend takes space proportionally
+    // For corner positions, legend extends into both adjacent quadrants
+    if (isLeft && legendWidth > chartWidth * threshold) {
+      // Legend on left affects right quadrants more
+      if (!isLeft) adjustedCount += Math.floor(adjustedCount * 0.5);
+    }
+    if (!isLeft && legendWidth > chartWidth * threshold) {
+      if (isLeft) adjustedCount += Math.floor(adjustedCount * 0.5);
+    }
+    if (isTop && legendHeight > chartHeight * threshold) {
+      if (!isTop) adjustedCount += Math.floor(adjustedCount * 0.5);
+    }
+    if (!isTop && legendHeight > chartHeight * threshold) {
+      if (isTop) adjustedCount += Math.floor(adjustedCount * 0.5);
+    }
+    
+    if (adjustedCount < minScore) {
+      minScore = adjustedCount;
+      bestPosition = position;
+    }
+  });
+
+  return bestPosition;
+}
+
+function truncateLabel(text, maxChars = 15) {
+  if (text.length <= maxChars) return text;
+  return text.substring(0, maxChars) + '...';
+}
+
+function padTextForTwoLines(text, targetLineWidth = 18) {
+  const words = text.split(' ');
+  if (words.length <= 1) {
+    return text + ' '.repeat(targetLineWidth - text.length);
+  }
+  
+  let line1 = words[0];
+  let line2 = words.slice(1).join(' ');
+  
+  while (line1.length < targetLineWidth && words.length > 1) {
+    const remainingWords = line2.split(' ');
+    if (remainingWords.length <= 1) break;
+    const firstWord = remainingWords[0];
+    line1 += ' ' + firstWord;
+    line2 = remainingWords.slice(1).join(' ');
+  }
+  
+  if (line1.length < targetLineWidth) {
+    line1 += ' '.repeat(targetLineWidth - line1.length);
+  }
+  
+  return line1 + '\n' + line2;
+}
+
+function renderLineLegend(chart, optimalPosition) {
+  const legendContainer = document.getElementById('lineChartLegend');
+  if (!legendContainer) return;
+  
+  legendContainer.innerHTML = '';
+  legendContainer.className = 'line-chart-legend legend-' + optimalPosition;
+  
+  const legendItems = [];
+  
+  chart.data.datasets.forEach((ds, index) => {
+    // Skip General Trend from legend
+    if (ds.label === 'General Trend') return;
+    
+    const isHidden = ds.hidden === true;
+    const item = document.createElement('div');
+    item.className = 'line-legend-item' + (isHidden ? ' disabled' : '');
+    item.dataset.index = index;
+    item.dataset.fullLabel = ds.label;
+    
+    item.innerHTML = `
+      <label class="legend-toggle">
+        <input type="checkbox" ${!isHidden ? 'checked' : ''} data-index="${index}">
+        <span class="legend-slider"></span>
+      </label>
+      <div class="legend-color" style="background-color: ${ds.borderColor}"></div>
+      <span class="legend-label">${truncateLabel(ds.label)}</span>
+    `;
+    
+    legendContainer.appendChild(item);
+    legendItems.push(item);
+  });
+
+  // Add container-level hover handlers to expand/collapse all items
+  legendContainer.addEventListener('mouseenter', () => {
+    legendContainer.classList.add('expanded');
+    legendItems.forEach(item => {
+      const label = item.querySelector('.legend-label');
+      const fullLabel = item.dataset.fullLabel;
+      label.innerHTML = padTextForTwoLines(fullLabel).replace('\n', '<br>');
+    });
+    const optimalPosition = calculateOptimalLegendPosition(chart, 0, 0, true);
+    legendContainer.className = 'line-chart-legend legend-' + optimalPosition + ' expanded';
+  });
+
+  legendContainer.addEventListener('mouseleave', () => {
+    legendContainer.classList.remove('expanded');
+    legendItems.forEach(item => {
+      const label = item.querySelector('.legend-label');
+      label.innerHTML = truncateLabel(item.dataset.fullLabel);
+    });
+    const optimalPosition = calculateOptimalLegendPosition(chart, 200, 150, true);
+    legendContainer.className = 'line-chart-legend legend-' + optimalPosition;
+  });
+
+  legendContainer.querySelectorAll('input').forEach(input => {
+    input.addEventListener('change', (e) => {
+      const idx = parseInt(e.target.dataset.index);
+      const isChecked = e.target.checked;
+      chart.data.datasets[idx].hidden = !isChecked;
+      
+      // Prevent auto-scaling by restoring initial Y bounds
+      chart.options.scales.y.min = chart._initialYMin;
+      chart.options.scales.y.max = chart._initialYMax;
+      chart.update();
+      
+      // Re-render snapshot chart with new visible subsets
+      renderSnapshotChart();
+      
+      const legendItem = e.target.closest('.line-legend-item');
+      legendItem.classList.toggle('disabled', !isChecked);
+    });
+  });
+}
+
+let userPreferredChartType = 'bar';
+
+/* --- Slider Pie Gradient --- */
+function renderSliderMarkers(pieYears) {
+  const slider = document.getElementById('yearSlider');
+  if (!slider) return;
+
+  const min = currentStartYear;
+  const max = currentEndYear;
+  const BASE = 'rgba(14,22,38,0.85)';
+  const PIE  = '#06b6d4';
+
+  if (min >= max || pieYears.length === 0) {
+    slider.style.background = BASE;
+    return;
+  }
+
+  const sorted = [...pieYears].filter(y => y >= min && y <= max).sort((a, b) => a - b);
+  if (sorted.length === 0) { slider.style.background = BASE; return; }
+
+  const toFrac = y => Math.max(0, Math.min(1, (y - min) / (max - min)));
+  const toPct  = f => (f * 100).toFixed(3) + '%';
+
+  // Build consecutive run-segments (adjacent years → one block)
+  const segs = [];
+  let s = sorted[0], e = sorted[0];
+  for (let i = 1; i < sorted.length; i++) {
+    if (sorted[i] === e + 1) { e = sorted[i]; }
+    else { segs.push([s, e]); s = e = sorted[i]; }
+  }
+  segs.push([s, e]);
+
+  // Build gradient stops for the full track
+  const stops = [];
+  let cursor = 0;
+  for (const [segS, segE] of segs) {
+    const f0 = toFrac(segS - 0.5);
+    const f1 = toFrac(segE + 0.5);
+    if (f0 > cursor) {
+      stops.push(`${BASE} ${toPct(cursor)}`, `${BASE} ${toPct(f0)}`);
+    }
+    stops.push(`${PIE} ${toPct(f0)}`, `${PIE} ${toPct(f1)}`);
+    cursor = f1;
+  }
+  if (cursor < 1) stops.push(`${BASE} ${toPct(cursor)}`, `${BASE} 100%`);
+
+  slider.style.background = `linear-gradient(to right, ${stops.join(', ')})`;
+}
 
 function getGlobalMaxRate() {
   const allRates = [
@@ -438,68 +827,119 @@ function getGlobalMaxRate() {
     ...currentGeneralData.map(d => getRate(d))
   ].filter(v => v !== null && !isNaN(v));
   
-  return allRates.length > 0 ? Math.max(...allRates) : 10; // Fallback to 10%
+  return allRates.length > 0 ? Math.max(...allRates) : 10;
 }
 
 function renderSnapshotChart() {
   const ctx = document.getElementById('mainChartCanvas').getContext('2d');
   if (snapshotChart) snapshotChart.destroy();
 
-  // Detect if ANY subset is missing data for the current selection
-  const hasMissingData = currentSnapshotData.some(d => {
-    const r = getRate(d);
-    return r === null || d.UnemployedLevel === null;
-  });
+  // Get visible subsets from trend chart (excluding General Trend)
+  // null means show all subsets (when trend chart hasn't been created yet)
+  const visibleSubsets = trendChart ? 
+    trendChart.data.datasets
+      .filter(ds => !ds.hidden && ds.label !== 'General Trend')
+      .map(ds => ds.label) : 
+    null;
+
   const chartTypeInputs = document.querySelectorAll('input[name="chartType"]');
 
-  if (hasMissingData && currentSnapshotData.length > 0) {
-    chartTypeInputs.forEach(r => {
-      if (r.value !== 'bar') {
-        r.disabled = true;
-        r.parentElement.style.opacity = '0.4';
-        r.parentElement.style.cursor = 'not-allowed';
-      } else {
-        r.checked = true; // Auto-force Bar chart
+  let hasInvalidLevel = false;
+  if (visibleSubsets) {
+    const activeCat = parameterSelect.value;
+    for (const subsetLabel of visibleSubsets) {
+      const entry = currentSnapshotData.find(d => {
+        const subset = d.Subset || d[activeCat] || d.series_description;
+        return subset === subsetLabel;
+      });
+      if (entry && entry.rate != null && entry.rate !== '' && !isNaN(entry.rate)) {
+        if (entry.level == null || entry.level === '' || isNaN(entry.level)) {
+          hasInvalidLevel = true;
+          break;
+        }
       }
-    });
-  } else {
-    chartTypeInputs.forEach(r => {
+    }
+  }
+  chartTypeInputs.forEach(r => {
+    if (r.value === 'pie' || r.value === 'bubble') {
+      r.disabled = hasInvalidLevel;
+      r.parentElement.style.opacity = hasInvalidLevel ? '0.5' : '1';
+      r.parentElement.style.cursor = hasInvalidLevel ? 'not-allowed' : 'pointer';
+      r.parentElement.title = hasInvalidLevel ? 'Unavailable due to missing level data for the active subsets.' : '';
+    } else {
       r.disabled = false;
       r.parentElement.style.opacity = '1';
       r.parentElement.style.cursor = 'pointer';
-      // Restore user's preferred type if we are no longer in "missing data" mode
-      if (r.value === userPreferredChartType) {
-        r.checked = true;
-      }
-    });
-  }
+      r.parentElement.title = '';
+    }
+    if (r.value === userPreferredChartType && !r.disabled) r.checked = true;
+  });
 
-  const activeRadio = document.querySelector('input[name="chartType"]:checked');
-  if (!activeRadio) return; // Fail safe
-  
+  let activeRadio = document.querySelector('input[name="chartType"]:checked');
+  if (activeRadio && activeRadio.disabled) {
+    const barRadio = document.querySelector('input[name="chartType"][value="bar"]');
+    if (barRadio) {
+      barRadio.checked = true;
+      activeRadio = barRadio;
+    }
+  }
+  if (!activeRadio) return;
   const activeType = activeRadio.value;
 
-  // Update HTML subtitle box
+  // Helper for multi-line labels
+  const wrapLabelText = (label, limit = 20) => {
+    if (!label) return '';
+    const words = label.split(' ');
+    const lines = [];
+    let currentLine = words[0];
+    for (let i = 1; i < words.length; i++) {
+      if (currentLine.length + words[i].length + 1 < limit) {
+        currentLine += ' ' + words[i];
+      } else {
+        lines.push(currentLine);
+        currentLine = words[i];
+      }
+    }
+    lines.push(currentLine);
+    return lines.slice(0, 3);
+  };
+
   const subtitleEl = document.getElementById('snapshotSubtitle');
   if (subtitleEl) {
-    if (activeType === 'pie') subtitleEl.textContent = 'Unemployed People per Category to the Sum in All Categories';
-    else if (activeType === 'bubble') subtitleEl.textContent = 'Number of Unemployed People per Category';
+    if (activeType === 'pie') subtitleEl.textContent = 'Share of Total Unemployed in the Dataset';
+    else if (activeType === 'bubble') subtitleEl.textContent = 'Unemployment Impact (Weighted by Unemployment Level)';
     else if (activeType === 'bar') subtitleEl.textContent = 'Unemployment Rate Within the Category';
   }
 
-  // Handle data filtering based on type
+  const selectedCategory = parameterSelect.value;
+  const categoryConfig = CATEGORIES.find(c => c.id === selectedCategory);
+  const subsetOrder = categoryConfig ? categoryConfig.subsets : [];
+
+  // Filter data to only visible subsets (null means show all)
+  let filteredData = [...currentSnapshotData].filter(d => {
+    if (visibleSubsets === null) return true;
+    const subset = d.Subset || d[selectedCategory] || d.series_description;
+    return visibleSubsets.includes(subset);
+  });
+
   let data = [];
   if (activeType === 'bar') {
-    data = [...currentSnapshotData].sort((a,b) => a.Subset.localeCompare(b.Subset));
+    data = filteredData.filter(d => getRate(d) > 0).sort((a, b) => b.rate - a.rate);
+  } else if (activeType === 'pie') {
+    data = filteredData.sort((a, b) => {
+      const idxA = subsetOrder.indexOf(a[selectedCategory]);
+      const idxB = subsetOrder.indexOf(b[selectedCategory]);
+      return idxA - idxB;
+    });
   } else {
-    data = [...currentSnapshotData].filter(d => getRate(d) > 0).sort((a, b) => b.Rate - a.Rate);
+    data = filteredData.filter(d => getRate(d) > 0).sort((a, b) => b.rate - a.rate);
   }
   
   const emptyStateEl = document.querySelector('#mainChartContainer .chart-empty-state');
   const canvasEl = document.getElementById('mainChartCanvas');
 
   if (data.length === 0) {
-    emptyStateEl.textContent = 'No data available for this specific year.';
+    emptyStateEl.textContent = 'No data available.';
     emptyStateEl.classList.remove('hidden');
     canvasEl.style.opacity = '0';
   } else {
@@ -507,8 +947,8 @@ function renderSnapshotChart() {
     canvasEl.style.opacity = '1';
   }
 
-  let labels = data.map(d => d.Subset);
-  const bgColors = data.map(d => activeColorMap[d.Subset] || '#64748b');
+  let labels = data.map(d => d[selectedCategory] || d.series_description);
+  const bgColors = data.map(d => activeColorMap[d[selectedCategory]] || activeColorMap[d.series_description?.toLowerCase()] || '#64748b');
 
   if (activeType === 'bar') {
     const globalMax = getGlobalMaxRate();
@@ -527,18 +967,26 @@ function renderSnapshotChart() {
         indexAxis: 'y',
         responsive: true,
         maintainAspectRatio: false,
-        layout: { padding: { top: 70, right: 30 } },
-        plugins: { 
-          legend: { display: false },
-          tooltip: { enabled: true }
-        },
+        plugins: { legend: { display: false } },
         scales: {
-          x: { 
-            display: false, 
-            min: 0,
-            max: globalMax * 1.2 // 20% breathing room for labels
-          },
-          y: { grid: { display: false }, ticks: { color: '#f2f4f7', font: { size: 12, weight: 'bold' } } }
+          x: { display: false, min: 0, max: globalMax * 1.2 },
+          y: { 
+            grid: { display: false }, 
+            ticks: { 
+              color: (ctx) => {
+                if (!ctx.chart.data.labels) return '#f2f4f7';
+                const labelStr = ctx.chart.data.labels[ctx.index];
+                // Handle cases where label might be an array (for multi-line)
+                const lookup = Array.isArray(labelStr) ? labelStr.join(' ') : labelStr;
+                return activeColorMap[lookup] || '#f2f4f7';
+              },
+              font: { size: 12, weight: 'bold' },
+              callback: function(value) {
+                const label = this.getLabelForValue(value);
+                return wrapLabelText(label, 20);
+              }
+            } 
+          }
         }
       },
       plugins: [{
@@ -547,16 +995,14 @@ function renderSnapshotChart() {
           const { ctx, data } = chart;
           chart.getDatasetMeta(0).data.forEach((bar, index) => {
             const rawVal = data.datasets[0].data[index];
-            const label = (rawVal !== null && rawVal > 0) ? `${rawVal}%` : "No available data";
+            const label = (rawVal !== null && rawVal > 0) ? `${rawVal.toFixed(1)}%` : "N/A";
             const color = data.datasets[0].backgroundColor[index];
             ctx.save();
             ctx.fillStyle = color;
             ctx.font = 'bold 12px Inter';
             ctx.textBaseline = 'middle';
             ctx.textAlign = 'left';
-            const xPos = Math.max(bar.x, bar.base) + 12;
-            const yPos = bar.y;
-            ctx.fillText(label, xPos, yPos);
+            ctx.fillText(label, Math.max(bar.x, bar.base) + 12, bar.y);
             ctx.restore();
           });
         }
@@ -569,122 +1015,263 @@ function renderSnapshotChart() {
       data: {
         labels: labels,
         datasets: [{
-          label: 'Percent of Unemployed People',
-          data: data.map(d => d.PercentOfCategory),
-          backgroundColor: bgColors,
-          borderColor: '#0f1115',
-          borderWidth: 2
+          label: 'Pct',
+          data: data.map(d => d.percent_of_group),
+          backgroundColor: bgColors
         }]
       },
       options: {
         responsive: true,
-        maintainAspectRatio: true,
-        aspectRatio: 1,
-        layout: { padding: { top: 80 } },
+        maintainAspectRatio: false,
+        layout: {
+          padding: { top: 20, bottom: 20, left: 20, right: 20 }
+        },
         plugins: {
-          legend: { 
-            position: 'right', 
-            labels: { 
-              padding: 15, 
-              font: { size: 11 },
+          legend: {
+            position: 'right',
+            labels: {
+              usePointStyle: true,
+              pointStyle: 'circle',
+              padding: 20,
+              wordWrap: true,
+              lineHeight: 25,
               generateLabels: (chart) => {
-                const data = chart.data;
-                if (data.labels.length && data.datasets.length) {
-                  return data.labels.map((label, i) => {
-                    const value = data.datasets[0].data[i];
-                    const color = data.datasets[0].backgroundColor[i];
-                    return {
-                      text: `${label}: ${value}%`,
-                      fillStyle: color,
-                      strokeStyle: data.datasets[0].borderColor,
-                      lineWidth: data.datasets[0].borderWidth,
-                      fontColor: color, // Legend text matches piece color
-                      hidden: isNaN(data.datasets[0].data[i]) || chart.getDatasetMeta(0).data[i].hidden,
-                      index: i
-                    };
-                  });
-                }
-                return [];
+                const ds = chart.data.datasets[0];
+                return chart.data.labels.map((lbl, i) => {
+                  const words = lbl.split(' ');
+                  const mid = Math.ceil(words.length / 2);
+                  const line1 = words.slice(0, mid).join(' ');
+                  const line2 = (words.slice(mid).join(' ') + ' ' + Number(ds.data[i]).toFixed(1) + '%').trim();
+                  return {
+                    text: [line1, line2],
+                    fillStyle: bgColors[i],
+                    strokeStyle: bgColors[i],
+                    fontColor: bgColors[i],
+                    lineWidth: 0,
+                    index: i,
+                    hidden: false,
+                  };
+                });
               }
-            } 
+            }
           },
-          tooltip: { callbacks: { label: (ctx) => ` ${ctx.label}: ${ctx.raw}%` } }
+          tooltip: {
+            enabled: true,
+            callbacks: {
+              label: (context) => {
+                const label = context.label;
+                const value = Number(context.raw).toFixed(1);
+                return `${label} - ${value}%`;
+              }
+            }
+          }
         }
       }
     });
   }
   else if (activeType === 'bubble') {
-    const rootData = { name: "root", children: data };
-    const packLayout = pack().size([600, 600]).padding(2); // Tighter padding
-    const rootNode = hierarchy(rootData).sum(d => d.UnemployedLevel);
-    const packedNodes = packLayout(rootNode).leaves();
+    const bubbleData = data.map(d => ({
+      percent: d.percent_of_group,
+      rate: getRate(d),
+      level: d.level,
+      subset: d[selectedCategory] || d.series_description
+    }));
     
-    // Bounds tracking for area-filling fit
-    let minX = Infinity, maxX = -Infinity, minY = Infinity, maxY = -Infinity;
-    const mappedData = packedNodes.map((node, i) => {
-      const r = node.r;
-      minX = Math.min(minX, node.x - r);
-      maxX = Math.max(maxX, node.x + r);
-      minY = Math.min(minY, node.y - r);
-      maxY = Math.max(maxY, node.y + r);
-      return {
-        x: node.x, y: node.y, r: r, 
-        subset: node.data.Subset, value: node.data.UnemployedLevel,
-        backgroundColor: activeColorMap[node.data.Subset] || '#cbd5e1'
-      };
-    });
-
-    // Add padding to specific bounds
-    const pad = 20;
-    minX -= pad; maxX += pad; minY -= pad; maxY += pad;
-
+    const xLow = Math.min(...bubbleData.map(d => d.percent));
+    const xHigh = Math.max(...bubbleData.map(d => d.percent));
+    const yLow = Math.min(...bubbleData.map(d => d.rate));
+    const yHigh = Math.max(...bubbleData.map(d => d.rate));
+    const xMaxVal = xHigh * 1.3;
+    const yMaxVal = yHigh * 1.3;
+    const xMinVal = xLow - (xMaxVal - xHigh);
+    const yMinVal = yLow - (yMaxVal - yHigh);
+    
+    const xTicks = [];
+    const xStep = (xMaxVal - xMinVal) / 6;
+    for (let i = 0; i <= 6; i++) {
+      xTicks.push(xMinVal + i * xStep);
+    }
+    
+    const yTicks = [];
+    const yStep = (yMaxVal - yMinVal) / 6;
+    for (let i = 0; i <= 6; i++) {
+      yTicks.push(yMinVal + i * yStep);
+    }
+    
+    const quadrantBackgroundPlugin = {
+      id: 'quadrantBackground',
+      beforeDraw: (chart) => {
+        const ctx = chart.ctx;
+        const xScale = chart.scales.x;
+        const yScale = chart.scales.y;
+        
+        if (!xScale || !yScale) return;
+        
+        const xMin = xScale.min;
+        const xMax = xScale.max;
+        const yMin = yScale.min;
+        const yMax = yScale.max;
+        const midX = (xMax + xMin) / 2;
+        const midY = (yMax + yMin) / 2;
+        
+        const left = xScale.getPixelForValue(xMin);
+        const right = xScale.getPixelForValue(xMax);
+        const top = yScale.getPixelForValue(yMax);
+        const bottom = yScale.getPixelForValue(yMin);
+        const midXPixel = xScale.getPixelForValue(midX);
+        const midYPixel = yScale.getPixelForValue(midY);
+        
+        ctx.save();
+        
+        // Top-right quarter (red_hue at 10% opacity)
+        ctx.fillStyle = 'rgba(238, 102, 119, 0.1)';
+        ctx.fillRect(midXPixel, top, right - midXPixel, midYPixel - top);
+        
+        // Bottom-left quarter (green_hue at 10% opacity)
+        ctx.fillStyle = 'rgba(34, 136, 51, 0.1)';
+        ctx.fillRect(left, midYPixel, midXPixel - left, bottom - midYPixel);
+        
+        ctx.restore();
+      }
+    };
+    
     snapshotChart = new Chart(ctx, {
       type: 'bubble',
       data: {
-        datasets: mappedData.map(node => ({
-          label: node.subset,
-          data: [{ x: node.x, y: node.y, r: node.r }],
-          backgroundColor: node.backgroundColor,
-          borderWidth: 1,
-          borderColor: '#0f1115',
-          volume: node.value,
-          fontColor: node.backgroundColor
-        }))
+        datasets: [{
+          label: 'Unemployment',
+          data: bubbleData.map(d => ({ x: d.percent, y: d.rate })),
+          backgroundColor: bubbleData.map(d => {
+            const color = activeColorMap[d.subset] || activeColorMap[d.subset?.toLowerCase()] || '#cbd5e1';
+            return hexToRgba(color, 0.6);
+          }),
+          borderColor: bubbleData.map(d => {
+            const color = activeColorMap[d.subset] || activeColorMap[d.subset?.toLowerCase()] || '#cbd5e1';
+            return hexToRgba(color, 0.6);
+          }),
+          borderWidth: 1
+        }]
       },
       options: {
         responsive: true,
         maintainAspectRatio: false,
-        layout: { padding: { top: 80 } },
+        animation: { duration: 0 },
+        layout: {
+          padding: { top: 20, bottom: 20, left: 20, right: 20 }
+        },
         plugins: {
-          legend: { 
-            position: 'right', 
-            labels: { 
-              padding: 10,
+          legend: {
+            position: 'top',
+            labels: {
+              usePointStyle: true,
+              pointStyle: 'circle',
+              padding:  15,
               generateLabels: (chart) => {
-                return chart.data.datasets.map((ds, i) => ({
-                  text: `${ds.label}: ${ds.volume} K`,
-                  fillStyle: ds.backgroundColor,
-                  strokeStyle: ds.borderColor,
-                  fontColor: ds.backgroundColor, // Colored legend text
-                  datasetIndex: i
-                }));
+                const sortedIndices = bubbleData
+                  .map((d, i) => ({ subset: d.subset, index: i }))
+                  .sort((a, b) => {
+                    const idxA = subsetOrder.indexOf(a.subset);
+                    const idxB = subsetOrder.indexOf(b.subset);
+                    return idxA - idxB;
+                  })
+                  .map(item => item.index);
+                
+                return sortedIndices.map(i => {
+                  const subset = bubbleData[i].subset;
+                  const color = activeColorMap[subset] || activeColorMap[subset?.toLowerCase()] || '#cbd5e1';
+                  return {
+                    text: subset,
+                    fillStyle: color,
+                    strokeStyle: color,
+                    fontColor: color,
+                    lineWidth: 0,
+                    index: i,
+                    hidden: false
+                  };
+                });
               }
-            } 
+            }
           },
           tooltip: {
             callbacks: {
-               label: (context) => {
-                 const n = mappedData[context.datasetIndex];
-                 return `Number of Unemployed People (Volume): ${n.value} K`;
-               }
+              label: (context) => {
+                const idx = context.dataIndex;
+                const d = bubbleData[idx];
+                return `${d.subset}: ${d.rate.toFixed(1)}% rate, ${(d.level / 1000).toFixed(1)}K unemployed, ${d.percent.toFixed(1)}% share`;
+              }
             }
           }
         },
         scales: {
-          x: { display: false, min: minX, max: maxX },
-          y: { display: false, min: minY, max: maxY }
+          x: {
+            title: { display: true, text: 'Share of Total Unemployed in the Dataset', color: '#a0a6b1' },
+            min: xMinVal,
+            max: xMaxVal,
+            grid: { color: 'rgba(255,255,255,0.05)' },
+            ticks: { 
+              values: xTicks, 
+              source: 'array', 
+              count: 7,
+              bounds: 'ticks',
+              color: '#a0a6b1', 
+              callback: function(val) { if (val < 0 || val > 100) return ' '; return val.toFixed(1) + '%'; } 
+            }
+          },
+          y: {
+            title: { display: true, text: 'Unemployment Rate (%)', color: '#a0a6b1' },
+            min: yMinVal,
+            max: yMaxVal,
+            grid: { color: 'rgba(255,255,255,0.05)' },
+            ticks: { 
+              values: yTicks, 
+              source: 'array', 
+              count: 7,
+              bounds: 'ticks',
+              color: '#a0a6b1', 
+              callback: function(val) { if (val < 0 || val > 100) return ' '; return val.toFixed(1); } 
+            }
+          }
         }
-      }
+      },
+      plugins: [quadrantBackgroundPlugin, {
+        id: 'bubbleRadius',
+        beforeDatasetsDraw: (chart) => {
+          if (!chart.canvas) return;
+          
+          const canvasWidth = chart.canvas.width;
+          const canvasHeight = chart.canvas.height;
+          const minCanvasDim = Math.min(canvasWidth, canvasHeight);
+          
+          const radiusCeiling = minCanvasDim * 0.10;
+          const maxArea = Math.PI * radiusCeiling * radiusCeiling;
+          
+          const maxLevel = Math.max(...bubbleData.map(d => d.level));
+          const minLevel = Math.min(...bubbleData.map(d => d.level));
+          
+          let radii = bubbleData.map(d => {
+            const scaledArea = (d.level / maxLevel) * maxArea;
+            return Math.sqrt(scaledArea / Math.PI);
+          });
+          
+          const radiusFloor = minCanvasDim * 0.01;
+          const smallestRadius = Math.min(...radii);
+          
+          if (smallestRadius < radiusFloor) {
+            const minArea = Math.PI * radiusFloor * radiusFloor;
+            radii = bubbleData.map(d => {
+              const scaledArea = (d.level / minLevel) * minArea;
+              return Math.sqrt(scaledArea / Math.PI);
+            });
+          }
+          
+          const dataset = chart.data.datasets[0];
+          dataset.data = bubbleData.map((d, i) => ({
+            x: d.percent,
+            y: d.rate,
+            r: radii[i]
+          }));
+        }
+      }]
     });
   }
 }
