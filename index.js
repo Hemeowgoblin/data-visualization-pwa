@@ -844,13 +844,45 @@ function renderSnapshotChart() {
 
   const chartTypeInputs = document.querySelectorAll('input[name="chartType"]');
 
+  let hasInvalidLevel = false;
+  if (visibleSubsets) {
+    const activeCat = parameterSelect.value;
+    for (const subsetLabel of visibleSubsets) {
+      const entry = currentSnapshotData.find(d => {
+        const subset = d.Subset || d[activeCat] || d.series_description;
+        return subset === subsetLabel;
+      });
+      if (entry && entry.rate != null && entry.rate !== '' && !isNaN(entry.rate)) {
+        if (entry.level == null || entry.level === '' || isNaN(entry.level)) {
+          hasInvalidLevel = true;
+          break;
+        }
+      }
+    }
+  }
   chartTypeInputs.forEach(r => {
-    r.disabled = false;
-    r.parentElement.style.opacity = '1';
-    if (r.value === userPreferredChartType) r.checked = true;
+    if (r.value === 'pie' || r.value === 'bubble') {
+      r.disabled = hasInvalidLevel;
+      r.parentElement.style.opacity = hasInvalidLevel ? '0.5' : '1';
+      r.parentElement.style.cursor = hasInvalidLevel ? 'not-allowed' : 'pointer';
+      r.parentElement.title = hasInvalidLevel ? 'Unavailable due to missing level data for the active subsets.' : '';
+    } else {
+      r.disabled = false;
+      r.parentElement.style.opacity = '1';
+      r.parentElement.style.cursor = 'pointer';
+      r.parentElement.title = '';
+    }
+    if (r.value === userPreferredChartType && !r.disabled) r.checked = true;
   });
 
-  const activeRadio = document.querySelector('input[name="chartType"]:checked');
+  let activeRadio = document.querySelector('input[name="chartType"]:checked');
+  if (activeRadio && activeRadio.disabled) {
+    const barRadio = document.querySelector('input[name="chartType"][value="bar"]');
+    if (barRadio) {
+      barRadio.checked = true;
+      activeRadio = barRadio;
+    }
+  }
   if (!activeRadio) return;
   const activeType = activeRadio.value;
 
