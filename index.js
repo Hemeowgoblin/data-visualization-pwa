@@ -27,6 +27,14 @@ const currentYearDisplay = document.getElementById('currentYearDisplay');
 const generalTrendToggle = document.getElementById('generalTrendToggle');
 const chartTypeRadios = document.getElementsByName('chartType');
 
+// Multi-page UI Elements
+const navLinks = document.querySelectorAll('.nav-link');
+const logoHome = document.getElementById('logoHome');
+const pageViews = document.querySelectorAll('.page-view');
+const contactForm = document.getElementById('contactForm');
+const formResponse = document.getElementById('formResponse');
+const submitBtn = document.getElementById('submitBtn');
+
 // Chart global instances
 let trendChart = null;
 let snapshotChart = null;
@@ -111,6 +119,91 @@ parameterSelect.addEventListener('change', (e) => {
 
 // Populate immediately as CATEGORIES is available via import
 populateParameterSelect();
+
+/* --- Multi-page Navigation Logic --- */
+function showPage(pageId) {
+  pageViews.forEach(view => {
+    if (view.id === pageId) {
+      view.classList.remove('hidden');
+      view.classList.add('active');
+    } else {
+      view.classList.add('hidden');
+      view.classList.remove('active');
+    }
+  });
+
+  navLinks.forEach(link => {
+    if (link.getAttribute('data-page') === pageId) {
+      link.classList.add('active');
+    } else {
+      link.classList.remove('active');
+    }
+  });
+
+  // If going to home page, ensure we are in a clean state if no viz is generated
+  if (pageId === 'homePage') {
+    window.dispatchEvent(new Event('resize')); // Force chart reflow if needed
+  }
+
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+navLinks.forEach(link => {
+  link.addEventListener('click', (e) => {
+    e.preventDefault();
+    const pageId = link.getAttribute('data-page');
+    showPage(pageId);
+  });
+});
+
+if (logoHome) {
+  logoHome.addEventListener('click', () => {
+    showPage('homePage');
+  });
+}
+
+/* --- Contact Form Handling --- */
+if (contactForm) {
+  contactForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    
+    // Reset state
+    formResponse.className = 'form-response hidden';
+    formResponse.textContent = '';
+    submitBtn.disabled = true;
+    const originalBtnText = submitBtn.textContent;
+    submitBtn.textContent = 'Sending...';
+
+    const formData = new FormData(contactForm);
+    
+    try {
+      const response = await fetch(contactForm.action, {
+        method: 'POST',
+        body: formData,
+        headers: {
+          'Accept': 'application/json'
+        }
+      });
+
+      if (response.ok) {
+        formResponse.textContent = 'Thank you! Your message has been sent successfully.';
+        formResponse.className = 'form-response success';
+        contactForm.reset();
+      } else {
+        const result = await response.json();
+        formResponse.textContent = result.message || 'Oops! Something went wrong while sending your message.';
+        formResponse.className = 'form-response error';
+      }
+    } catch (error) {
+      formResponse.textContent = 'Unable to send message. Please check your internet connection.';
+      formResponse.className = 'form-response error';
+    } finally {
+      submitBtn.disabled = false;
+      submitBtn.textContent = originalBtnText;
+      formResponse.classList.remove('hidden');
+    }
+  });
+}
 
 function buildFilters(selectedCategory) {
   dynamicFiltersContainer.innerHTML = '';
