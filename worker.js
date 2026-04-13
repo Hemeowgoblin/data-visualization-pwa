@@ -3,7 +3,7 @@ import { CATEGORIES, AGE_COMPARISON_SUBSETS } from './constants.js';
 let globalData = [];
 
 // Initialize data loading
-fetch('unemployment_data.json')
+fetch('/unemployment_data.json')
   .then(res => res.text())
   .then(text => {
     // Economic data from FRED often contains NaN for missing values in JSON-like formats.
